@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naveen Kumar — Hero</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#04040a;
+  --fg:#f0efff;
+  --muted:#8a8fb5;
+  --neon:#00f0ff;
+  --pink:#ff2d95;
+  --purple:#a855f7;
+  --gold:#ffd700;
+  --green:#39ff14;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"DM Sans","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--fg);
+  overflow-x:hidden;
+}
+canvas#particles{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:50;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 40px;
+  background:rgba(4,4,10,.6);
+  border-bottom:1px solid rgba(0,240,255,.06);
+  backdrop-filter:blur(16px);
+}
+.logo{
+  font-weight:800;
+  font-size:22px;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,var(--neon),var(--pink),var(--gold));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+nav ul{display:flex;gap:28px;list-style:none}
+nav a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:14px;
+  font-weight:500;
+  transition:.3s;
+  position:relative;
+}
+nav a:hover{color:var(--neon)}
+.cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(90deg,var(--neon),var(--pink));
+  color:#04040a;
+  padding:10px 22px;
+  border-radius:100px;
+  font-weight:700;
+  font-size:14px;
+  text-decoration:none;
+  box-shadow:0 8px 30px rgba(0,240,255,.3);
+  transition:.3s;
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,45,149,.4)}
+
+/* HERO */
+.hero{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:.98fr 1.02fr;
+  gap:18px;
+  align-items:center;
+  min-height:100vh;
+  max-width:1280px;
+  margin:0 auto;
+  padding:105px 40px 70px;
+}
+.hero-content{grid-column:1}
+.hero-chart{
+  grid-column:2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 16px;
+  border:1px solid rgba(0,240,255,.3);
+  border-radius:100px;
+  font-size:12px;
+  color:var(--neon);
+  letter-spacing:1px;
+  margin-bottom:24px;
+  background:rgba(0,240,255,.05);
+  backdrop-filter:blur(10px);
+}
+.badge .dot{
+  width:8px;height:8px;
+  background:var(--neon);
+  border-radius:50%;
+  animation:breathe 2s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.3);opacity:.5}
+}
+.hero h1{
+  font-size:clamp(42px,4.5vw,68px);
+  line-height:1.04;
+  font-weight:800;
+  margin-bottom:22px;
+  letter-spacing:-1.8px;
+}
+.hero-line-plain{color:var(--fg)}
+.hero-line-two{display:inline-flex;align-items:baseline;gap:.18em}
+.hero-line-two em{font-style:normal}
+.hero-line-two span{
+  background:linear-gradient(90deg,var(--neon),var(--pink),var(--purple),var(--gold),var(--green));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  background-size:400%;
+  animation:auroraFlow 8s ease infinite;
+}
+@keyframes auroraFlow{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+.hero-lead{
+  color:#c9cae2;
+  font-size:18px;
+  max-width:585px;
+  margin-bottom:14px;
+  line-height:1.55;
+  font-weight:500;
+}
+.hero-small{
+  color:var(--muted);
+  font-size:14.5px;
+  max-width:560px;
+  margin-bottom:26px;
+  line-height:1.65;
+}
+.hero .row{
+  display:flex;
+  gap:16px;
+  flex-wrap:nowrap;
+  align-items:center;
+}
+.hero-primary-cta{
+  min-width:300px;
+  min-height:62px;
+  padding-inline:26px;
+  font-size:17px;
+  font-weight:800;
+  background:linear-gradient(105deg,var(--neon),var(--purple),var(--pink),var(--gold),var(--neon));
+  background-size:300% 300%;
+  animation:heroCtaGradient 4s ease-in-out infinite;
+}
+@keyframes heroCtaGradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.btn-ghost{
+  min-width:190px;
+  min-height:60px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.1);
+  padding:12px 24px;
+  border-radius:100px;
+  color:var(--fg);
+  text-decoration:none;
+  font-weight:600;
+  font-size:16px;
+  transition:.4s;
+}
+.btn-ghost:hover{
+  border-color:var(--pink);
+  background:rgba(255,45,149,.08);
+  box-shadow:0 0 30px rgba(255,45,149,.2);
+  transform:translateY(-2px);
+}
+
+/* PERFORMANCE DASHBOARD */
+.hero-performance-stage{
+  position:relative;
+  width:min(630px,50vw);
+  aspect-ratio:11/7;
+  flex:0 0 auto;
+  transform:translateX(-38px);
+  overflow:visible;
+}
+.hero-performance{
+  position:absolute;
+  left:0;
+  top:0;
+  width:1100px;
+  height:700px;
+  padding:45px 20px 55px;
+  font-family:Arial,Helvetica,sans-serif;
+  transform-origin:0 0;
+}
+.hero-performance *{box-sizing:border-box}
+
+.hp-dashboard{
+  position:relative;
+  width:82%;
+  margin:35px auto 0;
+  padding:32px;
+  border-radius:30px;
+  overflow:hidden;
+  background:#081625 radial-gradient(circle at 50% 45%,rgba(28,70,112,.3),rgba(7,20,35,.98) 68%);
+  box-shadow:0 35px 70px rgba(18,54,100,.25),0 10px 30px rgba(0,0,0,.18);
+}
+.hp-dashboard:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(32,104,180,.14),transparent 40%),
+    radial-gradient(circle at 80% 80%,rgba(30,80,140,.12),transparent 45%);
+}
+.hp-dashboard-header,.hp-panel-header,.hp-campaign-header,.hp-campaign-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+}
+.hp-dashboard-header{margin-bottom:25px}
+.hp-dashboard-title{color:#fff;font-size:17px;font-weight:600}
+.hp-date-selector{
+  color:#fff;
+  background:rgba(18,37,55,.9);
+  border:1px solid rgba(255,255,255,.06);
+  padding:10px 15px;
+  border-radius:10px;
+  font-size:12px;
+}
+.hp-kpi-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:15px;
+}
+.hp-kpi-card{
+  min-height:105px;
+  padding:17px;
+  border-radius:13px;
+  background:linear-gradient(145deg,rgba(22,43,63,.95),rgba(15,33,50,.92));
+  border:1px solid rgba(255,255,255,.035);
+}
+.hp-kpi-label{color:#9aaabd;font-size:12px;margin-bottom:8px}
+.hp-kpi-value{color:#fff;font-size:24px;font-weight:700;margin-bottom:7px}
+.hp-kpi-change{font-size:11px;color:#42d88a;font-weight:500}
+
+.hp-dashboard-lower{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.55fr .85fr;
+  gap:12px;
+}
+.hp-graph-panel,.hp-campaign-panel{
+  min-height:285px;
+  padding:20px;
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(17,38,57,.92),rgba(12,29,46,.95));
+  border:1px solid rgba(255,255,255,.035);
+}
+.hp-panel-header{margin-bottom:12px}
+.hp-panel-title,.hp-campaign-header{
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+}
+.hp-legend{display:flex;gap:15px;color:#9eabba;font-size:10px}
+.hp-legend-item{display:flex;align-items:center;gap:5px}
+.hp-legend-blue,.hp-legend-green{width:10px;height:3px;border-radius:3px}
+.hp-legend-blue{background:#2388ff}
+.hp-legend-green{background:#43d991}
+.hp-graph{width:100%;height:220px;position:relative}
+.hp-graph svg{width:100%;height:100%;overflow:visible}
+.hp-grid-line{stroke:rgba(255,255,255,.07);stroke-width:1}
+.hp-axis-text,.hp-month-text{fill:#73869a;font-size:9px}
+.hp-month-text{text-anchor:middle}
+.hp-spend-area{
+  fill:url(#hpSpendGradient);
+  opacity:0;
+  animation:hpFadeArea 1.5s ease 1.3s forwards;
+}
+.hp-chart-line{
+  fill:none;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  animation:hpDrawChart 2.8s cubic-bezier(.4,0,.2,1) forwards;
+}
+.hp-spend-line{stroke:url(#hpSpendStroke);filter:drop-shadow(0 0 5px rgba(35,136,255,.45))}
+.hp-conversion-line{stroke:#43d991;filter:drop-shadow(0 0 4px rgba(67,217,145,.35));animation-delay:.25s}
+.hp-point-glow{opacity:.55;filter:drop-shadow(0 0 4px rgba(95,220,255,.38))}
+.hp-point-core{fill:#eafcff;filter:drop-shadow(0 0 3px rgba(255,255,255,.55))}
+@keyframes hpFadeArea{to{opacity:1}}
+@keyframes hpDrawChart{to{stroke-dashoffset:0}}
+
+.hp-campaign-header{font-size:12px;margin-bottom:25px}
+.hp-campaign-header span{color:#8294a6;font-weight:400}
+.hp-campaign-row{margin-bottom:21px;color:#dce4eb;font-size:12px}
+.hp-campaign-roas{color:#49dc91;font-weight:600}
+.hp-view-campaigns{color:#2390ff;font-size:11px;font-weight:600;margin-top:27px}
+
+.hp-result-card{
+  position:absolute;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:rgba(255,255,255,.97);
+  border-radius:18px;
+  padding:16px 21px;
+  box-shadow:0 20px 40px rgba(20,55,95,.18),0 5px 15px rgba(0,0,0,.07);
+}
+.hp-roas-card{
+  top:0;left:1%;
+  transform:rotate(-2.5deg);
+  animation:hpRoasShake 3s ease-in-out infinite;
+}
+.hp-leads-card{
+  bottom:5px;left:7%;
+  transform:rotate(-1.5deg);
+  animation:hpLeadsShake 3s ease-in-out infinite;
+}
+.hp-cac-card{
+  bottom:5px;right:7%;
+  animation:hpCacShake 3s ease-in-out infinite;
+}
+.hp-result-icon{
+  width:58px;height:58px;min-width:58px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:700;
+}
+.hp-green-icon{background:linear-gradient(145deg,#42c989,#1caf69);animation:hpFloat 1.8s ease-in-out infinite}
+.hp-blue-icon{background:linear-gradient(145deg,#4388ed,#2166c7);animation:hpTilt 2.2s ease-in-out infinite}
+.hp-purple-icon{background:linear-gradient(145deg,#8360f4,#6240df);animation:hpJump 1.6s ease-in-out infinite}
+.hp-icon-svg{
+  width:31px;height:31px;
+  stroke:#fff;fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.hp-result-number{font-size:23px;line-height:1;font-weight:700;color:#17202c;margin-bottom:6px}
+.hp-result-label{font-size:12px;line-height:1.4;color:#26313e}
+
+@keyframes hpFloat{
+  0%,100%{transform:translateY(0)}
+  25%{transform:translateY(-5px)}
+  50%{transform:translateY(1px)}
+  75%{transform:translateY(-4px)}
+}
+@keyframes hpTilt{
+  0%,100%{transform:rotate(0)}
+  25%{transform:rotate(-7deg)}
+  50%{transform:rotate(5deg)}
+  75%{transform:rotate(-4deg)}
+}
+@keyframes hpJump{
+  0%,35%,65%,100%{transform:translateY(0)}
+  20%{transform:translateY(-8px)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes hpRoasShake{
+  0%,78%,100%{transform:rotate(-2.5deg) translateX(0)}
+  82%{transform:rotate(-1.8deg) translateX(2px)}
+  86%{transform:rotate(-3.2deg) translateX(-2px)}
+  90%{transform:rotate(-2deg) translateX(1px)}
+  94%{transform:rotate(-2.9deg) translateX(-1px)}
+}
+@keyframes hpLeadsShake{
+  0%,78%,100%{transform:rotate(-1.5deg) translateX(0)}
+  82%{transform:rotate(-.8deg) translateX(2px)}
+  86%{transform:rotate(-2.2deg) translateX(-2px)}
+  90%{transform:rotate(-1deg) translateX(1px)}
+  94%{transform:rotate(-1.9deg) translateX(-1px)}
+}
+@keyframes hpCacShake{
+  0%,78%,100%{transform:rotate(0) translateX(0)}
+  82%{transform:rotate(.7deg) translateX(2px)}
+  86%{transform:rotate(-.7deg) translateX(-2px)}
+  90%{transform:rotate(.45deg) translateX(1px)}
+  94%{transform:rotate(-.45deg) translateX(-1px)}
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:16px 20px}
+  nav ul{display:none}
+  .hero{
+    grid-template-columns:1fr;
+    padding:100px 22px 50px;
+    min-height:auto;
+  }
+  .hero-content,.hero-chart{grid-column:1}
+  .hero-chart{margin-top:35px}
+  .hero-performance-stage{
+    width:min(760px,100%);
+    transform:none;
+    margin:0 auto;
+  }
+  .hero .row{flex-wrap:wrap}
+  .hero-primary-cta,.hero .btn-ghost{min-width:100%}
+  .hp-kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .hp-dashboard-lower{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hero h1{font-size:43px}
+  .hero-lead{font-size:17px}
+  .hp-kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<nav>
+  <div class="logo">Naveen Kumar</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About Me</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="cta">Let's Talk</a>
+</nav>
+
+<section id="home" class="hero">
+
+  <div class="hero-content">
+    <span class="badge">
+      <span class="dot"></span>
+      Performance & Growth Marketing
+    </span>
+
+    <h1>
+      <span class="hero-line-plain">Stop lighting money</span><br>
+      <span class="hero-line-two"><em>on</em> <span>FIRE</span></span>
+    </h1>
+
+    <p class="hero-lead">
+      Don’t just spend on ads. Invest in a growth strategy that makes every rupee work harder.
+    </p>
+
+    <p class="hero-small">
+      Performance marketing for ambitious brands.<br>
+      Paid ads, UGC creative systems, SEO/AEO/GEO, and growth strategy — built to scale profitably, not just spend budget.
+    </p>
+
+    <div class="row">
+      <a href="#contact" class="cta hero-primary-cta">Get Your Free Growth Plan</a>
+      <a href="#cases" class="btn-ghost">See My Results</a>
+    </div>
+  </div>
+
+  <div class="hero-chart">
+    <div class="hero-performance-stage">
+
+      <div class="hero-performance">
+
+        <div class="hp-result-card hp-roas-card">
+          <div class="hp-result-icon hp-green-icon">
+            <svg class="hp-icon-svg" viewBox="0 0 32 32">
+              <polyline points="4,23 12,15 17,19 27,7"/>
+              <polyline points="19,7 27,7 27,15"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hp-result-number">3.2x</div>
+            <div class="hp-result-label">ROAS<br>Increase</div>
+          </div>
+        </div>
+
+        <div class="hp-dashboard">
+
+          <div class="hp-dashboard-header">
+            <div class="hp-dashboard-title">Performance Overview</div>
+            <div class="hp-date-selector">▣ &nbsp;<span id="hpTodayDate">Today</span>&nbsp;⌄</div>
+          </div>
+
+          <div class="hp-kpi-grid">
+            <div class="hp-kpi-card">
+              <div class="hp-kpi-label">Total Spend</div>
+              <div class="hp-kpi-value">₹2.93L</div>
+              <div class="hp-kpi-change">↓ 40% vs previous 30 days</div>
+            </div>
+            <div class="hp-kpi-card">
+              <div class="hp-kpi-label">Revenue Generated</div>
+              <div class="hp-kpi-value">₹9.41L</div>
+              <div class="hp-kpi-change">↑ 182% vs previous 30 days</div>
+            </div>
+            <div class="hp-kpi-card">
+              <div class="hp-kpi-label">ROAS</div>
+              <div class="hp-kpi-value">3.21x</div>
+              <div class="hp-kpi-change">↑ 156% vs previous 30 days</div>
+            </div>
+            <div class="hp-kpi-card">
+              <div class="hp-kpi-label">Cost per Lead</div>
+              <div class="hp-kpi-value">₹58.7</div>
+              <div class="hp-kpi-change">↓ 40% vs previous 30 days</div>
+            </div>
+          </div>
+
+          <div class="hp-dashboard-lower">
+
+            <div class="hp-graph-panel">
+              <div class="hp-panel-header">
+                <div class="hp-panel-title">Performance Trend</div>
+                <div class="hp-legend">
+                  <div class="hp-legend-item"><span class="hp-legend-blue"></span>Spend</div>
+                  <div class="hp-legend-item"><span class="hp-legend-green"></span>Conversions</div>
+                </div>
+              </div>
+
+              <div class="hp-graph">
+                <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="hpSpendGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#2388ff" stop-opacity=".30"/>
+                      <stop offset="70%" stop-color="#2388ff" stop-opacity=".08"/>
+                      <stop offset="100%" stop-color="#2388ff" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="hpSpendStroke" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#1976ff"/>
+                      <stop offset="50%" stop-color="#3a9bff"/>
+                      <stop offset="100%" stop-color="#1976ff"/>
+                    </linearGradient>
+                  </defs>
+
+                  <g class="hp-grid-line">
+                    <line x1="45" y1="25" x2="570" y2="25"/>
+                    <line x1="45" y1="75" x2="570" y2="75"/>
+                    <line x1="45" y1="125" x2="570" y2="125"/>
+                    <line x1="45" y1="175" x2="570" y2="175"/>
+                  </g>
+
+                  <g class="hp-axis-text">
+                    <text x="5" y="29">₹80K</text>
+                    <text x="5" y="79">₹60K</text>
+                    <text x="5" y="129">₹40K</text>
+                    <text x="5" y="179">₹20K</text>
+                  </g>
+
+                  <g class="hp-month-text">
+                    <text x="45" y="207">Mar</text>
+                    <text x="149" y="207">Apr</text>
+                    <text x="253" y="207">May</text>
+                    <text x="357" y="207">Jun</text>
+                    <text x="461" y="207">Jul</text>
+                    <text x="565" y="207">Aug</text>
+                  </g>
+
+                  <path class="hp-spend-area" d="M45 175L45 145 149 132 253 110 357 88 461 68 565 100V175Z"/>
+                  <path class="hp-chart-line hp-spend-line" pathLength="1000" d="M45 145L149 132 253 110 357 88 461 68 565 100"/>
+                  <path class="hp-chart-line hp-conversion-line" pathLength="1000" d="M45 170L149 151 253 136 357 118 461 99 565 125"/>
+
+                  <g>
+                    <circle class="hp-point-glow" cx="45" cy="170" r="6.5" fill="rgba(95,220,255,.24)"/>
+                    <circle class="hp-point-core" cx="45" cy="170" r="2.8"/>
+                  </g>
+                  <g>
+                    <circle class="hp-point-glow" cx="149" cy="151" r="6.5" fill="rgba(95,220,255,.24)"/>
+                    <circle class="hp-point-core" cx="149" cy="151" r="2.8"/>
+                  </g>
+                  <g>
+                    <circle class="hp-point-glow" cx="253" cy="136" r="6.5" fill="rgba(95,220,255,.24)"/>
+                    <circle class="hp-point-core" cx="253" cy="136" r="2.8"/>
+                  </g>
+                  <g>
+                    <circle class="hp-point-glow" cx="357" cy="118" r="6.5" fill="rgba(95,220,255,.24)"/>
+                    <circle class="hp-point-core" cx="357" cy="118" r="2.8"/>
+                  </g>
+                  <g>
+                    <circle class="hp-point-glow" cx="461" cy="99" r="6.5" fill="rgba(95,220,255,.24)"/>
+                    <circle class="hp-point-core" cx="461" cy="99" r="2.8"/>
+                  </g>
+                  <g>
+                    <circle class="hp-point-glow" cx="565" cy="125" r="6.5" fill="rgba(95,220,255,.24)"/>
+                    <circle class="hp-point-core" cx="565" cy="125" r="2.8"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <div class="hp-campaign-panel">
+              <div class="hp-campaign-header">
+                <div>Top Campaigns</div><span>ROAS</span>
+              </div>
+              <div class="hp-campaign-row"><span>Leads Campaign - 1</span><span class="hp-campaign-roas">4.12x</span></div>
+              <div class="hp-campaign-row"><span>Leads Campaign - 2</span><span class="hp-campaign-roas">3.65x</span></div>
+              <div class="hp-campaign-row"><span>Retargeting - 1</span><span class="hp-campaign-roas">5.21x</span></div>
+              <div class="hp-campaign-row"><span>Conversion - 1</span><span class="hp-campaign-roas">2.89x</span></div>
+              <div class="hp-campaign-row"><span>Lookalike - 1</span><span class="hp-campaign-roas">3.08x</span></div>
+              <div class="hp-view-campaigns">View all campaigns →</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="hp-result-card hp-leads-card">
+          <div class="hp-result-icon hp-blue-icon">
+            <svg class="hp-icon-svg" viewBox="0 0 32 32">
+              <circle cx="16" cy="10" r="5"/>
+              <path d="M6 28C6 21 10 18 16 18S26 21 26 28"/>
+              <path d="M24 8C27 8 29 10 29 13C29 15 28 16 27 17"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hp-result-number">1,250+</div>
+            <div class="hp-result-label">Qualified Leads<br>Generated</div>
+          </div>
+        </div>
+
+        <div class="hp-result-card hp-cac-card">
+          <div class="hp-result-icon hp-purple-icon">
+            <svg class="hp-icon-svg" viewBox="0 0 32 32">
+              <line x1="16" y1="5" x2="16" y2="25"/>
+              <polyline points="8,18 16,26 24,18"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hp-result-number">40%</div>
+            <div class="hp-result-label">Lower Cost<br>Per Lead</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+/* Particle background */
+const c=document.getElementById('particles');
+const x=c.getContext('2d');
+
+function size(){
+  c.width=innerWidth;
+  c.height=innerHeight;
+}
+size();
+addEventListener('resize',size);
+
+const colors=['#00f0ff','#c8b6ff','#ff2d95','#ffd700','#39ff14'];
+
+const nodes=Array.from({length:55},()=>({
+  x:Math.random()*c.width,
+  y:Math.random()*c.height,
+  vx:(Math.random()-.5)*.3,
+  vy:(Math.random()-.5)*.3,
+  r:Math.random()*2+1,
+  color:colors[Math.floor(Math.random()*colors.length)]
+}));
+
+let mouse={x:innerWidth/2,y:innerHeight/2};
+
+addEventListener('mousemove',e=>{
+  mouse.x=e.clientX;
+  mouse.y=e.clientY;
+});
+
+function drawParticles(){
+  x.clearRect(0,0,c.width,c.height);
+
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i].x-nodes[j].x;
+      const dy=nodes[i].y-nodes[j].y;
+      const dist=Math.hypot(dx,dy);
+
+      if(dist<120){
+        x.beginPath();
+        x.moveTo(nodes[i].x,nodes[i].y);
+        x.lineTo(nodes[j].x,nodes[j].y);
+        x.strokeStyle=`rgba(0,240,255,${0.08*(1-dist/120)})`;
+        x.lineWidth=.5;
+        x.stroke();
+      }
+    }
+  }
+
+  nodes.forEach(n=>{
+    const dx=mouse.x-n.x;
+    const dy=mouse.y-n.y;
+    const dist=Math.hypot(dx,dy);
+
+    if(dist<180 && dist>0){
+      const force=(1-dist/180)*.4;
+      n.vx+=dx/dist*force;
+      n.vy+=dy/dist*force;
+    }
+
+    n.x+=n.vx;
+    n.y+=n.vy;
+    n.vx*=.99;
+    n.vy*=.99;
+
+    if(n.x<0)n.x=c.width;
+    if(n.x>c.width)n.x=0;
+    if(n.y<0)n.y=c.height;
+    if(n.y>c.height)n.y=0;
+
+    x.beginPath();
+    x.arc(n.x,n.y,n.r,0,7);
+    x.fillStyle=n.color;
+    x.globalAlpha=.6;
+    x.fill();
+    x.globalAlpha=1;
+  });
+
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* Live date + dashboard scaling */
+(()=>{
+  const date=document.getElementById('hpTodayDate');
+  if(date){
+    date.textContent=new Date().toLocaleDateString('en-IN',{
+      month:'short',
+      day:'numeric',
+      year:'numeric'
+    });
+  }
+
+  const stage=document.querySelector('.hero-performance-stage');
+  const graph=document.querySelector('.hero-performance');
+  if(!stage||!graph)return;
+
+  const fit=()=>{
+    const z=stage.clientWidth/1100;
+    if(z>0)graph.style.transform=`scale(${z})`;
+  };
+
+  fit();
+  addEventListener('resize',fit);
+
+  if(window.ResizeObserver){
+    new ResizeObserver(fit).observe(stage);
+  }
+})();
+</script>
+
+</body>
+</html>
