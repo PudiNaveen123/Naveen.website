@@ -288,8 +288,8 @@ const Hero = () => {
 
         {/* Bottom Cinematic Ticker */}
         <div className="hero-anim-item flex items-center justify-between text-xs font-mono text-white/50 tracking-widest uppercase">
-          <span>ENGINEERED FOR SCALABILITY</span>
-          <span>[ PORTFOLIO RELEASE v2.6 ]</span>
+          <span>BUILT FOR PROFITABLE GROWTH</span>
+          <span></span>
         </div>
       </div>
 
