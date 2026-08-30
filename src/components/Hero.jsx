@@ -12,9 +12,9 @@ const Hero = () => {
   const contentRef = useRef(null);
 
   const developerRoles = [
-    'Growth Marketer // FULL-STACK ARCHITECT',
-    'ORIGINAL SERIES // AI & ML SPECIALIST',
-    'BLOCKBUSTER // DISTRIBUTED SYSTEMS',
+    'GROWTH HACKER // PRODUCT MARKETER',
+    'DIGITAL MARKETER // ADS SPECIALIST',
+    'PAID MARKETR // DISTRIBUTED SYSTEMS',
     'ACCLAIMED // ALGORITHMIC PROBLEM SOLVER'
   ];
 
