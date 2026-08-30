@@ -214,7 +214,7 @@ const Hero = () => {
             </div>
 
             <p className="hero-anim-item text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md drop-shadow">
-              Architecting robust full-stack systems, building scalable multi-tenant SaaS platforms, and engineering cutting-edge AI integrations.
+              Building systems that grow businesses — combining performance marketing, product growth, AI automation, and experimentation to acquire, convert, and retain customers profitably.
             </p>
 
             {/* Action Button Set */}
