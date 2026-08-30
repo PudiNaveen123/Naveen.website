@@ -208,9 +208,9 @@ const Hero = () => {
             <div className="hero-anim-item flex items-center gap-3 text-xs font-mono text-red-400 font-bold">
               <span className="px-2 py-0.5 bg-red-500/10 border border-red-500/30 rounded text-red-500">₹2Cr+ MONTHLY SCALE</span>
               <span className="text-white/40">•</span>
-              <span>META • GOOGLE • AI • GROWTH • CRO • AUTOMATION</span>
+              <span>META • GOOGLE • AI • GROWTH</span>
               <span className="text-white/40">•</span>
-              <span className="text-white/70">Docker & Cloud</span>
+              <span className="text-white/70">CRO • AUTOMATION</span>
             </div>
 
             <p className="hero-anim-item text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md drop-shadow">
