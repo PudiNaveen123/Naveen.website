@@ -277,9 +277,9 @@ const Hero = () => {
           {/* Right Side: Technical Specs & Stack */}
           <div className="hero-anim-item lg:col-span-3 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
             <div className="p-5 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-xl shadow-2xl max-w-xs">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-red-500 font-bold mb-2">Core Stack & Awards</h3>
+              <h3 className="text-xs font-mono uppercase tracking-widest text-red-500 font-bold mb-2">Performance marketing for ambitious brands</h3>
               <p className="text-xs text-white/80 leading-relaxed font-light">
-                Flipkart GRiD 7.0 Semi-Finalist, AlgoUniversity Tech Fellow, GitHub Foundations Certified.
+                Paid ads, UGC creative systems, SEO/AEO/GEO, growth strategy — built to scale profitably, not just spend budget.
               </p>
             </div>
           </div>
