@@ -4,6 +4,7 @@ import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
 import About from './components/About';
 import Expertise from './components/Expertise';
+import WhatIOffer from './sections/what-i-offer/WhatIOffer';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
@@ -25,6 +26,7 @@ function App() {
       <Hero startMotion={!loading} />
       <About />
       <Expertise />
+      <WhatIOffer />
       <Skills />
       <Projects />
       <Contact />
