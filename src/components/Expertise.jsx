@@ -6,32 +6,42 @@ gsap.registerPlugin(ScrollTrigger);
 
 const expertiseData = [
   {
-    number: "01",
-    title: "Frontend Development",
-    text: "Crafting responsive, high-fidelity user interfaces with React, modern JavaScript, Tailwind CSS, and buttery smooth GSAP motion interactions.",
-    tag: "UI / UX & INTERACTION",
-    gradient: "from-[#1f0a0c] via-[#121212] to-[#0a0a0a]"
+    "number": "01",
+    "title": "Performance Marketing",
+    "text": "Meta Ads, Google Ads, LinkedIn and multi-channel acquisition focused on reaching the right audience, controlling CAC and maximizing return on every marketing rupee.",
+    "tag": "ACQUIRE / SCALE / OPTIMIZE",
+    "headline": "Paid growth built for scale.",
+    "platforms": "META ADS · GOOGLE ADS · LINKEDIN · PAID SOCIAL",
+    "gradient": "from-[#1f0a0c] via-[#121212] to-[#0a0a0a]"
   },
   {
-    number: "02",
-    title: "Backend Development",
-    text: "Architecting secure REST APIs, enterprise authentication pipelines, and scalable database schemas across PostgreSQL and MongoDB.",
-    tag: "API & ARCHITECTURE",
-    gradient: "from-[#1a0809] via-[#111111] to-[#090909]"
+    "number": "02",
+    "title": "Product & Business Growth",
+    "subtitle": "Funnel Growth",
+    "text": "From landing pages and onboarding to paywalls and subscriptions — optimized journeys designed to remove friction and turn more users into customers.",
+    "tag": "CONVERT / ENGAGE / RETAIN",
+    "headline": "Every click has a next step.",
+    "platforms": "CRO · ONBOARDING · PAYWALLS · MONETIZATION",
+    "gradient": "from-[#1a0809] via-[#111111] to-[#090909]"
   },
   {
-    number: "03",
-    title: "AI & Machine Learning",
-    text: "Integrating production-grade LLM workflows, predictive machine learning pipelines, and computer vision systems backed by AWS AI certification.",
-    tag: "INTELLIGENCE & ML",
-    gradient: "from-[#220a0d] via-[#131313] to-[#0a0a0a]"
+    "number": "03",
+    "title": "Growth Analytics",
+    "label": "INTELLIGENCE",
+    "text": "GA4, MMPs, dashboards and experimentation frameworks that connect marketing performance with user behavior — turning raw data into decisions.",
+    "tag": "MEASURE / EXPERIMENT / SCALE",
+    "headline": "Numbers that reveal where growth is hiding.",
+    "platforms": "GA4 · MMP · EXPERIMENTATION · ATTRIBUTION",
+    "gradient": "from-[#220a0d] via-[#131313] to-[#0a0a0a]"
   },
   {
-    number: "04",
-    title: "Cloud & Deployment",
-    text: "Deploying resilient, containerized multi-tenant services using Docker, GitHub Actions CI/CD workflows, and optimized cloud hosting.",
-    tag: "DEVOPS & CLOUD",
-    gradient: "from-[#1d090b] via-[#101010] to-[#080808]"
+    "number": "04",
+    "title": "AI-Powered Growth Systems",
+    "text": "AI and automation workflows that transform repetitive marketing operations into scalable systems — from reporting and analysis to creative testing and campaign workflows.",
+    "tag": "AUTOMATE / INNOVATE / ACCELERATE",
+    "headline": "Less manual work. More room to think.",
+    "platforms": "AI · N8N · APPS SCRIPT · AUTOMATION",
+    "gradient": "from-[#1d090b] via-[#101010] to-[#080808]"
   }
 ];
 
@@ -105,17 +115,18 @@ const Expertise = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
               <span className="text-red-500 font-bold">EPISODE 02</span>
               <span className="text-white/40">|</span>
-              <span>CORE COMPETENCIES</span>
+              <span>GROWTH CAPABILITIES</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
-              DIRECTOR'S CUT <br />
+              WHAT I BUILD. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
-                TECHNICAL CAPABILITIES.
+                WHAT I SCALE.
               </span>
             </h2>
           </div>
           <p className="text-white/60 text-xs md:text-sm font-light leading-relaxed max-w-xs">
-            Merging full-stack engineering, scalable microservices, and AI integrations into production-ready platforms.
+            <strong className="block text-white font-semibold mb-2">THE GROWTH PLAYBOOK.</strong>
+            Strategy, creativity, data and technology — connected to turn attention into acquisition, acquisition into customers, and customers into growth.
           </p>
         </div>
 
@@ -156,12 +167,16 @@ const Expertise = () => {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center my-auto relative z-10">
                 <div className="lg:col-span-5">
                   <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-snug group-hover:text-red-500 transition-colors duration-300">
+                    {item.label && <span className="block text-xs font-mono tracking-widest text-red-500 mb-2">{item.label}</span>}
                     {item.title}
+                    {item.subtitle && <span className="block text-sm font-medium text-white/70 mt-2">{item.subtitle}</span>}
                   </h3>
                 </div>
                 <div className="lg:col-span-7">
                   <p className="text-xs md:text-sm text-white/70 font-light leading-relaxed">
+                    <strong className="block text-white font-semibold mb-2">{item.headline}</strong>
                     {item.text}
+                    <span className="block text-[10px] font-mono tracking-wider text-white/50 mt-4">{item.platforms}</span>
                   </p>
                 </div>
               </div>
