@@ -7,6 +7,7 @@ const CustomCursor = () => {
   const spotlightRef = useRef(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) return;
     const dot = dotRef.current;
     const ring = ringRef.current;
     const spotlight = spotlightRef.current;
@@ -17,7 +18,7 @@ const CustomCursor = () => {
 
     const xToDot = gsap.quickTo(dot, "x", { duration: 0.05, ease: "power2.out" });
     const yToDot = gsap.quickTo(dot, "y", { duration: 0.05, ease: "power2.out" });
-    
+
     const xToRing = gsap.quickTo(ring, "x", { duration: 0.15, ease: "power3.out" });
     const yToRing = gsap.quickTo(ring, "y", { duration: 0.15, ease: "power3.out" });
 
@@ -53,6 +54,7 @@ const CustomCursor = () => {
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      gsap.killTweensOf([dot, ring, spotlight].filter(Boolean));
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseenter", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);
@@ -66,20 +68,20 @@ const CustomCursor = () => {
         ref={spotlightRef}
         className="fixed top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none z-[9998] opacity-0 blur-[100px] transition-opacity duration-300"
         style={{
-          background: 'radial-gradient(circle, rgba(229,9,20,0.2) 0%, rgba(229,9,20,0.06) 45%, transparent 75%)'
+          background: 'radial-gradient(circle, rgba(30,105,120,0.2) 0%, rgba(30,105,120,0.06) 45%, transparent 75%)'
         }}
       ></div>
 
       {/* Global Custom Cursor Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none w-3 h-3 bg-red-600 rounded-full shadow-[0_0_15px_#E50914]"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none w-3 h-3 bg-teal-600 rounded-full shadow-[0_0_15px_#1E6978]"
       ></div>
 
       {/* Global Custom Cursor Ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none w-12 h-12 border border-red-600/60 rounded-full flex items-center justify-center backdrop-blur-[1px]"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none w-12 h-12 border border-teal-600/60 rounded-full flex items-center justify-center backdrop-blur-[1px]"
       ></div>
     </>
   );

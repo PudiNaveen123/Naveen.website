@@ -6,6 +6,10 @@ const MinimalPreloader = ({ onComplete }) => {
   const contentRef = useRef(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      onComplete?.();
+      return;
+    }
     const tl = gsap.timeline({
       onComplete: () => {
         if (onComplete) onComplete();
@@ -31,20 +35,21 @@ const MinimalPreloader = ({ onComplete }) => {
         duration: 0.5,
         ease: "power2.inOut"
       });
+    return () => tl.kill();
   }, [onComplete]);
 
   return (
     <div
       ref={preloaderRef}
-      className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center select-none overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#f8faf9] flex items-center justify-center select-none overflow-hidden"
     >
       <div ref={contentRef} className="flex flex-col items-center gap-4">
         {/* Minimal Red Indicator Dot */}
-        <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></div>
+        <div className="w-2.5 h-2.5 rounded-full bg-teal-700 animate-ping"></div>
 
         {/* Minimal Typography */}
-        <h1 
-          className="text-2xl md:text-3xl font-black uppercase tracking-[0.3em] text-white"
+        <h1
+          className="text-2xl md:text-3xl font-black uppercase tracking-[0.3em] text-slate-900"
           style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif" }}
         >
           PUDI NAVEEN KUMAR

@@ -1,7 +1,17 @@
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import pictureImg from '../Picture.png';
 import './Hero.css';
 
-const Hero = () => {
+const Hero = ({ startMotion = true }) => {
+  const sectionRef = useRef(null);
+  const cardRef = useRef(null);
+  const glareRef = useRef(null);
+  const spotlightRef = useRef(null);
+  const cursorDotRef = useRef(null);
+  const cursorRingRef = useRef(null);
+  const contentRef = useRef(null);
+
   const developerRoles = [
     'GROWTH HACKER // PRODUCT MARKETER',
     'DIGITAL MARKETER // ADS SPECIALIST',
@@ -9,8 +19,127 @@ const Hero = () => {
     'ACCLAIMED // ALGORITHMIC PROBLEM SOLVER'
   ];
 
+  useEffect(() => {
+    if (!startMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const section = sectionRef.current;
+    const card = cardRef.current;
+    const content = contentRef.current;
+    if (!section || !card || !content) return;
+
+    const animatedNodes = [card, glareRef.current, spotlightRef.current, cursorDotRef.current, cursorRingRef.current, ...content.querySelectorAll(".hero-anim-item"), section.querySelector("header")].filter(Boolean);
+
+    // --- GSAP CINEMATIC ENTRANCE ANIMATION ---
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+    tl.fromTo(
+      section.querySelector('header'),
+      { y: -60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1 }
+    )
+    .fromTo(
+      content.querySelectorAll('.hero-anim-item'),
+      { y: 50, opacity: 0, filter: "blur(10px)" },
+      { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.1, stagger: 0.12 },
+      "-=0.7"
+    )
+    .fromTo(
+      card,
+      { scale: 0.75, opacity: 0, rotationY: 35, rotationX: -15 },
+      { scale: 1, opacity: 1, rotationY: 0, rotationX: 0, duration: 1.4, ease: "back.out(1.2)" },
+      "-=0.9"
+    );
+
+    // --- MOUSE PHYSICS & SPOTLIGHT TRACKING ---
+    gsap.set([cursorDotRef.current, cursorRingRef.current], {
+      scale: 0.5,
+      opacity: 0,
+      transformOrigin: "50% 50%"
+    });
+
+    const xToDot = gsap.quickTo(cursorDotRef.current, "x", { duration: 0.05, ease: "power2.out" });
+    const yToDot = gsap.quickTo(cursorDotRef.current, "y", { duration: 0.05, ease: "power2.out" });
+
+    const xToRing = gsap.quickTo(cursorRingRef.current, "x", { duration: 0.15, ease: "power3.out" });
+    const yToRing = gsap.quickTo(cursorRingRef.current, "y", { duration: 0.15, ease: "power3.out" });
+
+    const xTilt = gsap.quickTo(card, "rotationY", { duration: 0.4, ease: "power3.out" });
+    const yTilt = gsap.quickTo(card, "rotationX", { duration: 0.4, ease: "power3.out" });
+    const glareX = gsap.quickTo(glareRef.current, "x", { duration: 0.3, ease: "power2.out" });
+    const glareY = gsap.quickTo(glareRef.current, "y", { duration: 0.3, ease: "power2.out" });
+
+    const handleMouseMove = (e) => {
+      const rect = section.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const dotSize = 12;
+      const ringSize = 48;
+
+      // Update Spotlight position instantly via inline style
+      if (spotlightRef.current) {
+        spotlightRef.current.style.transform = `translate3d(${x - 300}px, ${y - 300}px, 0)`;
+      }
+
+      // Update Custom Cursor coordinates
+      xToDot(x - dotSize / 2);
+      yToDot(y - dotSize / 2);
+      xToRing(x - ringSize / 2);
+      yToRing(y - ringSize / 2);
+
+      // Card 3D Perspective Calculations
+      const cardRect = card.getBoundingClientRect();
+      const cardCenterX = cardRect.left + cardRect.width / 2 - rect.left;
+      const cardCenterY = cardRect.top + cardRect.height / 2 - rect.top;
+
+      const rotateX = -((y - cardCenterY) / (cardRect.height / 2)) * 16;
+      const rotateY = ((x - cardCenterX) / (cardRect.width / 2)) * 16;
+
+      xTilt(rotateY);
+      yTilt(rotateX);
+
+      // Holographic Glare mapping
+      glareX((x - cardRect.left) - cardRect.width / 2);
+      glareY((y - cardRect.top) - cardRect.height / 2);
+    };
+
+    const handleMouseEnter = () => {
+      gsap.to([cursorDotRef.current, cursorRingRef.current], {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 1, duration: 0.3 });
+    };
+
+    const handleMouseLeave = () => {
+      gsap.to([cursorDotRef.current, cursorRingRef.current], {
+        opacity: 0,
+        scale: 0.5,
+        duration: 0.3,
+        ease: "power2.inOut"
+      });
+      if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 0, duration: 0.3 });
+      xTilt(0);
+      yTilt(0);
+    };
+
+    section.addEventListener("mousemove", handleMouseMove);
+    section.addEventListener("mouseenter", handleMouseEnter);
+    section.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      tl.kill();
+      gsap.killTweensOf(animatedNodes);
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseenter", handleMouseEnter);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [startMotion]);
+
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="theme-hero relative w-full min-h-screen bg-[#f8faf9] overflow-hidden flex flex-col justify-between"
     >
@@ -40,7 +169,7 @@ const Hero = () => {
       </div>
 
       {/* 2. Direct Mouse Tracking Spotlight Beam (Glows wherever you move) */}
-      <div
+      <div ref={spotlightRef}
         className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-10 opacity-0 blur-[90px] transition-opacity duration-300"
         style={{
           background: 'radial-gradient(circle, rgba(30,105,120,0.35) 0%, rgba(30,105,120,0.1) 40%, transparent 70%)'
@@ -48,7 +177,7 @@ const Hero = () => {
       ></div>
 
       {/* 3. Main Content Layer */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-between pt-24 pb-12">
+      <div ref={contentRef} className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-between pt-24 pb-12">
 
         {/* Top Netflix Cinematic Badge */}
         <div className="hero-anim-item flex items-center justify-between w-full">
@@ -121,7 +250,7 @@ const Hero = () => {
 
           {/* Center: Interactive 3D Holographic Tilt Developer Poster Frame */}
           <div className="lg:col-span-4 flex justify-center perspective-[1200px]">
-            <div
+            <div ref={cardRef}
               className="relative group transform-gpu transition-transform duration-100 ease-out will-change-transform"
             >
               {/* Cinematic Red Neon Back Glow */}
@@ -131,7 +260,7 @@ const Hero = () => {
               <div className="relative w-[280px] md:w-[320px] p-3.5 bg-white/90 backdrop-blur-2xl rounded-2xl border border-teal-600/40 shadow-[0_40px_80px_rgba(0,0,0,0.95)] overflow-hidden">
 
                 {/* Dynamic Specular Glare Layer */}
-                <div
+                <div ref={glareRef}
                   className="absolute inset-[-50%] w-[200%] h-[200%] bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none transform-gpu z-40"
                 ></div>
 
@@ -169,11 +298,11 @@ const Hero = () => {
       </div>
 
       {/* 4. Ultra Pro Max Custom Precision Cursor Suite */}
-      <div
+      <div ref={cursorDotRef}
         className="absolute top-0 left-0 z-50 pointer-events-none w-3 h-3 bg-teal-600 rounded-full shadow-[0_0_15px_#1E6978]"
       ></div>
 
-      <div
+      <div ref={cursorRingRef}
         className="absolute top-0 left-0 z-50 pointer-events-none w-12 h-12 border border-teal-600/60 rounded-full flex items-center justify-center backdrop-blur-[1px]"
       ></div>
 

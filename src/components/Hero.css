@@ -24,18 +24,10 @@
 .theme-hero .shadow-xl { box-shadow: 0 10px 30px rgba(23,45,67,.05); }
 .theme-hero [class*="drop-shadow"] { filter: none; }
 .theme-hero [class*="shadow-["] { box-shadow: none; }
-.theme-hero [class*="blur-3xl"],
-.theme-hero [class*="blur-[90px]"],
-.theme-hero [class*="inset-[-50%]"],
-.theme-hero > .absolute.pointer-events-none { display: none; }
-.theme-hero .animate-pulse,
-.theme-hero .animate-ping { animation: none; }
-.theme-hero .animate-marquee { animation: none; color: #1e6978; }
-.theme-hero .opacity-10 { opacity: .025; }
-.theme-hero .perspective-\[1200px\] { perspective: none; }
-.theme-hero img { transform: none; object-position: center top; }
-.theme-hero .group:hover img { transform: none; }
-.theme-hero [class*="bg-gradient-to-r"] { background-image: none; }
+.theme-hero .animate-marquee { color: #1e6978; }
+.theme-hero .opacity-10 { opacity: .07; }
+.theme-hero img { object-position: center top; }
+.theme-hero [class*="blur-3xl"] { opacity: .35; }
 .theme-hero .hero-anim-item > a { border-radius: 8px; }
 .theme-hero a[href="#projects"]:not(nav a) { background: #1e6978; color: white; }
 .theme-hero a[href="#projects"]:not(nav a):hover { background: #174f5b; }
