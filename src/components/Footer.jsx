@@ -1,9 +1,10 @@
-import React from 'react';
+import FlowBackground from './FlowBackground';
 
 const Footer = () => {
   return (
     <footer className="bg-[#081c15] text-[#ebf2fa] py-16 px-6 md:px-12 border-t border-[#ebf2fa]/10 select-none relative z-10">
-      <div className="max-w-7xl mx-auto flex flex-col space-y-12">
+      <FlowBackground variant="footer" />
+      <div className="footer-content max-w-7xl mx-auto flex flex-col space-y-12">
         
         {/* Top Section: Brand & Quick Links */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-12 border-b border-[#ebf2fa]/10">

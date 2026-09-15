@@ -1,3 +1,4 @@
+import FlowBackground from './FlowBackground';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import pictureImg from '../Picture.png';
@@ -155,8 +156,9 @@ const Hero = ({ startMotion = true }) => {
         }
       `}</style>
 
-      {/* 1. Cinematic Background Gradient & Marquee */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#081c15] via-white to-[#edf5f5] z-0">
+      <FlowBackground />
+      {/* 1. Cinematic Background Marquee */}
+      <div className="absolute inset-0 z-[1]">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-10">
           <div className="flex whitespace-nowrap animate-marquee">
             {[...developerRoles, ...developerRoles].map((role, idx) => (
