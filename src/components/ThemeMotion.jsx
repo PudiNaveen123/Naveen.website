@@ -23,7 +23,7 @@ export default function ThemeMotion() {
           observer.unobserve(target);
         });
       }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('.emerald-theme > section:not(#home)').forEach(section => observer.observe(section));
+      document.querySelectorAll('.harbour-theme > section:not(#home)').forEach(section => observer.observe(section));
     };
     start();
     preference.addEventListener('change', start);

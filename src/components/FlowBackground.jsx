@@ -7,6 +7,7 @@ const fragment = `
 precision mediump float;
 uniform vec2 resolution;
 uniform float time;
+uniform float darkMode;
 float grain(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 void main(){
   vec2 uv=gl_FragCoord.xy/resolution;
@@ -20,11 +21,11 @@ void main(){
   bands=pow(bands,2.4);
   float envelope=1.-smoothstep(.12,.98,diagonal);
   float glow=exp(-pow((diagonal-.12)*2.5,2.));
-  vec3 deep=vec3(.0314,.1098,.0824);
-  vec3 emerald=vec3(.106,.263,.196);
-  vec3 teal=vec3(.012,.525,.40);
-  vec3 col=mix(deep,emerald,glow*.3);
-  col=mix(col,teal,clamp((bands*.82+glow*.20)*envelope,0.,1.));
+  vec3 deep=mix(vec3(.9333,.9569,.9294),vec3(.0431,.1451,.2706),darkMode);
+  vec3 secondary=mix(mix(deep,vec3(.0745,.1922,.3608),.10),vec3(.0745,.1922,.3608),darkMode);
+  vec3 accent=mix(mix(deep,vec3(.0745,.2510,.4549),.20),vec3(.0745,.2510,.4549),darkMode);
+  vec3 col=mix(deep,secondary,glow*.3);
+  col=mix(col,accent,clamp((bands*.82+glow*.20)*envelope,0.,1.));
   col+=(grain(gl_FragCoord.xy)-.5)*.024;
   // Fade down through the section, keeping the content contrast steady.
   col=mix(deep,col,(1.-smoothstep(.05,1.,uv.y))*.86);
@@ -59,6 +60,7 @@ export default function FlowBackground({ variant = 'hero' }) {
     gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);
     const size = gl.getUniformLocation(program,'resolution');
     const clock = gl.getUniformLocation(program,'time');
+    gl.uniform1f(gl.getUniformLocation(program,'darkMode'), variant === 'footer' ? 1 : 0);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0, visible = true, elapsed = variant === 'footer' ? 17 : 0, last = 0;
     const draw = () => {

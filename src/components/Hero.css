@@ -1,39 +1,39 @@
 /* Theme-only presentation. All original hero copy lives unchanged in Hero.jsx. */
 .theme-hero {
-  background: #081c15;
-  color: #ebf2fa;
+  background: #eef4ed;
+  color: #0b2545;
   font-family: Arial, Helvetica, sans-serif;
   cursor: auto;
   isolation: isolate;
   min-height: 0;
   justify-content: flex-start;
 }
-.theme-hero ::selection { background: #1b4332; color: #ebf2fa; }
+.theme-hero ::selection { background: #eef4ed; color: #0b2545; }
 .theme-hero a { cursor: pointer; }
-.theme-hero a:focus-visible { outline: 3px solid #038666; outline-offset: 5px; }
-.theme-hero header { position: relative; margin: 0 auto; order: -1; border-bottom: 1px solid #038666; min-height: 96px; flex-wrap: wrap; gap: 20px; background: #081c15; }
-.theme-hero header > div { color: #ebf2fa; filter: none; font-size: 22px; letter-spacing: -.6px; }
-.theme-hero header > div > span { background: #038666; }
+.theme-hero a:focus-visible { outline: 3px solid #134074; outline-offset: 5px; }
+.theme-hero header { position: relative; margin: 0 auto; order: -1; border-bottom: 1px solid #134074; min-height: 96px; flex-wrap: wrap; gap: 20px; background: #eef4ed; }
+.theme-hero header > div { color: #0b2545; filter: none; font-size: 22px; letter-spacing: -.6px; }
+.theme-hero header > div > span { background: #134074; }
 .theme-hero header nav { font-family: Arial, Helvetica, sans-serif; letter-spacing: .04em; font-size: 11px; gap: 20px; }
-.theme-hero header > a { background: #038666; color: white; box-shadow: none; }
-.theme-hero header > a:hover { background: #fbb02d; }
+.theme-hero header > a { background: #134074; color: white; box-shadow: none; }
+.theme-hero header > a:hover { background: #134074; }
 .theme-hero > .relative { height: auto; min-height: 0; padding-top: 24px; padding-bottom: 32px; gap: 28px; }
 .theme-hero .hero-anim-item { filter: none; }
-.theme-hero h1 { color: #ebf2fa; font-weight: 750; font-size: clamp(36px,4.5vw,64px); letter-spacing: -.045em; filter: none; overflow-wrap: anywhere; }
-.theme-hero h1 > span { color: #038666; background: none; filter: none; font-size: .82em; }
+.theme-hero h1 { color: #0b2545; font-weight: 750; font-size: clamp(36px,4.5vw,64px); letter-spacing: -.045em; filter: none; overflow-wrap: anywhere; }
+.theme-hero h1 > span { color: #134074; background: none; filter: none; font-size: .82em; }
 .theme-hero p { font-family: Arial, Helvetica, sans-serif; filter: none; line-height: 1.85; font-weight: 400; }
 .theme-hero .shadow-2xl,
-.theme-hero .shadow-xl { box-shadow: 0 10px 30px rgba(8,28,21,.05); }
+.theme-hero .shadow-xl { box-shadow: 0 10px 30px rgba(11,37,69,.05); }
 .theme-hero [class*="drop-shadow"] { filter: none; }
 .theme-hero [class*="shadow-["] { box-shadow: none; }
-.theme-hero .animate-marquee { color: #038666; }
+.theme-hero .animate-marquee { color: #134074; }
 .theme-hero .opacity-10 { opacity: .07; }
 .theme-hero img { object-position: center top; }
 .theme-hero [class*="blur-3xl"] { opacity: .35; }
 .theme-hero .hero-anim-item > a { border-radius: 8px; }
-.theme-hero a[href="#projects"]:not(nav a) { background: #038666; color: white; }
-.theme-hero a[href="#projects"]:not(nav a):hover { background: #fbb02d; }
-.theme-hero a[href="#contact"]:not(nav a) { border-color: #038666; color: #ebf2fa; }
+.theme-hero a[href="#projects"]:not(nav a) { background: #134074; color: white; }
+.theme-hero a[href="#projects"]:not(nav a):hover { background: #134074; }
+.theme-hero a[href="#contact"]:not(nav a) { border-color: #134074; color: #0b2545; }
 @media (max-width: 1100px) {
   .theme-hero header nav { gap: 14px; }
   .theme-hero header > div { font-size: 18px; }

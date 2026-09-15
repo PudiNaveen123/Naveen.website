@@ -46,10 +46,10 @@ const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="contact" className="bg-[#081c15] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-[#ebf2fa]/10 select-none">
+    <section ref={ref} id="contact" className="bg-[#eef4ed] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-[#0b2545]/10 select-none">
 
       {/* Background Cinematic Red Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#038666]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#134074]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
       {/* Huge Background Parallax Netflix Watermark Text */}
       <motion.div
@@ -57,7 +57,7 @@ const Contact = () => {
         className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12 opacity-10"
       >
         <h1
-          className="text-[25vw] leading-[0.75] font-black text-[#fbb02d] uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
+          className="text-[25vw] leading-[0.75] font-black text-[#134074] uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
           style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif" }}
         >
           CONTACT
@@ -71,17 +71,17 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-[#1b4332]/95 backdrop-blur-2xl border-t border-l border-[#ebf2fa]/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-[#ebf2fa] flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(8,28,21,0.10)] relative overflow-hidden"
+          className="bg-[#eef4ed]/95 backdrop-blur-2xl border-t border-l border-[#0b2545]/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-[#0b2545] flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(11,37,69,0.10)] relative overflow-hidden"
         >
           {/* Subtle internal top crimson highlight glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-[#038666] to-transparent opacity-90"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-[#134074] to-transparent opacity-90"></div>
 
           <div className="flex items-center justify-between mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-[#038666]/10 border border-[#038666]/30 text-xs font-mono uppercase tracking-widest text-[#fbb02d]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#038666] animate-ping"></span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-[#134074]/10 border border-[#134074]/30 text-xs font-mono uppercase tracking-widest text-[#134074]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#134074] animate-ping"></span>
               <span>EPISODE 04 // GET IN TOUCH</span>
             </div>
-            <span className="text-xs font-mono text-[#ebf2fa] tracking-wider hidden md:block">
+            <span className="text-xs font-mono text-[#0b2545] tracking-wider hidden md:block">
               // LET'S BUILD SOMETHING CINEMATIC
             </span>
           </div>
@@ -99,7 +99,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="First Name"
                     required
-                    className="w-full bg-transparent border-b border-[#ebf2fa]/20 pb-3 text-lg focus:outline-none focus:border-[#038666] transition-colors placeholder-slate-500 font-medium rounded-none text-[#ebf2fa]"
+                    className="w-full bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium rounded-none text-[#0b2545]"
                   />
                 </div>
                 <div className="relative">
@@ -110,7 +110,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Last Name"
                     required
-                    className="w-full bg-transparent border-b border-[#ebf2fa]/20 pb-3 text-lg focus:outline-none focus:border-[#038666] transition-colors placeholder-slate-500 font-medium rounded-none text-[#ebf2fa]"
+                    className="w-full bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium rounded-none text-[#0b2545]"
                   />
                 </div>
                 <div className="relative">
@@ -121,7 +121,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Email Address"
                     required
-                    className="w-full bg-transparent border-b border-[#ebf2fa]/20 pb-3 text-lg focus:outline-none focus:border-[#038666] transition-colors placeholder-slate-500 font-medium rounded-none text-[#ebf2fa]"
+                    className="w-full bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium rounded-none text-[#0b2545]"
                   />
                 </div>
               </div>
@@ -135,23 +135,23 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Type your message here..."
                     required
-                    className="w-full h-full min-h-[140px] bg-transparent border-b border-[#ebf2fa]/20 pb-3 text-lg focus:outline-none focus:border-[#038666] transition-colors placeholder-slate-500 font-medium resize-none rounded-none text-[#ebf2fa]"
+                    className="w-full h-full min-h-[140px] bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium resize-none rounded-none text-[#0b2545]"
                   ></textarea>
                 </div>
               </div>
             </div>
 
             {/* Bottom Section */}
-            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-[#ebf2fa]/10">
+            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-[#0b2545]/10">
               {/* Left text */}
-              <div className="flex-1 flex items-start gap-4 text-sm font-light text-[#ebf2fa]">
+              <div className="flex-1 flex items-start gap-4 text-sm font-light text-[#0b2545]">
                 <input
                   type="checkbox"
                   id="permission"
                   checked={formData.permission}
                   onChange={handleChange}
-                  className="mt-1 w-4 h-4 rounded-sm border-[#ebf2fa]/30 bg-transparent text-[#fbb02d] focus:ring-0 focus:ring-offset-0 cursor-pointer"
-                  style={{ accentColor: "#038666" }}
+                  className="mt-1 w-4 h-4 rounded-sm border-[#0b2545]/30 bg-transparent text-[#134074] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                  style={{ accentColor: "#134074" }}
                 />
                 <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
                   I give permission to contact me at this email address.
@@ -159,7 +159,7 @@ const Contact = () => {
               </div>
 
               {/* Right text & button */}
-              <div className="flex-1 flex flex-col gap-8 text-xs text-[#ebf2fa] font-light">
+              <div className="flex-1 flex flex-col gap-8 text-xs text-[#0b2545] font-light">
                 <p className="leading-relaxed max-w-[400px]">
                   This site is protected by security protocols and industry-standard privacy guidelines.
                 </p>
@@ -170,7 +170,7 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    className="px-8 py-3.5 rounded bg-[#038666] text-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-[#038666] transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(3,134,102,0.6)] hover:scale-105"
+                    className="px-8 py-3.5 rounded bg-[#134074] text-[#eef4ed] font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-[#134074] transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(19,64,116,0.6)] hover:scale-105"
                   >
                     Send Message
                     <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

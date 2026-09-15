@@ -18,7 +18,7 @@ function App() {
   const finishLoading = useCallback(() => setLoading(false), []);
 
   return (
-    <main className="emerald-theme bg-[#081c15] min-h-screen text-[#ebf2fa] relative selection:bg-[#038666] selection:text-white">
+    <main className="harbour-theme bg-[#eef4ed] min-h-screen text-[#0b2545] relative selection:bg-[#134074] selection:text-[#eef4ed]">
       <ThemeMotion />
       {/* Cinematic Preloader */}
       {loading && <NetflixPreloader onComplete={finishLoading} />}
