@@ -1,21 +1,21 @@
-.why-naveen { background: #f8faf9; color: #172d43; padding: 96px 48px 120px; overflow: clip; border-top: 1px solid #1e69781a; }
+.why-naveen { background: #081c15; color: #ebf2fa; padding: 96px 48px 120px; overflow: clip; border-top: 1px solid #0386661a; }
 .why-heading { max-width: 790px; margin: 0 auto 70px; text-align: center; }
-.why-eyebrow { margin: 0 0 20px; font: 600 11px/1.5 monospace; letter-spacing: .2em; color: #1e6978; }
+.why-eyebrow { margin: 0 0 20px; font: 600 11px/1.5 monospace; letter-spacing: .2em; color: #038666; }
 .why-heading h2 { margin: 0; font-size: clamp(34px,4vw,56px); font-weight: 600; line-height: 1.13; letter-spacing: -.035em; }
-.why-introduction { margin: 24px auto 0; max-width: 670px; font-size: 18px; line-height: 1.7; color: #526573; }
+.why-introduction { margin: 24px auto 0; max-width: 670px; font-size: 18px; line-height: 1.7; color: #b9d2c6; }
 .why-introduction strong { font-weight: 600; }
 .why-scroll { min-height: 150vh; padding-bottom: 40vh; }
 .why-stage { width: min(1240px,100%); margin-inline: auto; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: auto auto; gap: 16px; position: sticky; top: 6vh; align-items: stretch; }
-.why-card { padding: 32px; min-width: 0; background: #ffffff; border: 1px solid #1e69781a; border-radius: 4px; position: relative; z-index: 1; }
+.why-card { padding: 32px; min-width: 0; background: #1b4332; border: 1px solid #0386661a; border-radius: 4px; position: relative; z-index: 1; }
 .why-card-1 { grid-area: 1 / 1; }
 .why-card-2 { grid-area: 1 / 2; justify-self: end; }
 .why-card-3 { grid-area: 2 / 1; }
 .why-card-4 { grid-area: 2 / 2; justify-self: end; }
-.why-icon { width: 56px; height: 56px; display: inline-flex; align-items: center; justify-content: center; background: #1e69780a; border: 1px solid #1e69781a; border-radius: 3px; color: #1e6978; margin-bottom: 34px; }
+.why-icon { width: 56px; height: 56px; display: inline-flex; align-items: center; justify-content: center; background: #0386660a; border: 1px solid #0386661a; border-radius: 3px; color: #038666; margin-bottom: 34px; }
 .why-card h3 { margin: 0 0 18px; font-size: 25px; line-height: 1.22; font-weight: 500; letter-spacing: -.025em; }
-.why-card p { margin: 0; font-size: 15px; line-height: 1.75; color: #526573; }
-.why-card strong { font-weight: 600; color: #294653; }
-.why-portrait { position: absolute; left: 50%; top: 0; margin: 0; margin-left: -13%; width: 26%; height: 100%; transform-origin: 50% 100%; border: 1px solid #729ba34d; border-radius: 4px; overflow: hidden; box-shadow: 0 22px 70px #17394d18; background: #f8faf9; z-index: 2; pointer-events: none; }
+.why-card p { margin: 0; font-size: 15px; line-height: 1.75; color: #b9d2c6; }
+.why-card strong { font-weight: 600; color: #ebf2fa; }
+.why-portrait { position: absolute; left: 50%; top: 0; margin: 0; margin-left: -13%; width: 26%; height: 100%; transform-origin: 50% 100%; border: 1px solid #729ba34d; border-radius: 4px; overflow: hidden; box-shadow: 0 22px 70px #ebf2fa18; background: #081c15; z-index: 2; pointer-events: none; }
 .why-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; }
 @media (max-width: 1100px) and (min-width: 801px) {
   .why-naveen { padding-inline: 28px; }

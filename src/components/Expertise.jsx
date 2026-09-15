@@ -12,7 +12,7 @@ const expertiseData = [
     "tag": "ACQUIRE / SCALE / OPTIMIZE",
     "headline": "Paid growth built for scale.",
     "platforms": "META ADS · GOOGLE ADS · LINKEDIN · PAID SOCIAL",
-    "gradient": "from-[#e2eff0] via-[#ffffff] to-[#f8faf9]"
+    "gradient": "from-[#1b4332] via-[#1b4332] to-[#081c15]"
   },
   {
     "number": "02",
@@ -22,7 +22,7 @@ const expertiseData = [
     "tag": "CONVERT / ENGAGE / RETAIN",
     "headline": "Every click has a next step.",
     "platforms": "CRO · ONBOARDING · PAYWALLS · MONETIZATION",
-    "gradient": "from-[#e2eff0] via-[#ffffff] to-[#f8faf9]"
+    "gradient": "from-[#1b4332] via-[#1b4332] to-[#081c15]"
   },
   {
     "number": "03",
@@ -32,7 +32,7 @@ const expertiseData = [
     "tag": "MEASURE / EXPERIMENT / SCALE",
     "headline": "Numbers that reveal where growth is hiding.",
     "platforms": "GA4 · MMP · EXPERIMENTATION · ATTRIBUTION",
-    "gradient": "from-[#e2eff0] via-[#ffffff] to-[#f8faf9]"
+    "gradient": "from-[#1b4332] via-[#1b4332] to-[#081c15]"
   },
   {
     "number": "04",
@@ -41,7 +41,7 @@ const expertiseData = [
     "tag": "AUTOMATE / INNOVATE / ACCELERATE",
     "headline": "Less manual work. More room to think.",
     "platforms": "AI · N8N · APPS SCRIPT · AUTOMATION",
-    "gradient": "from-[#e2eff0] via-[#ffffff] to-[#f8faf9]"
+    "gradient": "from-[#1b4332] via-[#1b4332] to-[#081c15]"
   }
 ];
 
@@ -101,31 +101,31 @@ const Expertise = () => {
     <section
       id="expertise"
       ref={containerRef}
-      className="relative w-full bg-[#f8faf9] text-[#172d43] py-20 px-6 md:px-12 select-none overflow-hidden"
+      className="relative w-full bg-[#081c15] text-[#ebf2fa] py-20 px-6 md:px-12 select-none overflow-hidden"
     >
       {/* Cinematic Red Ambient Glow */}
-      <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-[#1e6978]/10 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-[#038666]/10 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="relative z-10 max-w-6xl mx-auto w-full space-y-12">
         
         {/* Compact Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
           <div className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-white/80 backdrop-blur-xl border border-[#1e6978]/40 text-[11px] font-mono uppercase tracking-widest text-[#172d43] shadow-xl">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#1e6978] animate-ping"></span>
-              <span className="text-[#1e6978] font-bold">EPISODE 02</span>
-              <span className="text-slate-500">|</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#1b4332]/80 backdrop-blur-xl border border-[#038666]/40 text-[11px] font-mono uppercase tracking-widest text-[#ebf2fa] shadow-xl">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#038666] animate-ping"></span>
+              <span className="text-[#fbb02d] font-bold">EPISODE 02</span>
+              <span className="text-[#ebf2fa]">|</span>
               <span>GROWTH CAPABILITIES</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-[#172d43] tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-[#ebf2fa] tracking-tight leading-tight">
               WHAT I BUILD. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1e6978] via-[#1e6978] to-[#1e6978] drop-shadow-[0_0_25px_rgba(30,105,120,0.35)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fbb02d] via-[#ebf2fa] to-[#fbb02d] drop-shadow-[0_0_25px_rgba(3,134,102,0.35)]">
                 WHAT I SCALE.
               </span>
             </h2>
           </div>
-          <p className="text-slate-600 text-xs md:text-sm font-light leading-relaxed max-w-xs">
-            <strong className="block text-[#172d43] font-semibold mb-2">THE GROWTH PLAYBOOK.</strong>
+          <p className="text-[#ebf2fa] text-xs md:text-sm font-light leading-relaxed max-w-xs">
+            <strong className="block text-[#ebf2fa] font-semibold mb-2">THE GROWTH PLAYBOOK.</strong>
             Strategy, creativity, data and technology — connected to turn attention into acquisition, acquisition into customers, and customers into growth.
           </p>
         </div>
@@ -136,7 +136,7 @@ const Expertise = () => {
             <div
               key={index}
               ref={addToRefs}
-              className={`sticky w-full p-6 md:p-8 rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-2xl border border-[#537b85]/10 shadow-[0_20px_45px_rgba(23,45,67,0.10)] flex flex-col justify-between min-h-[230px] md:min-h-[250px] transform-gpu transition-all overflow-hidden group hover:border-[#1e6978]/50`}
+              className={`sticky w-full p-6 md:p-8 rounded-2xl bg-gradient-to-br ${item.gradient} backdrop-blur-2xl border border-[#ebf2fa]/10 shadow-[0_20px_45px_rgba(8,28,21,0.10)] flex flex-col justify-between min-h-[230px] md:min-h-[250px] transform-gpu transition-all overflow-hidden group hover:border-[#038666]/50`}
               style={{
                 zIndex: index + 1,
                 top: `${95 + index * 16}px`
@@ -146,19 +146,19 @@ const Expertise = () => {
               <div 
                 className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
                 style={{
-                  background: 'radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(30,105,120,0.18), transparent 70%)'
+                  background: 'radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(3,134,102,0.18), transparent 70%)'
                 }}
               ></div>
 
               {/* Crimson Accent Stripe */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-[#1e6978] to-transparent z-10"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-[#038666] to-transparent z-10"></div>
 
               {/* Card Header Top */}
               <div className="flex items-center justify-between w-full mb-4 relative z-10">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#1e6978] px-2.5 py-0.5 rounded bg-[#1e6978]/10 border border-[#1e6978]/25">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#fbb02d] px-2.5 py-0.5 rounded bg-[#038666]/10 border border-[#038666]/25">
                   {item.tag}
                 </span>
-                <span className="text-2xl md:text-3xl font-mono font-black text-[#172d43]/20">
+                <span className="text-2xl md:text-3xl font-mono font-black text-[#ebf2fa]/20">
                   {item.number}
                 </span>
               </div>
@@ -166,23 +166,23 @@ const Expertise = () => {
               {/* Card Body */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center my-auto relative z-10">
                 <div className="lg:col-span-5">
-                  <h3 className="text-2xl md:text-3xl font-black text-[#172d43] tracking-tight leading-snug group-hover:text-[#1e6978] transition-colors duration-300">
-                    {item.label && <span className="block text-xs font-mono tracking-widest text-[#1e6978] mb-2">{item.label}</span>}
+                  <h3 className="text-2xl md:text-3xl font-black text-[#ebf2fa] tracking-tight leading-snug group-hover:text-[#fbb02d] transition-colors duration-300">
+                    {item.label && <span className="block text-xs font-mono tracking-widest text-[#fbb02d] mb-2">{item.label}</span>}
                     {item.title}
-                    {item.subtitle && <span className="block text-sm font-medium text-slate-600 mt-2">{item.subtitle}</span>}
+                    {item.subtitle && <span className="block text-sm font-medium text-[#ebf2fa] mt-2">{item.subtitle}</span>}
                   </h3>
                 </div>
                 <div className="lg:col-span-7">
-                  <p className="text-xs md:text-sm text-slate-600 font-light leading-relaxed">
-                    <strong className="block text-[#172d43] font-semibold mb-2">{item.headline}</strong>
+                  <p className="text-xs md:text-sm text-[#ebf2fa] font-light leading-relaxed">
+                    <strong className="block text-[#ebf2fa] font-semibold mb-2">{item.headline}</strong>
                     {item.text}
-                    <span className="block text-[10px] font-mono tracking-wider text-slate-500 mt-4">{item.platforms}</span>
+                    <span className="block text-[10px] font-mono tracking-wider text-[#ebf2fa] mt-4">{item.platforms}</span>
                   </p>
                 </div>
               </div>
 
               {/* Subtle Red Corner Dot */}
-              <div className="absolute bottom-4 right-4 w-1.5 h-1.5 rounded-full bg-[#1e6978] group-hover:shadow-[0_0_10px_#1e6978] z-10 transition-all"></div>
+              <div className="absolute bottom-4 right-4 w-1.5 h-1.5 rounded-full bg-[#038666] group-hover:shadow-[0_0_10px_#038666] z-10 transition-all"></div>
             </div>
           ))}
         </div>

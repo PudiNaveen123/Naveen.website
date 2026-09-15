@@ -243,17 +243,17 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" ref={containerRef} className="bg-[#f8faf9] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-[#172d43] w-full flex items-center justify-center py-24 md:py-40 select-none">
+    <section id="projects" ref={containerRef} className="bg-[#081c15] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-[#ebf2fa] w-full flex items-center justify-center py-24 md:py-40 select-none">
       
       {/* Background Netflix Cinematic Title Watermark */}
       <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
-        <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-[#172d43]/[0.03] tracking-tighter leading-none whitespace-nowrap uppercase">
+        <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-[#ebf2fa]/[0.03] tracking-tighter leading-none whitespace-nowrap uppercase">
           ORIGINALS
         </h1>
       </div>
 
       {/* Ambient Crimson Glow behind folder */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] bg-[#1e6978]/15 rounded-full blur-[160px] pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] bg-[#038666]/15 rounded-full blur-[160px] pointer-events-none z-0" />
 
       {/* Main Perspective Container */}
       <div className="mt-12 relative w-full max-w-7xl h-full flex items-center justify-center perspective-[2000px] z-10">
@@ -264,11 +264,11 @@ const Projects = () => {
           {/* Folder Back */}
           <div 
             ref={folderBackRef}
-            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#ffffff] rounded-[24px] border border-[#1e6978]/40 shadow-[0_20px_50px_rgba(30,105,120,0.25)] flex items-center justify-center"
+            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#1b4332] rounded-[24px] border border-[#038666]/40 shadow-[0_20px_50px_rgba(3,134,102,0.25)] flex items-center justify-center"
             style={{ zIndex: 5 }}
           >
-            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#e2eff0] rounded-t-xl border-t border-[#1e6978]/30" />
-            <div className="relative z-10 text-[#1e6978] font-mono font-black text-2xl tracking-widest uppercase opacity-60">
+            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#1b4332] rounded-t-xl border-t border-[#038666]/30" />
+            <div className="relative z-10 text-[#fbb02d] font-mono font-black text-2xl tracking-widest uppercase opacity-60">
               ARCHIVE_SLOTS
             </div>
           </div>
@@ -281,43 +281,43 @@ const Projects = () => {
               className="hidden md:block absolute w-[80vw] md:w-[33vw] max-w-[380px] aspect-[16/10] will-change-transform"
               style={{ zIndex: 10 + i }}
             >
-              <div className="w-full h-full rounded-[24px] overflow-hidden border border-[#537b85]/15 bg-[#ffffff]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(23,45,67,0.10)] transition-all duration-500 group hover:scale-[1.04] hover:border-[#1e6978] hover:shadow-[0_35px_80px_rgba(30,105,120,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
+              <div className="w-full h-full rounded-[24px] overflow-hidden border border-[#ebf2fa]/15 bg-[#1b4332]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(8,28,21,0.10)] transition-all duration-500 group hover:scale-[1.04] hover:border-[#038666] hover:shadow-[0_35px_80px_rgba(3,134,102,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
                 
                 {/* Top Card Header */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#1e6978] bg-[#1e6978]/10 px-2.5 py-1 rounded border border-[#1e6978]/20">
+                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#fbb02d] bg-[#038666]/10 px-2.5 py-1 rounded border border-[#038666]/20">
                     {project.episode}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-[#1e6978] font-bold">{project.match} Match</span>
-                    <span className="text-[10px] font-mono border border-[#537b85]/30 px-1 text-slate-600">HD</span>
+                    <span className="text-xs font-mono text-[#fbb02d] font-bold">{project.match} Match</span>
+                    <span className="text-[10px] font-mono border border-[#ebf2fa]/30 px-1 text-[#ebf2fa]">HD</span>
                   </div>
                 </div>
 
                 {/* Middle Title & Description */}
                 <div className="space-y-2 my-auto">
-                  <div className="text-[11px] font-mono uppercase tracking-widest text-slate-500">
+                  <div className="text-[11px] font-mono uppercase tracking-widest text-[#ebf2fa]">
                     {project.category}
                   </div>
-                  <h3 className="text-2xl font-black text-[#172d43] tracking-tight group-hover:text-[#1e6978] transition-colors duration-300">
+                  <h3 className="text-2xl font-black text-[#ebf2fa] tracking-tight group-hover:text-[#fbb02d] transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-slate-600 font-light leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#ebf2fa] font-light leading-relaxed line-clamp-2">
                     {project.description}
                   </p>
                 </div>
 
                 {/* Bottom Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#537b85]/10">
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#ebf2fa]/10">
                   {project.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-[10px] font-mono text-slate-600 bg-[#1e6978]/5 px-2 py-0.5 rounded group-hover:border-[#1e6978]/30 transition-colors">
+                    <span key={tIdx} className="text-[10px] font-mono text-[#ebf2fa] bg-[#038666]/5 px-2 py-0.5 rounded group-hover:border-[#038666]/30 transition-colors">
                       {tag}
                     </span>
                   ))}
                 </div>
 
                 {/* Red Glowing Corner Accent */}
-                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-[#1e6978] group-hover:shadow-[0_0_15px_#1e6978] transition-all" />
+                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-[#038666] group-hover:shadow-[0_0_15px_#038666] transition-all" />
               </div>
             </div>
           ))}
@@ -328,8 +328,8 @@ const Projects = () => {
             className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video pointer-events-none will-change-transform"
             style={{ zIndex: 60 }}
           >
-            <div className="absolute bottom-0 w-full h-[85%] bg-[#e2eff0] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(23,45,67,0.10)] flex flex-col justify-end p-6 border-t border-[#1e6978]/40">
-              <div className="w-20 h-1.5 bg-[#1e6978]/20 rounded-full mx-auto mb-2" />
+            <div className="absolute bottom-0 w-full h-[85%] bg-[#1b4332] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(8,28,21,0.10)] flex flex-col justify-end p-6 border-t border-[#038666]/40">
+              <div className="w-20 h-1.5 bg-[#038666]/20 rounded-full mx-auto mb-2" />
             </div>
           </div>
 
@@ -351,20 +351,20 @@ const Projects = () => {
             ref={el => mobileCardsRef.current[i] = el}
             className="shrink-0 w-[78vw] aspect-[16/11] snap-center will-change-transform relative z-10"
           >
-            <div className="w-full h-full rounded-[24px] overflow-hidden border border-[#537b85]/15 bg-[#ffffff] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(23,45,67,0.10)]">
+            <div className="w-full h-full rounded-[24px] overflow-hidden border border-[#ebf2fa]/15 bg-[#1b4332] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(8,28,21,0.10)]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#1e6978] bg-[#1e6978]/10 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-[#fbb02d] bg-[#038666]/10 px-2 py-0.5 rounded">
                   {project.episode}
                 </span>
-                <span className="text-xs font-mono text-[#1e6978] font-bold">{project.match} Match</span>
+                <span className="text-xs font-mono text-[#fbb02d] font-bold">{project.match} Match</span>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-black text-[#172d43]">{project.title}</h3>
-                <p className="text-xs text-slate-600 font-light line-clamp-2">{project.description}</p>
+                <h3 className="text-xl font-black text-[#ebf2fa]">{project.title}</h3>
+                <p className="text-xs text-[#ebf2fa] font-light line-clamp-2">{project.description}</p>
               </div>
-              <div className="flex flex-wrap gap-1 pt-2 border-t border-[#537b85]/10">
+              <div className="flex flex-wrap gap-1 pt-2 border-t border-[#ebf2fa]/10">
                 {project.tags.slice(0, 3).map((tag, tIdx) => (
-                  <span key={tIdx} className="text-[10px] font-mono text-slate-600 bg-[#1e6978]/5 px-2 py-0.5 rounded">
+                  <span key={tIdx} className="text-[10px] font-mono text-[#ebf2fa] bg-[#038666]/5 px-2 py-0.5 rounded">
                     {tag}
                   </span>
                 ))}

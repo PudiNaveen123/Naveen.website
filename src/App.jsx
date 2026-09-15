@@ -10,13 +10,16 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ThemeMotion from './components/ThemeMotion';
+import './EmeraldTheme.css';
 
 function App() {
   const [loading, setLoading] = useState(true);
   const finishLoading = useCallback(() => setLoading(false), []);
 
   return (
-    <main className="bg-[#f8faf9] min-h-screen text-[#172d43] relative selection:bg-teal-700 selection:text-white">
+    <main className="emerald-theme bg-[#081c15] min-h-screen text-[#ebf2fa] relative selection:bg-[#038666] selection:text-white">
+      <ThemeMotion />
       {/* Cinematic Preloader */}
       {loading && <NetflixPreloader onComplete={finishLoading} />}
 
