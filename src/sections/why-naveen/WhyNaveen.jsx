@@ -12,8 +12,7 @@ export default function WhyNaveen() {
   const portraitOpacity = useTransform(scrollYProgress, [0, 0.15, 0.9, 1], [0, 0, 1, 1]);
   const portraitY = useTransform(scrollYProgress, [0, 0.15, 0.9, 1], [120, 120, 0, 0]);
   const portraitScale = useTransform(scrollYProgress, [0, 0.15, 0.9, 1], [0.2, 0.2, 1, 1]);
-  const leftX = useTransform(scrollYProgress, [0, 0.15, 0.9, 1], ['0%', '0%', '-44%', '-44%']);
-  const rightX = useTransform(scrollYProgress, [0, 0.15, 0.9, 1], ['0%', '0%', '44%', '44%']);
+  const cardWidth = useTransform(scrollYProgress, [0, 0.15, 0.9, 1], ['100%', '100%', '70%', '70%']);
 
   return (
     <section className="why-naveen" data-reduced-motion={Boolean(reducedMotion)} id="why-naveen" aria-labelledby="why-naveen-title">
@@ -25,7 +24,7 @@ export default function WhyNaveen() {
       <div className="why-scroll" ref={scrollRef}>
       <div className="why-stage">
         {reasons.map((reason, index) => (
-          <motion.article className={`why-card why-card-${index + 1}`} key={reason.title} style={reducedMotion ? undefined : { x: index % 2 === 0 ? leftX : rightX }}>
+          <motion.article className={`why-card why-card-${index + 1}`} key={reason.title} style={reducedMotion ? undefined : { width: cardWidth }}>
             <span className="why-icon" aria-hidden="true"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={reason.icon} /></svg></span>
             <h3>{reason.title}</h3>
             <p>{reason.introduction} <strong>{reason.emphasis}</strong></p>

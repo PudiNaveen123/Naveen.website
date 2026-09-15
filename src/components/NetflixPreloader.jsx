@@ -20,19 +20,19 @@ const MinimalPreloader = ({ onComplete }) => {
       .fromTo(
         contentRef.current,
         { scale: 0.95, opacity: 0, filter: "blur(8px)" },
-        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.35, ease: "power3.out" }
       )
       .to(contentRef.current, {
         scale: 1.05,
         opacity: 0,
         filter: "blur(10px)",
-        duration: 0.4,
+        duration: 0.25,
         ease: "power2.in",
-        delay: 0.6
+        delay: 0.15
       })
       .to(preloaderRef.current, {
         opacity: 0,
-        duration: 0.5,
+        duration: 0.25,
         ease: "power2.inOut"
       });
     return () => tl.kill();
@@ -44,7 +44,7 @@ const MinimalPreloader = ({ onComplete }) => {
       className="fixed inset-0 z-[9999] bg-[#f8faf9] flex items-center justify-center select-none overflow-hidden"
     >
       <div ref={contentRef} className="flex flex-col items-center gap-4">
-        {/* Minimal Red Indicator Dot */}
+        {/* Minimal Teal Indicator Dot */}
         <div className="w-2.5 h-2.5 rounded-full bg-teal-700 animate-ping"></div>
 
         {/* Minimal Typography */}

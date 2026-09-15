@@ -16,8 +16,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: #000;
-  color: #fff;
+  background-color: #f8faf9;
+  color: #172d43;
 }
 
 [data-aos="drop-bounce"] {

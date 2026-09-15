@@ -16,7 +16,7 @@ function App() {
   const finishLoading = useCallback(() => setLoading(false), []);
 
   return (
-    <main className="bg-[#050505] min-h-screen text-white relative selection:bg-teal-700 selection:text-white">
+    <main className="bg-[#f8faf9] min-h-screen text-[#172d43] relative selection:bg-teal-700 selection:text-white">
       {/* Cinematic Preloader */}
       {loading && <NetflixPreloader onComplete={finishLoading} />}
 

@@ -5,6 +5,8 @@
   font-family: Arial, Helvetica, sans-serif;
   cursor: auto;
   isolation: isolate;
+  min-height: 0;
+  justify-content: flex-start;
 }
 .theme-hero ::selection { background: #cde6e8; color: #172d43; }
 .theme-hero a { cursor: pointer; }
@@ -15,7 +17,7 @@
 .theme-hero header nav { font-family: Arial, Helvetica, sans-serif; letter-spacing: .04em; font-size: 11px; gap: 20px; }
 .theme-hero header > a { background: #1e6978; color: white; box-shadow: none; }
 .theme-hero header > a:hover { background: #174f5b; }
-.theme-hero > .relative { height: auto; min-height: 640px; padding-top: 38px; padding-bottom: 32px; gap: 44px; }
+.theme-hero > .relative { height: auto; min-height: 0; padding-top: 24px; padding-bottom: 32px; gap: 28px; }
 .theme-hero .hero-anim-item { filter: none; }
 .theme-hero h1 { color: #172d43; font-weight: 750; font-size: clamp(36px,4.5vw,64px); letter-spacing: -.045em; filter: none; overflow-wrap: anywhere; }
 .theme-hero h1 > span { color: #1e6978; background: none; filter: none; font-size: .82em; }
@@ -54,3 +56,5 @@
 @media (prefers-reduced-motion: reduce) {
   .theme-hero *, .theme-hero *::before, .theme-hero *::after { animation: none !important; transition: none !important; }
 }
+
+.theme-hero > .relative > .grid { margin-block: 0; }
