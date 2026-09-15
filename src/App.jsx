@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Expertise from './components/Expertise';
 import WhatIOffer from './sections/what-i-offer/WhatIOffer';
+import WhyNaveen from './sections/why-naveen/WhyNaveen';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
@@ -27,6 +28,7 @@ function App() {
       <About />
       <Expertise />
       <WhatIOffer />
+      <WhyNaveen />
       <Skills />
       <Projects />
       <Contact />
