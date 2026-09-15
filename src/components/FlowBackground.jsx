@@ -12,23 +12,28 @@ float grain(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 void main(){
   vec2 uv=gl_FragCoord.xy/resolution;
   uv.y=1.-uv.y;
-  float t=time*.14;
-  vec2 p=uv;
-  // Broad, gently bending ribbons travel diagonally across the upper field.
-  float warp=.055*sin(p.x*3.8+p.y*2.2+t)+.024*sin(p.y*7.-p.x*2.8-t*.7);
-  float diagonal=p.x*.85+p.y*.68+warp+.085*sin(t*.42);
-  float bands=.5+.5*cos(diagonal*29.-t);
-  bands=pow(bands,2.4);
-  float envelope=1.-smoothstep(.12,.98,diagonal);
-  float glow=exp(-pow((diagonal-.12)*2.5,2.));
-  vec3 deep=mix(vec3(.9333,.9569,.9294),vec3(.0431,.1451,.2706),darkMode);
-  vec3 secondary=mix(mix(deep,vec3(.0745,.1922,.3608),.10),vec3(.0745,.1922,.3608),darkMode);
-  vec3 accent=mix(mix(deep,vec3(.0745,.2510,.4549),.20),vec3(.0745,.2510,.4549),darkMode);
-  vec3 col=mix(deep,secondary,glow*.3);
-  col=mix(col,accent,clamp((bands*.82+glow*.20)*envelope,0.,1.));
-  col+=(grain(gl_FragCoord.xy)-.5)*.024;
-  // Fade down through the section, keeping the content contrast steady.
-  col=mix(deep,col,(1.-smoothstep(.05,1.,uv.y))*.86);
+  float t=time*.22;
+  // Large flowing fields frame BOTH edges, leaving the content centre quiet.
+  float bend=.055*sin(uv.y*4.2+t*.7)+.035*sin(uv.x*5.-uv.y*3.+t*.4);
+  float leftField=exp(-pow((uv.x+.035+.045*sin(t*.5))*3.4,2.));
+  float rightField=exp(-pow((uv.x-1.035+.045*cos(t*.45))*3.4,2.));
+  float leftDiagonal=uv.x*.65+uv.y*.52+bend;
+  float rightDiagonal=(1.-uv.x)*.65+uv.y*.52-bend;
+  float leftRibbons=pow(.5+.5*sin(leftDiagonal*19.-t),1.65);
+  float rightRibbons=pow(.5+.5*sin(rightDiagonal*20.+t*.85+1.8),1.65);
+  float leftWash=.5+.5*sin(uv.y*3.8-t*.65);
+  float rightWash=.5+.5*cos(uv.y*4.2+t*.55);
+  float flow=leftField*(.32+.34*leftWash+.52*leftRibbons)
+            +rightField*(.28+.30*rightWash+.60*rightRibbons);
+  float fade=1.-smoothstep(.68,1.12,uv.y);
+  vec3 paper=vec3(.9333,.9569,.9294);
+  vec3 navy=vec3(.0431,.1451,.2706);
+  vec3 blue=vec3(.0745,.2510,.4549);
+  vec3 deep=mix(paper,navy,darkMode);
+  // A pale blue tint on the light hero; richer harbour blue on the navy footer.
+  vec3 accent=mix(mix(paper,blue,.42),blue,darkMode);
+  vec3 col=mix(deep,accent,clamp(flow*fade,0.,1.));
+  col+=(grain(gl_FragCoord.xy)-.5)*mix(.012,.022,darkMode);
   gl_FragColor=vec4(col,1.);
 }`;
 
