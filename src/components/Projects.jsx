@@ -4,376 +4,121 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Authentic Project Data based on your engineering portfolio
-const projectsData = [
+const work = [
   {
-    title: "Notice Hub",
-    category: "Full-Stack Architecture",
-    description: "Consolidates university announcements and streamlines real-time student communication with high uptime.",
-    tags: ["React", "Node.js", "Express", "MongoDB"],
-    match: "99%",
-    episode: "S01 E01"
+    number: '01',
+    label: 'ACQUISITION SCALE',
+    title: 'Scaling high-volume demand.',
+    context: 'Complex paid acquisition environments requiring stronger scale without losing efficiency.',
+    focus: 'Channel structure, audience strategy, creative testing and budget allocation.',
+    outcome: '₹2Cr+ monthly media scale',
   },
   {
-    title: "Multi-Tenant SaaS Platform",
-    category: "Cloud & Distributed Systems",
-    description: "Containerized enterprise SaaS featuring strict database isolation and granular role-based access control.",
-    tags: ["Docker", "PostgreSQL", "Node.js", "Express"],
-    match: "98%",
-    episode: "S01 E02"
+    number: '02',
+    label: 'UNIT ECONOMICS',
+    title: 'Improving acquisition efficiency.',
+    context: 'Customer acquisition costs limiting room for profitable growth.',
+    focus: 'Audience quality, creative performance, campaign structure and funnel friction.',
+    outcome: '30% CAC improvement',
   },
   {
-    title: "Payment Gateway System",
-    category: "Fintech Architecture",
-    description: "Simulates complex transaction state management, webhook verification, and multi-method processing.",
-    tags: ["JavaScript", "PostgreSQL", "REST APIs", "Docker"],
-    match: "97%",
-    episode: "S01 E03"
+    number: '03',
+    label: 'MONETIZATION',
+    title: 'Strengthening paywall conversion.',
+    context: 'Healthy traffic with friction at the subscription and decision stage.',
+    focus: 'Paywall experience, offer hierarchy, pricing communication and experimentation.',
+    outcome: '8% → 12% conversion',
   },
   {
-    title: "Productivity Suite Extension",
-    category: "Client-Side Engineering",
-    description: "Custom Chrome extension built with Chrome APIs and advanced JavaScript for task automation and management.",
-    tags: ["JavaScript", "Chrome APIs", "Tailwind CSS", "HTML5"],
-    match: "99%",
-    episode: "S01 E04"
+    number: '04',
+    label: 'OPERATIONS',
+    title: 'Compressing reporting time.',
+    context: 'Manual reporting consuming significant operating time every week.',
+    focus: 'Automated data collection, reporting workflows and performance monitoring.',
+    outcome: '7 hours → ~7 minutes',
   },
   {
-    title: "AI & ML Diagnostic Engine",
-    category: "Artificial Intelligence",
-    description: "Intelligent data processing pipeline leveraging machine learning models and NLP workflows.",
-    tags: ["Python", "Machine Learning", "NLP", "AWS"],
-    match: "96%",
-    episode: "S01 E05"
+    number: '05',
+    label: 'BUSINESS EXPOSURE',
+    title: 'Growth across multiple models.',
+    context: 'Different products, categories and commercial stages demand different operating choices.',
+    focus: 'Business context, channel fit, conversion logic and scalable execution systems.',
+    outcome: '60+ businesses & products',
   },
   {
-    title: "Algorithmic Problem Solver",
-    category: "Competitive Programming",
-    description: "Optimized data structure solutions across LeetCode, CodeChef, and GeeksforGeeks platforms.",
-    tags: ["Data Structures", "Algorithms", "C++", "JavaScript"],
-    match: "99%",
-    episode: "S01 E06"
+    number: '06',
+    label: 'COMMERCIAL IMPACT',
+    title: 'Connecting activity to revenue.',
+    context: 'Growth work becomes useful when it is tied back to commercial outcomes.',
+    focus: 'Acquisition, monetization, funnel movement and performance intelligence.',
+    outcome: '₹40Cr+ revenue influenced',
   },
-  {
-    title: "Portfolio Cinematics v2.6",
-    category: "UI/UX & Animation",
-    description: "Award-winning dark studio interactive portfolio featuring GSAP physics and responsive layouts.",
-    tags: ["React", "GSAP", "Tailwind CSS", "Framer Motion"],
-    match: "100%",
-    episode: "S01 E07"
-  },
-  {
-    title: "Cloud CI/CD Pipeline",
-    category: "DevOps & Infrastructure",
-    description: "Automated deployment workflows using GitHub Actions and containerized Docker environments.",
-    tags: ["Docker", "GitHub Actions", "CI/CD", "Render"],
-    match: "98%",
-    episode: "S01 E08"
-  }
 ];
 
 const Projects = () => {
-  const containerRef = useRef(null);
-  const folderBackRef = useRef(null);
-  const folderFrontRef = useRef(null);
+  const sectionRef = useRef(null);
   const cardsRef = useRef([]);
-  const mobileCardsRef = useRef([]);
-  const mobileCarouselRef = useRef(null);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Set initial origins (Centered in viewport)
-      gsap.set([folderBackRef.current, folderFrontRef.current], { 
-        xPercent: -50, 
-        yPercent: -50 
-      });
-      gsap.set(folderFrontRef.current, { transformOrigin: "bottom center" });
-      
-      const getGridPos = (index) => {
-        let row, col;
-        if (index < 3) { row = 0; col = index; }
-        else if (index === 3) { row = 1; col = 0; }
-        else if (index === 4) { row = 1; col = 2; }
-        else { row = 2; col = index - 5; }
-        return { row, col };
-      };
-
-      cardsRef.current.forEach((card) => {
-        gsap.set(card, {
-          xPercent: -50,
-          yPercent: -50,
-          rotation: gsap.utils.random(-6, 6),
-          scale: 0.85,
-          x: 0,
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cardsRef.current,
+        { y: 34, opacity: 0 },
+        {
           y: 0,
-        });
-      });
-
-      let mm = gsap.matchMedia();
-
-      mm.add({
-        isDesktop: "(min-width: 768px)",
-        isMobile: "(max-width: 767px)"
-      }, (context) => {
-        let { isDesktop, isMobile } = context.conditions;
-
-        if (isDesktop) {
-          let floatTween;
-
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 50%", 
-              end: "bottom 50%",
-              toggleActions: "play reverse play reverse",
-              onEnter: () => { if (floatTween) floatTween.kill(); },
-              onEnterBack: () => { if (floatTween) floatTween.kill(); },
-              onLeave: () => { if (floatTween) floatTween.kill(); },
-              onLeaveBack: () => { if (floatTween) floatTween.kill(); }
-            },
-            onComplete: () => {
-              floatTween = gsap.to(cardsRef.current, {
-                y: "+=12",
-                rotation: "+=1",
-                duration: 3.5,
-                yoyo: true,
-                repeat: -1,
-                ease: "sine.inOut",
-                stagger: { amount: 1.5, from: "random" }
-              });
-            }
-          });
-
-          // 1. Folder opens with smooth rotation
-          tl.to(folderFrontRef.current, {
-            rotationX: -130,
-            duration: 1.2,
-            ease: "power3.inOut"
-          });
-
-          // 2. Cards rise up collectively
-          tl.to(cardsRef.current, {
-            y: -140,
-            scale: 0.9,
-            zIndex: 70,
-            duration: 0.6,
-            stagger: 0.04,
-            ease: "back.out(1.2)"
-          }, "-=0.6");
-
-          // 3. Cards magically spread out into an ultra-clean blockbuster grid layout
-          tl.to(cardsRef.current, {
-            x: (i) => {
-              const w = Math.max(...cardsRef.current.map(c => c?.offsetWidth || 0)) || 360;
-              const gap = 40;
-              const { col } = getGridPos(i);
-              return (col - 1) * (w + gap);
-            },
-            y: (i) => {
-              const h = Math.max(...cardsRef.current.map(c => c?.offsetHeight || 0)) || 240;
-              const gap = 40;
-              const { row } = getGridPos(i);
-              return (row - 1) * (h + gap);
-            },
-            rotation: () => gsap.utils.random(-3, 3),
-            scale: 1,
-            duration: 1.4,
-            stagger: { amount: 0.4, from: "center" },
-            ease: "expo.out"
-          }, "-=0.2");
+          opacity: 1,
+          duration: 0.85,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
         }
-
-        if (isMobile) {
-          const cardW = window.innerWidth * 0.8;
-          const gap = 20;
-          
-          mobileCardsRef.current.forEach((card, i) => {
-            gsap.set(card, {
-              x: -(i * (cardW + gap)), 
-              y: 0,
-              scale: 0.4,
-              opacity: 0,
-              rotation: gsap.utils.random(-15, 15)
-            });
-          });
-
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 60%",
-            }
-          });
-
-          tl.to(folderFrontRef.current, {
-            rotationX: -130,
-            duration: 0.8,
-            ease: "power3.inOut"
-          });
-
-          tl.to(mobileCardsRef.current, {
-            y: -100,
-            opacity: 1,
-            scale: 0.85,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: "back.out(1.2)"
-          }, "-=0.4");
-
-          tl.to(mobileCardsRef.current, {
-            x: 0,
-            y: 0,
-            rotation: 0,
-            scale: (i) => i === 0 ? 1 : 0.92,
-            opacity: (i) => i === 0 ? 1 : 0.5,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: "expo.out",
-            onComplete: () => {
-              if (mobileCarouselRef.current) {
-                mobileCarouselRef.current.style.overflowX = 'auto';
-                mobileCarouselRef.current.style.pointerEvents = 'auto';
-              }
-            }
-          }, "-=0.2");
-        }
-      });
-    }, containerRef);
-
+      );
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="projects" ref={containerRef} className="bg-[#eef4ed] min-h-[100svh] md:min-h-[170vh] relative font-sans overflow-x-clip text-[#0b2545] w-full flex items-center justify-center py-24 md:py-40 select-none">
-      
-      {/* Background Netflix Cinematic Title Watermark */}
-      <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
-        <h1 className="text-[14vw] sm:text-[17vw] md:text-[20vw] font-black text-[#0b2545]/[0.03] tracking-tighter leading-none whitespace-nowrap uppercase">
-          ORIGINALS
-        </h1>
-      </div>
-
-      {/* Ambient Crimson Glow behind folder */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[55vw] bg-[#134074]/15 rounded-full blur-[160px] pointer-events-none z-0" />
-
-      {/* Main Perspective Container */}
-      <div className="mt-12 relative w-full max-w-7xl h-full flex items-center justify-center perspective-[2000px] z-10">
-        
-        {/* Origin Container */}
-        <div className="relative w-0 h-0 transform-style-3d">
-          
-          {/* Folder Back */}
-          <div 
-            ref={folderBackRef}
-            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-[#eef4ed] rounded-[24px] border border-[#134074]/40 shadow-[0_20px_50px_rgba(19,64,116,0.25)] flex items-center justify-center"
-            style={{ zIndex: 5 }}
-          >
-            <div className="absolute -top-6 left-6 w-32 h-8 bg-[#eef4ed] rounded-t-xl border-t border-[#134074]/30" />
-            <div className="relative z-10 text-[#134074] font-mono font-black text-2xl tracking-widest uppercase opacity-60">
-              ARCHIVE_SLOTS
-            </div>
+    <section id="projects" ref={sectionRef} className="relative w-full bg-[#eef4ed] text-[#0b2545] py-28 px-6 md:px-12 overflow-hidden">
+      <div className="absolute right-[8%] top-[12%] w-[420px] h-[420px] rounded-full bg-[#134074]/[0.06] blur-[150px] pointer-events-none" />
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-8 items-end mb-12">
+          <div className="lg:col-span-8">
+            <p className="text-[11px] font-mono font-bold tracking-[0.18em] uppercase text-[#134074] mb-4">Selected Growth Work</p>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.96]">Strategy becomes valuable when it <span className="text-[#134074]">moves a metric.</span></h2>
           </div>
+          <p className="lg:col-span-4 text-sm md:text-base leading-relaxed text-[#0b2545]/68">Selected examples across acquisition, monetization, efficiency and operating systems — expressed through the business movement they created.</p>
+        </div>
 
-          {/* Desktop Project Cards */}
-          {projectsData.map((project, i) => (
-            <div 
-              key={i}
-              ref={el => cardsRef.current[i] = el}
-              className="hidden md:block absolute w-[80vw] md:w-[33vw] max-w-[380px] aspect-[16/10] will-change-transform"
-              style={{ zIndex: 10 + i }}
+        <div className="grid md:grid-cols-2 gap-5">
+          {work.map((item, index) => (
+            <article
+              key={item.number}
+              ref={(el) => (cardsRef.current[index] = el)}
+              className="group rounded-[24px] border border-[#0b2545]/10 bg-[#eef4ed]/82 backdrop-blur-xl p-7 md:p-8 min-h-[330px] flex flex-col shadow-[0_18px_60px_rgba(11,37,69,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-[#134074]/30"
             >
-              <div className="w-full h-full rounded-[24px] overflow-hidden border border-[#0b2545]/15 bg-[#eef4ed]/95 backdrop-blur-2xl shadow-[0_25px_50px_rgba(11,37,69,0.10)] transition-all duration-500 group hover:scale-[1.04] hover:border-[#134074] hover:shadow-[0_35px_80px_rgba(19,64,116,0.35)] hover:-translate-y-2 cursor-pointer relative z-10 p-7 flex flex-col justify-between">
-                
-                {/* Top Card Header */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#134074] bg-[#134074]/10 px-2.5 py-1 rounded border border-[#134074]/20">
-                    {project.episode}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-[#134074] font-bold">{project.match} Match</span>
-                    <span className="text-[10px] font-mono border border-[#0b2545]/30 px-1 text-[#0b2545]">HD</span>
-                  </div>
-                </div>
-
-                {/* Middle Title & Description */}
-                <div className="space-y-2 my-auto">
-                  <div className="text-[11px] font-mono uppercase tracking-widest text-[#0b2545]">
-                    {project.category}
-                  </div>
-                  <h3 className="text-2xl font-black text-[#0b2545] tracking-tight group-hover:text-[#134074] transition-colors duration-300">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs text-[#0b2545] font-light leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* Bottom Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#0b2545]/10">
-                  {project.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-[10px] font-mono text-[#0b2545] bg-[#134074]/5 px-2 py-0.5 rounded group-hover:border-[#134074]/30 transition-colors">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Red Glowing Corner Accent */}
-                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-[#134074] group-hover:shadow-[0_0_15px_#134074] transition-all" />
+              <div className="flex items-center justify-between mb-9">
+                <span className="text-[10px] font-mono font-bold tracking-[0.14em] text-[#134074]">{item.label}</span>
+                <span className="text-[10px] font-mono text-[#0b2545]/35">{item.number}</span>
               </div>
-            </div>
+              <h3 className="text-2xl md:text-3xl font-black tracking-tight mb-5">{item.title}</h3>
+              <div className="grid sm:grid-cols-2 gap-5 text-sm leading-relaxed text-[#0b2545]/68">
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#0b2545]/45 mb-2">Context</p>
+                  <p>{item.context}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#0b2545]/45 mb-2">Growth Focus</p>
+                  <p>{item.focus}</p>
+                </div>
+              </div>
+              <div className="mt-auto pt-7 border-t border-[#0b2545]/10 flex items-end justify-between gap-4">
+                <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#0b2545]/45">Business Movement</span>
+                <strong className="text-xl md:text-2xl font-black tracking-tight text-[#134074] text-right">{item.outcome}</strong>
+              </div>
+            </article>
           ))}
-
-          {/* Folder Front Flap */}
-          <div 
-            ref={folderFrontRef}
-            className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video pointer-events-none will-change-transform"
-            style={{ zIndex: 60 }}
-          >
-            <div className="absolute bottom-0 w-full h-[85%] bg-[#eef4ed] rounded-b-[24px] rounded-t-md shadow-[0_-5px_20px_rgba(11,37,69,0.10)] flex flex-col justify-end p-6 border-t border-[#134074]/40">
-              <div className="w-20 h-1.5 bg-[#134074]/20 rounded-full mx-auto mb-2" />
-            </div>
-          </div>
-
         </div>
       </div>
-
-      {/* Mobile Swipeable Carousel */}
-      <div 
-        ref={mobileCarouselRef}
-        className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-auto py-12 flex items-center gap-6 px-[12.5vw] pointer-events-none z-[100] snap-x snap-mandatory overflow-x-hidden hide-scrollbar"
-      >
-        <style>{`
-          .hide-scrollbar::-webkit-scrollbar { display: none; }
-          .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        `}</style>
-        {projectsData.map((project, i) => (
-          <div 
-            key={`mob-${i}`}
-            ref={el => mobileCardsRef.current[i] = el}
-            className="shrink-0 w-[78vw] aspect-[16/11] snap-center will-change-transform relative z-10"
-          >
-            <div className="w-full h-full rounded-[24px] overflow-hidden border border-[#0b2545]/15 bg-[#eef4ed] p-6 flex flex-col justify-between shadow-[0_20px_40px_rgba(11,37,69,0.10)]">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-[#134074] bg-[#134074]/10 px-2 py-0.5 rounded">
-                  {project.episode}
-                </span>
-                <span className="text-xs font-mono text-[#134074] font-bold">{project.match} Match</span>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-xl font-black text-[#0b2545]">{project.title}</h3>
-                <p className="text-xs text-[#0b2545] font-light line-clamp-2">{project.description}</p>
-              </div>
-              <div className="flex flex-wrap gap-1 pt-2 border-t border-[#0b2545]/10">
-                {project.tags.slice(0, 3).map((tag, tIdx) => (
-                  <span key={tIdx} className="text-[10px] font-mono text-[#0b2545] bg-[#134074]/5 px-2 py-0.5 rounded">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
     </section>
   );
 };
