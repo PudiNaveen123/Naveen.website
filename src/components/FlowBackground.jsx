@@ -4,7 +4,6 @@ import { startLiquidFallback } from './liquidFallback';
 
 // Independent liquid-gradient renderer in the Harbour Navy palette.
 const vertex = `attribute vec2 position; void main(){gl_Position=vec4(position,0.,1.);}`;
-// A moving, domain-warped colour field, rather than fixed stripes or edge masks.
 const fragment = `
 precision highp float;
 uniform vec2 resolution;
@@ -14,7 +13,6 @@ float grain(vec2 p){return fract(52.9829189*fract(dot(p,vec2(.06711056,.00583715
 void main(){
   vec2 uv=gl_FragCoord.xy/resolution;
   vec2 p=(gl_FragCoord.xy-.5*resolution)/max(resolution.x,resolution.y)*2.;
-  // Broad sheets of colour travel across the full canvas, slowly changing angle.
   float angle=.65+.8*sin(time*.105);
   p=mat2(cos(angle),-sin(angle),sin(angle),cos(angle))*p;
   float t=time*.65;
@@ -22,21 +20,37 @@ void main(){
     float n=float(i)+1.;
     p+=.07/n*sin(p.yx*(2.+n*.31)+t*vec2(.63,-.47)+n*1.9);
   }
+
   float phase=p.x*5.+.65*sin(p.y*2.2+t*.38)+t;
-  // A narrow fold accompanies a broad luminous sheet, like the video reference.
   float wave=.5+.5*sin(phase);
   float sheet=smoothstep(.25,.8,wave);
   float seam=exp(-pow((sin(phase+.85)-.8)*7.,2.));
   float amount=clamp(sheet-.7*seam,0.,1.);
+
+  // A second, slower ribbon introduces real white into the flow instead of only off-white.
+  float whiteWave=.5+.5*sin(phase*.72-t*.32+1.6+.35*sin(p.y*2.));
+  float whiteRibbon=smoothstep(.60,.97,whiteWave);
+
+  vec3 white=vec3(1.);
   vec3 paper=vec3(238.,244.,237.)/255.;
   vec3 navy=vec3(11.,37.,69.)/255.;
   vec3 blue=vec3(19.,64.,116.)/255.;
-  vec3 base=mix(paper,navy,darkMode);
-  vec3 ink=mix(mix(paper,blue,.48),blue,darkMode);
-  // The same vertical fade as the reference, with an accessible light variant.
+
+  vec3 lightBase=mix(white,paper,.48);
+  vec3 base=mix(lightBase,navy,darkMode);
+  vec3 lightInk=mix(white,blue,.50);
+  vec3 darkInk=mix(blue,white,.08);
+  vec3 ink=mix(lightInk,darkInk,darkMode);
+
   float fade=smoothstep(0.,1.,uv.y);
-  vec3 color=mix(base,ink,amount*fade);
-  color+=(grain(gl_FragCoord.xy)-.5)*.015;
+  float blueStrength=amount*fade*mix(.66,.88,darkMode);
+  vec3 color=mix(base,ink,blueStrength);
+
+  // White stays visibly present in both hero and footer, but remains more restrained on dark mode.
+  float whiteStrength=whiteRibbon*mix(.62,.18,darkMode);
+  color=mix(color,white,whiteStrength);
+
+  color+=(grain(gl_FragCoord.xy)-.5)*.012;
   gl_FragColor=vec4(color,1.);
 }`;
 
@@ -89,7 +103,6 @@ export default function FlowBackground({ variant = 'hero' }) {
       if (!contextLost && visible && !document.hidden && !reduced.matches) frame=requestAnimationFrame(tick);
     };
     const resize = new ResizeObserver(() => {
-      // Cap shader resolution independently of high-density screens.
       const scale=Math.min(window.devicePixelRatio || 1,1.5,1440/Math.max(canvas.clientWidth,1));
       canvas.width=Math.max(1,Math.round(canvas.clientWidth*scale));
       canvas.height=Math.max(1,Math.round(canvas.clientHeight*scale));
