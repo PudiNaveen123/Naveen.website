@@ -1,257 +1,104 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skillCategories = [
-  { 
-    title: 'Frontend Engineering', 
-    desc: 'Crafting responsive and interactive user interfaces using React, JavaScript, HTML5, CSS3, and Tailwind CSS.', 
-    tag: 'UI / INTERACTION',
-    skills: ['React', 'JavaScript', 'Tailwind CSS', 'HTML5', 'CSS3'] 
+const systems = [
+  {
+    number: '01',
+    title: 'Acquisition Architecture',
+    description: 'Channel roles, audience structure, media planning and creative testing designed around scale and acquisition economics.',
+    tags: ['Meta', 'Google', 'Search', 'Media Planning'],
   },
-  { 
-    title: 'Backend & Databases', 
-    desc: 'Building secure REST APIs, authentication flows, server-side applications, and high-performance database architectures.', 
-    tag: 'ARCHITECTURE',
-    skills: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'DQL'] 
+  {
+    number: '02',
+    title: 'Measurement & Attribution',
+    description: 'A cleaner view of what is driving movement across campaigns, funnels, customer behaviour and commercial outcomes.',
+    tags: ['GA4', 'MMP', 'Looker', 'Attribution'],
   },
-  { 
-    title: 'AI & Machine Learning', 
-    desc: 'Developing intelligent applications leveraging NLP, generative AI workflows, computer vision, and LLM systems.', 
-    tag: 'INTELLIGENCE',
-    skills: ['NLP', 'Generative AI', 'Computer Vision', 'LLMs', 'AWS AI'] 
+  {
+    number: '03',
+    title: 'Conversion Systems',
+    description: 'Decision journeys across landing pages, onboarding, pricing and monetization built to reduce friction and improve action.',
+    tags: ['CRO', 'Funnels', 'Paywalls', 'Monetization'],
   },
-  { 
-    title: 'Cloud & DevOps', 
-    desc: 'Deploying and scaling production-grade applications using Docker containers, GitHub Actions, and CI/CD pipelines.', 
-    tag: 'INFRASTRUCTURE',
-    skills: ['Docker', 'GitHub', 'CI/CD Pipelines', 'Render', 'Docker Hub'] 
+  {
+    number: '04',
+    title: 'Experimentation',
+    description: 'Structured testing across creative, offer, audience and product experiences to find the next measurable improvement.',
+    tags: ['Testing', 'Creative', 'Offers', 'Journeys'],
   },
-  { 
-    title: 'Algorithmic Problem Solving', 
-    desc: 'Optimizing data structures and solving complex algorithmic challenges across competitive programming platforms.', 
-    tag: 'COMPETITIVE',
-    skills: ['Data Structures', 'Algorithms', 'LeetCode', 'CodeChef', 'GFG'] 
+  {
+    number: '05',
+    title: 'Growth Automation',
+    description: 'Reporting, monitoring and repeatable workflows automated to improve operating speed and create more room for decisions.',
+    tags: ['n8n', 'Apps Script', 'AI', 'Workflows'],
   },
-  { 
-    title: 'Tools & Ecosystem', 
-    desc: 'Equipped with industry-grade instruments for version control, productivity extensions, and workflow management.', 
-    tag: 'PRODUCTIVITY',
-    skills: ['Git', 'Chrome APIs', 'Adobe Express', 'Google Cloud', 'VS Code'] 
+  {
+    number: '06',
+    title: 'Execution Infrastructure',
+    description: 'Clear priorities, defined ownership and coordinated execution support to move strategy into market without operational gaps.',
+    tags: ['Planning', 'Operations', 'Dashboards', 'Team Execution'],
   },
 ];
 
 const Skills = () => {
   const sectionRef = useRef(null);
   const cardsRef = useRef([]);
-  const bgRefs = useRef([]);
-  const textRefs = useRef([]);
 
-  const handleScroll = (e) => {
-    if (window.innerWidth >= 769) return;
-    const container = e.target;
-    const center = container.scrollLeft + container.offsetWidth / 2;
-    
-    let activeIdx = 0;
-    let minDiff = Infinity;
-    
-    cardsRef.current.forEach((card, i) => {
-      if (!card) return;
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const diff = Math.abs(cardCenter - center);
-      if (diff < minDiff) {
-        minDiff = diff;
-        activeIdx = i;
-      }
-    });
-
-    cardsRef.current.forEach((card, i) => {
-      if (card) {
-        gsap.to(card, { scale: i === activeIdx ? 1 : 0.9, duration: 0.4, ease: "power2.out", overwrite: "auto" });
-      }
-    });
-
-    bgRefs.current.forEach((bg, i) => {
-      if (bg) gsap.to(bg, { opacity: i === activeIdx ? 1 : 0, duration: 0.4, overwrite: "auto" });
-    });
-    
-    textRefs.current.forEach((txt, i) => {
-      if (txt) gsap.to(txt, { opacity: i === activeIdx ? 1 : 0, duration: 0.4, overwrite: "auto" });
-    });
-  };
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      let mm = gsap.matchMedia();
-
-      mm.add("(min-width: 769px)", () => {
-        const updateCards = (p) => {
-          cardsRef.current.forEach((card, i) => {
-            if (!card) return;
-            const offset = i - p;
-            
-            const radius = 1800; 
-            const angleSpread = 18; 
-            
-            const angle = offset * angleSpread;
-            const rad = angle * Math.PI / 180;
-            
-            const x = Math.sin(rad) * radius;
-            const y = radius - (Math.cos(rad) * radius); 
-            const z = -Math.abs(offset) * 50; 
-            
-            const scale = Math.max(0.4, 1 - Math.abs(offset) * 0.15);
-            const rotateZ = angle; 
-            
-            const opacity = Math.max(0.1, 1 - Math.abs(offset) * 0.3);
-            const zIndex = Math.round(100 - Math.abs(offset) * 10);
-
-            gsap.set(card, {
-              x: x,
-              y: y,
-              z: z,
-              scale: scale,
-              rotationZ: rotateZ,
-              rotationY: 0, 
-              opacity: opacity,
-              zIndex: zIndex,
-            });
-          });
-
-          bgRefs.current.forEach((bg, i) => {
-              if (!bg) return;
-              const itemOpacity = Math.max(0, 1 - Math.abs(i - p));
-              gsap.set(bg, { opacity: itemOpacity });
-              
-              if (textRefs.current[i]) {
-                  gsap.set(textRefs.current[i], { opacity: itemOpacity });
-              }
-          });
-        };
-
-        updateCards(0);
-
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=500%", 
-          pin: true,
-          scrub: 1,
-          onUpdate: (self) => {
-            const p = self.progress * (skillCategories.length - 1);
-            updateCards(p);
-          }
-        });
-      });
-
-      mm.add("(max-width: 768px)", () => {
-        cardsRef.current.forEach((card, i) => {
-           if (card) {
-             gsap.set(card, { clearProps: "x,y,z,rotation,scale,opacity,position" });
-             gsap.set(card, { scale: i === 0 ? 1 : 0.9 });
-           }
-        });
-        
-        bgRefs.current.forEach((bg, i) => {
-           if (bg) gsap.set(bg, { clearProps: "all", opacity: i === 0 ? 1 : 0 });
-        });
-        
-        textRefs.current.forEach((txt, i) => {
-           if (txt) gsap.set(txt, { clearProps: "all", opacity: i === 0 ? 1 : 0 });
-        });
-      });
-
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cardsRef.current,
+        { y: 28, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
+        }
+      );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
-    <section 
-      id="skills"
-      ref={sectionRef} 
-      className="relative w-full h-screen bg-[#0b2545] text-[#eef4ed] overflow-hidden flex items-center justify-center md:[perspective:1000px] select-none"
-    >
-      {/* Dynamic Netflix Dark Background Vignettes */}
-      {skillCategories.map((_, i) => (
-        <div 
-          key={i}
-          ref={el => bgRefs.current[i] = el}
-          className="absolute inset-0 z-0 pointer-events-none opacity-0 bg-gradient-to-tr from-[#0b2545] via-[#13315c] to-[#0b2545]"
-        />
-      ))}
-
-      {/* Massive Background Typography (Netflix Red & White Outline) */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-        {skillCategories.map((_, i) => (
-          <h1 
-            key={`text-${i}`}
-            ref={el => textRefs.current[i] = el}
-            className="absolute text-[22vw] md:text-[18vw] font-black uppercase text-transparent leading-none tracking-tighter mix-blend-overlay"
-            style={{ 
-               WebkitTextStroke: `2px ${i % 2 === 0 ? 'rgba(19,64,116,0.3)' : 'rgba(19,64,116,0.15)'}`,
-               opacity: 0 
-            }}
-          >
-            SKILLS
-          </h1>
-        ))}
-      </div>
-
-      {/* Carousel Container */}
-      <div 
-        className="relative w-full h-full flex md:items-center md:justify-center z-10 md:[transform-style:preserve-3d] overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center px-[10vw] md:px-0 gap-4 md:gap-0 touch-pan-x"
-        onScroll={handleScroll}
-      >
-        {skillCategories.map((category, i) => (
-          <div 
-            key={i}
-            ref={el => cardsRef.current[i] = el}
-            className="md:absolute relative shrink-0 snap-center w-[82vw] sm:w-[360px] md:w-[440px] h-[460px] md:h-[540px] rounded-[32px] p-8 md:p-10 bg-[#13315c]/95 backdrop-blur-2xl border border-[#eef4ed]/15 flex flex-col justify-between overflow-hidden group shadow-[0_30px_60px_rgba(11,37,69,0.10)] hover:border-[#134074]/80 transition-colors duration-500"
-          >
-            {/* Inner Red Glossy Reflection */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#134074]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-20" />
-            
-            {/* Top Card Metadata */}
-            <div className="flex items-center justify-between relative z-10">
-              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#eef4ed] bg-[#134074]/10 px-3 py-1 rounded border border-[#134074]/20">
-                {category.tag}
-              </span>
-              <span className="text-xs font-mono text-[#eef4ed]">
-                [ 0{i + 1} / 06 ]
-              </span>
-            </div>
-
-            {/* Middle Title & Description */}
-            <div className="space-y-4 relative z-10 my-auto">
-              <h3 className="text-3xl md:text-4xl font-black text-[#eef4ed] tracking-tight group-hover:text-[#eef4ed] transition-colors duration-300">
-                {category.title}
-              </h3>
-              <p className="text-sm md:text-base text-[#eef4ed] font-light leading-relaxed">
-                {category.desc}
-              </p>
-            </div>
-
-            {/* Bottom Skill Badges */}
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-[#eef4ed]/10 relative z-10">
-              {category.skills.map((skill, sIdx) => (
-                <span 
-                  key={sIdx}
-                  className="text-xs font-mono text-[#eef4ed] bg-[#134074]/5 border border-[#eef4ed]/10 px-3 py-1 rounded group-hover:border-[#134074]/30 transition-colors"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            {/* Bottom Glow Accent */}
-            <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-[#134074] group-hover:shadow-[0_0_15px_#134074] transition-all" />
+    <section id="skills" ref={sectionRef} className="relative w-full bg-[#0b2545] text-[#eef4ed] py-28 px-6 md:px-12 overflow-hidden">
+      <div className="absolute left-[12%] bottom-[5%] w-[420px] h-[420px] rounded-full bg-[#134074]/20 blur-[150px] pointer-events-none" />
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-8 items-end mb-12">
+          <div className="lg:col-span-8">
+            <p className="text-[11px] font-mono font-bold tracking-[0.18em] uppercase text-[#eef4ed]/60 mb-4">Growth Operating System</p>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.96]">The infrastructure behind <span className="text-[#eef4ed]/50">better decisions.</span></h2>
           </div>
-        ))}
-      </div>
+          <p className="lg:col-span-4 text-sm md:text-base leading-relaxed text-[#eef4ed]/62">Tools matter less than how they connect. The operating layer brings planning, execution, measurement and optimization together.</p>
+        </div>
 
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {systems.map((item, index) => (
+            <article
+              key={item.number}
+              ref={(el) => (cardsRef.current[index] = el)}
+              className="group min-h-[300px] rounded-[24px] border border-[#eef4ed]/10 bg-[#13315c]/65 p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-[#eef4ed]/22"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <span className="text-[10px] font-mono tracking-[0.16em] uppercase text-[#eef4ed]/45">System</span>
+                <span className="text-sm font-mono text-[#eef4ed]/30">{item.number}</span>
+              </div>
+              <h3 className="text-2xl font-black tracking-tight mb-4">{item.title}</h3>
+              <p className="text-sm leading-relaxed text-[#eef4ed]/60">{item.description}</p>
+              <div className="mt-auto pt-7 flex flex-wrap gap-2 border-t border-[#eef4ed]/10">
+                {item.tags.map((tag) => (
+                  <span key={tag} className="px-2.5 py-1 rounded-md bg-[#eef4ed]/[0.05] text-[10px] font-mono uppercase tracking-[0.08em] text-[#eef4ed]/60">{tag}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };
