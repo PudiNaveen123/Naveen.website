@@ -3,8 +3,14 @@ export function startLiquidFallback(canvas, variant) {
   const context = canvas.getContext('2d', { alpha: false });
   if (!context) return () => {};
   const dark = variant === 'footer';
-  const base = dark ? [11,37,69] : [238,244,237];
-  const ink = dark ? [19,64,116] : base.map((v,i) => v+([19,64,116][i]-v)*.48);
+  const white = [255,255,255];
+  const paper = [238,244,237];
+  const navy = [11,37,69];
+  const blue = [19,64,116];
+  const base = dark ? navy : white.map((v,i) => v+(paper[i]-v)*.48);
+  const ink = dark
+    ? blue.map((v,i) => v+(white[i]-v)*.08)
+    : white.map((v,i) => v+(blue[i]-v)*.50);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   let frame=0, last=0, elapsed=dark?9:0, visible=true, pixels;
   const smooth = (a,b,v) => { const n=Math.max(0,Math.min(1,(v-a)/(b-a))); return n*n*(3-2*n); };
@@ -26,9 +32,14 @@ export function startLiquidFallback(canvas, variant) {
         const phase=qx*5+.65*Math.sin(qy*2.2+t*.38)+t;
         const wave=.5+.5*Math.sin(phase);
         const seam=Math.exp(-Math.pow((Math.sin(phase+.85)-.8)*7,2));
-        const amount=Math.max(0,Math.min(1,smooth(.25,.8,wave)-.7*seam))*fade;
+        const amount=Math.max(0,Math.min(1,smooth(.25,.8,wave)-.7*seam))*fade*(dark?.88:.66);
+        const whiteWave=.5+.5*Math.sin(phase*.72-t*.32+1.6+.35*Math.sin(qy*2));
+        const whiteAmount=smooth(.60,.97,whiteWave)*(dark?.18:.62);
         const i=(y*w+x)*4;
-        for(let c=0;c<3;c++) pixels.data[i+c]=base[c]+(ink[c]-base[c])*amount;
+        for(let c=0;c<3;c++) {
+          const blueMixed=base[c]+(ink[c]-base[c])*amount;
+          pixels.data[i+c]=blueMixed+(white[c]-blueMixed)*whiteAmount;
+        }
         pixels.data[i+3]=255;
       }
     }
