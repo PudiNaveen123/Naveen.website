@@ -58,3 +58,29 @@
 }
 
 .theme-hero > .relative > .grid { margin-block: 0; }
+
+/* Results stay inside the hero, aligned with its content edges. */
+.theme-hero .hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  margin: 0;
+  padding: 24px 0 8px;
+  text-align: center;
+}
+.theme-hero .hero-metric { display: flex; flex-direction: column; gap: 10px; }
+.theme-hero .hero-metric dd {
+  order: -1;
+  margin: 0;
+  color: #0b2545;
+  font-size: clamp(32px, 3.2vw, 46px);
+  font-weight: 750;
+  line-height: 1.1;
+  letter-spacing: -.035em;
+}
+.theme-hero .hero-metric dt { color: #13315c; font-size: 14px; line-height: 1.5; }
+@media (max-width: 640px) {
+  .theme-hero .hero-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; padding-top: 12px; }
+  .theme-hero .hero-metric dt { font-size: 12px; }
+}

@@ -185,7 +185,7 @@ const Hero = ({ startMotion = true }) => {
         <div className="hero-anim-item flex items-center justify-between w-full">
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded bg-[#eef4ed]/90 backdrop-blur-2xl border border-[#134074]/40 text-xs font-mono uppercase tracking-widest text-[#0b2545] shadow-2xl">
             <span className="w-2 h-2 rounded-full bg-[#134074] animate-ping"></span>
-            <span className="text-[#134074] font-bold tracking-wider">BUSINESS GROWTH STRATEGIST</span>
+            <span className="text-[#134074] font-bold tracking-wider" style={{ textTransform: 'none' }}>Growth That Moves the Business.</span>
             <span className="text-[#0b2545]"></span>
             <span className="text-[#0b2545]"></span>
           </div>
@@ -268,7 +268,7 @@ const Hero = ({ startMotion = true }) => {
 
                 {/* Netflix Series Tag */}
                 <div className="absolute top-6 left-6 z-30 px-3 py-1 bg-[#134074] text-[#eef4ed] font-mono text-[10px] font-bold tracking-widest rounded shadow-xl">
-                  FEATURED DEV
+                  Business Strategist
                 </div>
 
                 <img
@@ -297,6 +297,20 @@ const Hero = ({ startMotion = true }) => {
           <span>BUILT FOR PROFITABLE GROWTH</span>
           <span></span>
         </div>
+
+        <dl className="hero-anim-item hero-metrics" aria-label="Business growth results">
+          {[
+            ['₹40Cr+', 'Revenue Influenced'],
+            ['₹2Cr+', 'Monthly Ad Spend Managed'],
+            ['3×', 'Acquisition Growth'],
+            ['60+', 'Businesses & Products Supported'],
+          ].map(([value, label]) => (
+            <div className="hero-metric" key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
       {/* 4. Ultra Pro Max Custom Precision Cursor Suite */}
