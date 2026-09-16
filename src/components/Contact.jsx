@@ -55,9 +55,28 @@ const Contact = () => {
             <span className="text-xs font-mono text-[#13315c] tracking-[0.12em] hidden md:block">BUSINESS · LEADERSHIP · PARTNERSHIPS · OPPORTUNITIES</span>
           </div>
 
-          <div className="mb-12 max-w-3xl">
+          <div className="mb-10 max-w-3xl">
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-[#0b2545] mb-5">Good conversations start with the business problem.</h2>
             <p className="text-sm md:text-base text-[#13315c] leading-relaxed max-w-2xl">Share the context, challenge or opportunity. The right conversation can begin around acquisition, conversion, product, systems, leadership or a broader growth mandate.</p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3 mb-12">
+            <a href="mailto:pudinaveenkumar123@gmail.com" className="group rounded-2xl border border-[#0b2545]/10 bg-white px-5 py-4 shadow-sm hover:border-[#134074]/35 hover:-translate-y-1 transition-all duration-300">
+              <span className="block text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#134074] mb-2">Email</span>
+              <span className="block text-sm font-semibold text-[#0b2545] break-all">pudinaveenkumar123@gmail.com</span>
+            </a>
+            <a href="tel:+919885990560" className="group rounded-2xl border border-[#0b2545]/10 bg-white px-5 py-4 shadow-sm hover:border-[#134074]/35 hover:-translate-y-1 transition-all duration-300">
+              <span className="block text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#134074] mb-2">Phone</span>
+              <span className="block text-sm font-semibold text-[#0b2545]">+91 98859 90560</span>
+            </a>
+            <a href="https://www.linkedin.com/in/pudi-naveen-kumar-3478a8203/" target="_blank" rel="noopener noreferrer" className="group rounded-2xl border border-[#0b2545]/10 bg-white px-5 py-4 shadow-sm hover:border-[#134074]/35 hover:-translate-y-1 transition-all duration-300">
+              <span className="block text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#134074] mb-2">LinkedIn</span>
+              <span className="block text-sm font-semibold text-[#0b2545]">Connect on LinkedIn ↗</span>
+            </a>
+            <div className="rounded-2xl border border-[#0b2545]/10 bg-white px-5 py-4 shadow-sm">
+              <span className="block text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#134074] mb-2">Location</span>
+              <span className="block text-sm font-semibold text-[#0b2545]">Hyderabad, Telangana</span>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 w-full">
