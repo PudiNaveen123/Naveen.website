@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import './FlowBackground.css';
+import { startLiquidFallback } from './liquidFallback';
 
 // Independent liquid-gradient renderer in the Harbour Navy palette.
 const vertex = `attribute vec2 position; void main(){gl_Position=vec4(position,0.,1.);}`;
@@ -49,7 +50,7 @@ export default function FlowBackground({ variant = 'hero' }) {
   useEffect(() => {
     const canvas = ref.current;
     const gl = canvas.getContext('webgl', { alpha: false, antialias: false, powerPreference: 'low-power' });
-    if (!gl) return;
+    if (!gl) return startLiquidFallback(canvas, variant);
     const shaders = [];
     const compile = (type, source) => {
       const shader = gl.createShader(type);
