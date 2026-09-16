@@ -6,342 +6,176 @@ import './Hero.css';
 
 const Hero = ({ startMotion = true }) => {
   const sectionRef = useRef(null);
-  const cardRef = useRef(null);
-  const glareRef = useRef(null);
-  const spotlightRef = useRef(null);
-  const cursorDotRef = useRef(null);
-  const cursorRingRef = useRef(null);
   const contentRef = useRef(null);
+  const portraitRef = useRef(null);
 
-  const developerRoles = [
-    'GROWTH HACKER // PRODUCT MARKETER',
-    'DIGITAL MARKETER // ADS SPECIALIST',
-    'PAID MARKETR // DISTRIBUTED SYSTEMS',
-    'ACCLAIMED // ALGORITHMIC PROBLEM SOLVER'
+  const systemSignals = [
+    'ACQUISITION // CONVERSION',
+    'PRODUCT // REVENUE',
+    'DATA // AUTOMATION',
+    'STRATEGY // EXECUTION',
   ];
 
   useEffect(() => {
-    if (!startMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!startMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const section = sectionRef.current;
-    const card = cardRef.current;
     const content = contentRef.current;
-    if (!section || !card || !content) return;
+    const portrait = portraitRef.current;
+    if (!section || !content || !portrait) return;
 
-    const animatedNodes = [card, glareRef.current, spotlightRef.current, cursorDotRef.current, cursorRingRef.current, ...content.querySelectorAll(".hero-anim-item"), section.querySelector("header")].filter(Boolean);
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    tl.fromTo(section.querySelector('header'), { y: -28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 })
+      .fromTo(
+        content.querySelectorAll('.hero-anim-item'),
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.09 },
+        '-=0.45'
+      )
+      .fromTo(portrait, { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 1 }, '-=0.7');
 
-    // --- GSAP CINEMATIC ENTRANCE ANIMATION ---
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-    tl.fromTo(
-      section.querySelector('header'),
-      { y: -60, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1 }
-    )
-    .fromTo(
-      content.querySelectorAll('.hero-anim-item'),
-      { y: 50, opacity: 0, filter: "blur(10px)" },
-      { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.1, stagger: 0.12 },
-      "-=0.7"
-    )
-    .fromTo(
-      card,
-      { scale: 0.75, opacity: 0, rotationY: 35, rotationX: -15 },
-      { scale: 1, opacity: 1, rotationY: 0, rotationX: 0, duration: 1.4, ease: "back.out(1.2)" },
-      "-=0.9"
-    );
-
-    // --- MOUSE PHYSICS & SPOTLIGHT TRACKING ---
-    gsap.set([cursorDotRef.current, cursorRingRef.current], {
-      scale: 0.5,
-      opacity: 0,
-      transformOrigin: "50% 50%"
-    });
-
-    const xToDot = gsap.quickTo(cursorDotRef.current, "x", { duration: 0.05, ease: "power2.out" });
-    const yToDot = gsap.quickTo(cursorDotRef.current, "y", { duration: 0.05, ease: "power2.out" });
-
-    const xToRing = gsap.quickTo(cursorRingRef.current, "x", { duration: 0.15, ease: "power3.out" });
-    const yToRing = gsap.quickTo(cursorRingRef.current, "y", { duration: 0.15, ease: "power3.out" });
-
-    const xTilt = gsap.quickTo(card, "rotationY", { duration: 0.4, ease: "power3.out" });
-    const yTilt = gsap.quickTo(card, "rotationX", { duration: 0.4, ease: "power3.out" });
-    const glareX = gsap.quickTo(glareRef.current, "x", { duration: 0.3, ease: "power2.out" });
-    const glareY = gsap.quickTo(glareRef.current, "y", { duration: 0.3, ease: "power2.out" });
-
-    const handleMouseMove = (e) => {
-      const rect = section.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const dotSize = 12;
-      const ringSize = 48;
-
-      // Update Spotlight position instantly via inline style
-      if (spotlightRef.current) {
-        spotlightRef.current.style.transform = `translate3d(${x - 300}px, ${y - 300}px, 0)`;
-      }
-
-      // Update Custom Cursor coordinates
-      xToDot(x - dotSize / 2);
-      yToDot(y - dotSize / 2);
-      xToRing(x - ringSize / 2);
-      yToRing(y - ringSize / 2);
-
-      // Card 3D Perspective Calculations
-      const cardRect = card.getBoundingClientRect();
-      const cardCenterX = cardRect.left + cardRect.width / 2 - rect.left;
-      const cardCenterY = cardRect.top + cardRect.height / 2 - rect.top;
-
-      const rotateX = -((y - cardCenterY) / (cardRect.height / 2)) * 16;
-      const rotateY = ((x - cardCenterX) / (cardRect.width / 2)) * 16;
-
-      xTilt(rotateY);
-      yTilt(rotateX);
-
-      // Holographic Glare mapping
-      glareX((x - cardRect.left) - cardRect.width / 2);
-      glareY((y - cardRect.top) - cardRect.height / 2);
-    };
-
-    const handleMouseEnter = () => {
-      gsap.to([cursorDotRef.current, cursorRingRef.current], {
-        opacity: 1,
-        scale: 1,
-        duration: 0.3,
-        ease: "power2.out"
-      });
-      if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 1, duration: 0.3 });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to([cursorDotRef.current, cursorRingRef.current], {
-        opacity: 0,
-        scale: 0.5,
-        duration: 0.3,
-        ease: "power2.inOut"
-      });
-      if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 0, duration: 0.3 });
-      xTilt(0);
-      yTilt(0);
-    };
-
-    section.addEventListener("mousemove", handleMouseMove);
-    section.addEventListener("mouseenter", handleMouseEnter);
-    section.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      tl.kill();
-      gsap.killTweensOf(animatedNodes);
-      section.removeEventListener("mousemove", handleMouseMove);
-      section.removeEventListener("mouseenter", handleMouseEnter);
-      section.removeEventListener("mouseleave", handleMouseLeave);
-    };
+    return () => tl.kill();
   }, [startMotion]);
 
   return (
     <section
       ref={sectionRef}
       id="home"
-      className="theme-hero relative w-full min-h-screen bg-[#eef4ed] overflow-hidden flex flex-col justify-between"
+      className="theme-hero relative w-full min-h-screen bg-[#eef4ed] overflow-hidden flex flex-col"
     >
       <style>{`
         @keyframes marquee {
-          0% { transform: translateX(0%); }
+          0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        .animate-marquee {
-          display: flex;
+        .brand-marquee {
           width: max-content;
-          animation: marquee 35s linear infinite;
+          animation: marquee 42s linear infinite;
         }
       `}</style>
 
       <FlowBackground />
-      {/* 1. Cinematic Background Marquee */}
-      <div className="absolute inset-0 z-[1]">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-10">
-          <div className="flex whitespace-nowrap animate-marquee">
-            {[...developerRoles, ...developerRoles].map((role, idx) => (
-              <span key={idx} className="text-[14vw] font-black text-[#134074] mx-8 uppercase tracking-tighter">
-                {role} &bull;
+
+      <div className="absolute inset-0 z-[1] overflow-hidden pointer-events-none select-none">
+        <div className="absolute top-[36%] -translate-y-1/2 opacity-[0.055]">
+          <div className="brand-marquee flex whitespace-nowrap">
+            {[...systemSignals, ...systemSignals].map((signal, idx) => (
+              <span key={idx} className="text-[12vw] font-black text-[#134074] mx-8 tracking-tighter">
+                {signal} ·
               </span>
             ))}
           </div>
         </div>
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#134074]/30 to-transparent" />
       </div>
 
-      {/* 2. Direct Mouse Tracking Spotlight Beam (Glows wherever you move) */}
-      <div ref={spotlightRef}
-        className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-10 opacity-0 blur-[90px] transition-opacity duration-300"
-        style={{
-          background: 'radial-gradient(circle, rgba(19,64,116,0.35) 0%, rgba(19,64,116,0.1) 40%, transparent 70%)'
-        }}
-      ></div>
+      <header className="relative z-50 w-full max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between">
+        <a href="#home" className="text-xl md:text-2xl font-black text-[#134074] tracking-tighter">
+          GROWTH.ENGINE<span className="text-[#0b2545]">/</span>
+        </a>
+        <nav className="hidden md:flex items-center gap-7 text-[11px] font-mono uppercase tracking-[0.16em] text-[#0b2545]">
+          <a href="#about" className="hover:text-[#134074] transition-colors">Perspective</a>
+          <a href="#expertise" className="hover:text-[#134074] transition-colors">Capabilities</a>
+          <a href="#skills" className="hover:text-[#134074] transition-colors">Systems</a>
+          <a href="#projects" className="hover:text-[#134074] transition-colors">Work</a>
+          <a href="#contact" className="hover:text-[#134074] transition-colors">Connect</a>
+        </nav>
+        <a
+          href="#contact"
+          className="px-5 py-2.5 rounded-lg bg-[#134074] text-[#eef4ed] font-bold text-[11px] uppercase tracking-[0.14em] transition-transform duration-300 hover:-translate-y-0.5"
+        >
+          Start a Conversation
+        </a>
+      </header>
 
-      {/* 3. Main Content Layer */}
-      <div ref={contentRef} className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-between pt-24 pb-12">
-
-        {/* Top Netflix Cinematic Badge */}
-        <div className="hero-anim-item flex items-center justify-between w-full">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded bg-[#eef4ed]/90 backdrop-blur-2xl border border-[#134074]/40 text-xs font-mono uppercase tracking-widest text-[#0b2545] shadow-2xl">
-            <span className="w-2 h-2 rounded-full bg-[#134074] animate-ping"></span>
-            <span className="text-[#134074] font-bold tracking-wider" style={{ textTransform: 'none' }}>Growth That Moves the Business.</span>
-            <span className="text-[#0b2545]"></span>
-            <span className="text-[#0b2545]"></span>
+      <div ref={contentRef} className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 flex-1 flex flex-col justify-center py-10 md:py-14">
+        <div className="hero-anim-item flex items-center justify-between gap-4 mb-10">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-lg bg-[#eef4ed]/85 backdrop-blur-xl border border-[#134074]/25 text-[11px] font-mono tracking-[0.12em] text-[#134074] shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#134074]" />
+            <span className="font-bold normal-case tracking-normal">Growth That Moves the Business.</span>
           </div>
-          <div className="hidden md:flex items-center gap-2 text-xs font-mono text-[#0b2545] tracking-wider">
-            <span className="px-2 py-0.5 border border-[#0b2545]/20 rounded bg-[#eef4ed]/80">₹2Cr+ SCALE</span>
-            <span className="px-2 py-0.5 border border-[#0b2545]/20 rounded bg-[#eef4ed]/80">AI × GROWTH</span>
+          <div className="hidden lg:flex items-center gap-2 text-[10px] font-mono tracking-[0.14em] text-[#0b2545]">
+            <span className="px-3 py-1.5 border border-[#0b2545]/15 rounded-md bg-[#eef4ed]/70">₹2CR+ MONTHLY SCALE</span>
+            <span className="px-3 py-1.5 border border-[#0b2545]/15 rounded-md bg-[#eef4ed]/70">AI × BUSINESS SYSTEMS</span>
           </div>
         </div>
 
-        {/* Main Center Cinematic Stage Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 my-auto">
-
-          {/* Left Side: Developer Story & Description */}
-          <div className="lg:col-span-5 flex flex-col items-start space-y-5 text-left">
-
-            <div className="hero-anim-item flex items-center gap-3">
-              <span className="px-2.5 py-0.5 bg-[#134074] text-[#eef4ed] font-black text-xs rounded tracking-widest shadow-[0_0_20px_rgba(19,64,116,0.8)] animate-pulse">TOP 1%</span>
-              <span className="text-[#0b2545] text-xs font-mono tracking-widest uppercase">GROWTH MARKETER & PROBLEM SOLVER</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          <div className="lg:col-span-5 space-y-6">
+            <div className="hero-anim-item flex items-center gap-3 text-[11px] font-mono tracking-[0.16em] uppercase text-[#0b2545]">
+              <span className="w-8 h-px bg-[#134074]" />
+              Strategy · Scale · Systems
             </div>
 
-            <h1 className="hero-anim-item text-5xl md:text-7xl font-black tracking-tighter text-[#0b2545] leading-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
+            <h1 className="hero-anim-item text-5xl md:text-7xl font-black tracking-tighter text-[#0b2545] leading-[0.92]">
               NAVEEN <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#134074] via-[#134074] to-[#134074] drop-shadow-[0_0_35px_rgba(19,64,116,0.5)]">
-            GROWTH.ENGINE
-              </span>
+              <span className="text-[#134074]">GROWTH.ENGINE</span>
             </h1>
 
-            <div className="hero-anim-item flex items-center gap-3 text-xs font-mono text-[#134074] font-bold">
-              <span className="px-2 py-0.5 bg-[#134074]/10 border border-[#134074]/30 rounded text-[#134074]">₹2Cr+ MONTHLY SCALE</span>
-              <span className="text-[#0b2545]">•</span>
-              <span>META • GOOGLE • AI • CRO</span>
-              <span className="text-[#0b2545]">•</span>
-              <span className="text-[#0b2545]">AUTOMATION</span>
-            </div>
-
-            <p className="hero-anim-item text-sm md:text-base text-[#0b2545] font-light leading-relaxed max-w-md drop-shadow">
-              Building systems that grow businesses — combining performance marketing, product growth, AI automation, and experimentation to acquire, convert, and retain customers profitably.
+            <p className="hero-anim-item text-sm md:text-[17px] text-[#0b2545]/85 leading-relaxed max-w-xl">
+              Building connected business systems across acquisition, product, conversion, intelligence and automation — designed to create measurable movement, not isolated activity.
             </p>
 
-            {/* Action Button Set */}
-            <div className="hero-anim-item flex items-center gap-4 pt-2">
-              <a
-                href="#projects"
-                className="px-8 py-3.5 bg-[#eef4ed] text-[#eef4ed] font-bold text-xs uppercase tracking-widest rounded hover:bg-[#134074] hover:text-[#eef4ed] transition-all duration-300 shadow-[0_10px_35px_rgba(255,255,255,0.3)] flex items-center gap-2 hover:scale-105 active:scale-95"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-                View Projects
+            <div className="hero-anim-item flex flex-wrap gap-2 text-[10px] font-mono tracking-[0.12em] uppercase text-[#134074]">
+              {['Acquisition', 'Product', 'Conversion', 'Analytics', 'Automation'].map((item) => (
+                <span key={item} className="px-3 py-1.5 rounded-md border border-[#134074]/20 bg-[#134074]/[0.04]">{item}</span>
+              ))}
+            </div>
+
+            <div className="hero-anim-item flex flex-wrap gap-3 pt-1">
+              <a href="#projects" className="px-7 py-3.5 rounded-lg bg-[#134074] text-[#eef4ed] font-bold text-[11px] uppercase tracking-[0.14em] hover:-translate-y-0.5 transition-transform">
+                Explore Business Work
               </a>
-              <a
-                href="#contact"
-                className="px-8 py-3.5 bg-[#eef4ed] text-[#0b2545] border border-[#0b2545]/20 font-bold text-xs uppercase tracking-widest rounded hover:bg-[#134074] transition-all duration-300 shadow-xl backdrop-blur-md flex items-center gap-2 hover:scale-105 active:scale-95"
-              >
-                <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="8" x2="12" y2="12" />
-                  <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
-                Contact Me
+              <a href="#about" className="px-7 py-3.5 rounded-lg border border-[#0b2545]/20 text-[#0b2545] font-bold text-[11px] uppercase tracking-[0.14em] bg-[#eef4ed]/70 hover:border-[#134074]/50 transition-colors">
+                See the System
               </a>
             </div>
           </div>
 
-          {/* Center: Interactive 3D Holographic Tilt Developer Poster Frame */}
-          <div className="lg:col-span-4 flex justify-center perspective-[1200px]">
-            <div ref={cardRef}
-              className="relative group transform-gpu transition-transform duration-100 ease-out will-change-transform"
-            >
-              {/* Cinematic Red Neon Back Glow */}
-              <div className="absolute -inset-3 bg-gradient-to-r from-[#134074]/70 via-[#134074]/40 to-[#134074]/20 rounded-3xl blur-3xl opacity-90 group-hover:opacity-100 animate-pulse duration-1000"></div>
-
-              {/* Poster Card with Glossy Sheen */}
-              <div className="relative w-[280px] md:w-[320px] p-3.5 bg-[#eef4ed]/90 backdrop-blur-2xl rounded-2xl border border-[#134074]/40 shadow-[0_40px_80px_rgba(0,0,0,0.95)] overflow-hidden">
-
-                {/* Dynamic Specular Glare Layer */}
-                <div ref={glareRef}
-                  className="absolute inset-[-50%] w-[200%] h-[200%] bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none transform-gpu z-40"
-                ></div>
-
-                {/* Netflix Series Tag */}
-                <div className="absolute top-6 left-6 z-30 px-3 py-1 bg-[#134074] text-[#eef4ed] font-mono text-[10px] font-bold tracking-widest rounded shadow-xl">
-                  Business Strategist
+          <div className="lg:col-span-4 flex justify-center">
+            <div ref={portraitRef} className="relative w-[280px] md:w-[330px]">
+              <div className="absolute -inset-8 rounded-full bg-[#134074]/10 blur-3xl" />
+              <div className="relative p-3 rounded-[28px] bg-[#eef4ed]/80 backdrop-blur-xl border border-[#134074]/20 shadow-[0_30px_90px_rgba(11,37,69,0.16)]">
+                <div className="absolute top-6 left-6 z-20 px-3 py-1.5 rounded-md bg-[#134074] text-[#eef4ed] text-[10px] font-mono font-bold tracking-[0.12em] uppercase">
+                  Business Growth
                 </div>
-
-                <img
-                  src={pictureImg}
-                  alt="Developer Portrait"
-                  className="w-full h-[330px] md:h-[390px] object-cover rounded-xl  group-hover:scale-[1.02] transition-transform duration-500"
-                />
+                <img src={pictureImg} alt="Portrait" className="w-full h-[360px] md:h-[410px] object-cover rounded-[20px]" />
               </div>
             </div>
           </div>
 
-          {/* Right Side: Technical Specs & Stack */}
-          <div className="hero-anim-item lg:col-span-3 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
-            <div className="p-5 bg-[#eef4ed]/90 backdrop-blur-2xl border border-[#0b2545]/20 rounded-xl shadow-2xl max-w-xs">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-[#134074] font-bold mb-2">Performance marketing for ambitious brands</h3>
-              <p className="text-xs text-[#0b2545] leading-relaxed font-light">
-                Paid ads, UGC creative systems, SEO/AEO/GEO, growth strategy — built to scale profitably, not just spend budget.
+          <div className="hero-anim-item lg:col-span-3">
+            <div className="rounded-2xl border border-[#0b2545]/12 bg-[#eef4ed]/75 backdrop-blur-xl p-6 shadow-[0_18px_60px_rgba(11,37,69,0.08)]">
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-[10px] font-mono tracking-[0.16em] uppercase text-[#134074] font-bold">Operating System</span>
+                <span className="text-[10px] font-mono text-[#0b2545]/50">01 / 01</span>
+              </div>
+              <h2 className="text-xl font-black tracking-tight text-[#0b2545] mb-3">Business before channels.</h2>
+              <p className="text-sm text-[#0b2545]/75 leading-relaxed">
+                Strategy, execution, measurement and optimization connected around commercial priorities — with structured implementation support built into the operating model.
               </p>
+              <div className="mt-6 pt-5 border-t border-[#0b2545]/10 grid grid-cols-2 gap-4 text-[10px] font-mono uppercase tracking-[0.1em] text-[#0b2545]/65">
+                <span>Demand</span><span>Conversion</span><span>Revenue</span><span>Efficiency</span>
+              </div>
             </div>
           </div>
-
         </div>
 
-        {/* Bottom Cinematic Ticker */}
-        <div className="hero-anim-item flex items-center justify-between text-xs font-mono text-[#0b2545] tracking-widest uppercase">
-          <span>BUILT FOR PROFITABLE GROWTH</span>
-          <span></span>
+        <div className="hero-anim-item mt-12 border-t border-[#0b2545]/10 pt-6">
+          <dl className="hero-metrics" aria-label="Business growth results">
+            {[
+              ['₹40Cr+', 'Revenue Influenced'],
+              ['₹2Cr+', 'Monthly Media Scale'],
+              ['3×', 'Acquisition Growth'],
+              ['60+', 'Businesses & Products'],
+            ].map(([value, label]) => (
+              <div className="hero-metric" key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-
-        <dl className="hero-anim-item hero-metrics" aria-label="Business growth results">
-          {[
-            ['₹40Cr+', 'Revenue Influenced'],
-            ['₹2Cr+', 'Monthly Ad Spend Managed'],
-            ['3×', 'Acquisition Growth'],
-            ['60+', 'Businesses & Products Supported'],
-          ].map(([value, label]) => (
-            <div className="hero-metric" key={label}>
-              <dt>{label}</dt>
-              <dd>{value}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
-
-      {/* 4. Ultra Pro Max Custom Precision Cursor Suite */}
-      <div ref={cursorDotRef}
-        className="absolute top-0 left-0 z-50 pointer-events-none w-3 h-3 bg-[#134074] rounded-full shadow-[0_0_15px_#134074]"
-      ></div>
-
-      <div ref={cursorRingRef}
-        className="absolute top-0 left-0 z-50 pointer-events-none w-12 h-12 border border-[#134074]/60 rounded-full flex items-center justify-center backdrop-blur-[1px]"
-      ></div>
-
-      {/* --- NETFLIX-THEMED DEVELOPER NAVBAR --- */}
-      <header className="absolute top-0 left-0 z-50 w-full max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between pointer-events-auto">
-        <div className="text-2xl font-black text-[#134074] tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(19,64,116,0.9)]">
-          NAVEEN KUMAR<span className="w-1.5 h-1.5 rounded-full bg-[#eef4ed] inline-block"></span>
-        </div>
-        <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-[#0b2545]">
-          <a href="#home" className="hover:text-[#134074] transition-colors">Home</a>
-          <a href="#about" className="hover:text-[#134074] transition-colors">About</a>
-          <a href="#expertise" className="hover:text-[#134074] transition-colors">Expertise</a>
-          <a href="#skills" className="hover:text-[#134074] transition-colors">Skills</a>
-          <a href="#projects" className="hover:text-[#134074] transition-colors">Projects</a>
-          <a href="#contact" className="hover:text-[#134074] transition-colors">Contact</a>
-        </nav>
-        <a
-          href="#hire"
-          className="px-5 py-2 rounded bg-[#134074] hover:bg-[#134074] text-[#eef4ed] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(19,64,116,0.6)] hover:scale-105 active:scale-95"
-        >
-          Hire Me
-        </a>
-      </header>
     </section>
   );
 };
