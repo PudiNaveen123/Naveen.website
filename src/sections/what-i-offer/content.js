@@ -1,22 +1,20 @@
-// Edit copy here. Replace files in ./images/ to update the card photos.
 export const offerContent = {
-  eyebrow: 'WHAT I OFFER',
-  title: 'Solutions Designed for Business Growth',
-  introduction: 'Helping businesses attract customers and achieve measurable success.',
-  description: 'Growth-focused marketing, creative, and digital solutions built to attract, convert, and scale.',
-  durationSeconds: 100,
+  eyebrow: 'GROWTH SYSTEMS',
+  title: 'Connected capabilities. One commercial direction.',
+  introduction: 'The strongest systems connect demand, conversion, data and execution around the same business priority.',
+  description: 'Built to improve how growth is planned, deployed, measured and scaled — without turning the page into a service catalogue.',
+  durationSeconds: 115,
 };
 
 export const offers = [
-  { id: 'growth-consulting', title: 'Growth Consulting', description: 'Turn challenges into clear strategies and scalable growth.', image: 'profile.png', icon: 'growth', position: '50% 20%' },
-  { id: 'ppc-advertising', title: 'PPC Advertising', description: 'Drive targeted traffic, optimize CAC, and maximize returns.', image: 'ppc-advertising.jpg', icon: 'target' },
-  { id: 'seo', title: 'SEO', description: 'Improve search visibility, grow organic traffic, and build authority.', image: 'seo.jpg', icon: 'search' },
-  { id: 'social-media-marketing', title: 'Social Media Marketing', description: 'Build attention, grow engagement, and strengthen your digital presence.', image: 'social-media-marketing.jpg', icon: 'social' },
-  { id: 'sem', title: 'SEM', description: 'Capture high-intent searches, drive qualified traffic, and increase conversions.', image: 'sem.jpg', icon: 'target' },
-  { id: 'ui-ux', title: 'UI & UX', description: 'Create intuitive experiences, reduce friction, and improve conversions.', image: 'ui-ux.jpg', icon: 'design' },
-  { id: 'content-marketing', title: 'Content Marketing', description: 'Create valuable content, build trust, and drive meaningful engagement.', image: 'content-marketing.jpg', icon: 'content' },
-  { id: 'brand-management', title: 'Brand Management', description: 'Build consistent positioning, strengthen identity, and increase brand recall.', image: 'brand-management.jpg', icon: 'brand' },
-  { id: 'website-design', title: 'Website Design', description: 'Design modern websites, communicate value, and drive conversions.', image: 'website-design.jpg', icon: 'design' },
-  { id: 'funnel-design', title: 'Funnel Design', description: 'Map user journeys, remove friction, and improve conversion rates.', image: 'funnel-design.jpg', icon: 'funnel' },
-  { id: 'ai-reporting-analytics', title: 'AI-Driven Reporting & Analytics', description: 'Automate reporting, uncover insights, and make faster decisions.', image: 'ai-reporting-analytics.jpg', icon: 'analytics' },
+  { id: 'commercial-strategy', title: 'Commercial Growth Strategy', description: 'Translate business priorities into focused growth bets, channel roles and measurable outcomes.', image: 'profile.png', icon: 'growth', position: '50% 20%' },
+  { id: 'acquisition', title: 'Acquisition Systems', description: 'Build demand through structured media, search, audience and creative testing systems.', image: 'ppc-advertising.jpg', icon: 'target' },
+  { id: 'search', title: 'Search & Discovery', description: 'Strengthen discoverability across high-intent search, organic visibility and demand capture.', image: 'seo.jpg', icon: 'search' },
+  { id: 'content-demand', title: 'Content & Demand', description: 'Create content systems that earn attention, strengthen positioning and support growth.', image: 'social-media-marketing.jpg', icon: 'content' },
+  { id: 'conversion', title: 'Conversion Architecture', description: 'Reduce friction across landing pages, onboarding, paywalls and decision journeys.', image: 'ui-ux.jpg', icon: 'funnel' },
+  { id: 'brand-positioning', title: 'Brand Positioning', description: 'Sharpen value, narrative and communication so the market understands why the business matters.', image: 'brand-management.jpg', icon: 'brand' },
+  { id: 'digital-experience', title: 'Digital Experience', description: 'Shape web and product experiences that communicate clearly and move users toward action.', image: 'website-design.jpg', icon: 'design' },
+  { id: 'revenue-journey', title: 'Revenue Journey', description: 'Connect acquisition, conversion, retention and monetization into a measurable commercial path.', image: 'funnel-design.jpg', icon: 'funnel' },
+  { id: 'intelligence', title: 'Growth Intelligence', description: 'Turn analytics, attribution and performance data into clearer decisions and priorities.', image: 'ai-reporting-analytics.jpg', icon: 'analytics' },
+  { id: 'automation', title: 'AI & Automation', description: 'Automate reporting, monitoring and repeatable workflows to improve speed and operating control.', image: 'sem.jpg', icon: 'analytics' },
 ];
