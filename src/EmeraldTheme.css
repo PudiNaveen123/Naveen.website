@@ -1,41 +1,137 @@
-/* Harbour Navy — 60% light foundation, 30% navy structure, 10% blue emphasis.
-   This file retains its historical path so existing imports remain stable. */
-:root { --harbour-paper: #eef4ed; --harbour-navy: #0b2545; --harbour-blue: #134074; --harbour-slate: #13315c; }
-.harbour-theme { background: var(--harbour-paper); color: var(--harbour-navy); }
+/* Harbour Navy + White — white surfaces, navy structure, blue emphasis. */
+:root {
+  --harbour-white: #ffffff;
+  --harbour-paper: #eef4ed;
+  --harbour-soft: #f7faf7;
+  --harbour-navy: #0b2545;
+  --harbour-blue: #134074;
+  --harbour-slate: #13315c;
+}
+
+.harbour-theme { background: var(--harbour-white); color: var(--harbour-navy); }
+
 .harbour-theme > section {
-  background-color: var(--harbour-paper);
-  background-image: radial-gradient(ellipse at 12% 30%, #13407408, transparent 55%), radial-gradient(ellipse at 88% 70%, #13315c08, transparent 55%);
+  background-color: var(--harbour-white);
+  background-image:
+    radial-gradient(ellipse at 10% 28%, #13407408, transparent 52%),
+    radial-gradient(ellipse at 90% 72%, #13315c07, transparent 54%);
   background-size: 160% 160%, 180% 180%;
   animation: harbour-drift 36s ease-in-out infinite alternate;
-  border-top: 1px solid #0b25451a;
+  border-top: 1px solid #0b254510;
 }
+
 .harbour-theme > section:nth-of-type(even) { animation-delay: -18s; }
-@keyframes harbour-drift { from { background-position: 0% 15%, 100% 85%; } to { background-position: 100% 70%, 0% 20%; } }
-/* Navy anchors provide the secondary colour's visual weight. */
-.harbour-theme > #expertise, .harbour-theme > #skills, .harbour-theme > footer { background-color: var(--harbour-navy); color: var(--harbour-paper); }
-.harbour-theme .theme-hero header { background: #eef4edb3; border-color: #0b254525; backdrop-filter: blur(18px); }
-.harbour-theme .theme-hero h1 > span,
-.harbour-theme .theme-hero header > div,
+@keyframes harbour-drift {
+  from { background-position: 0% 15%, 100% 85%; }
+  to { background-position: 100% 70%, 0% 20%; }
+}
+
+/* White is now an intentional UI layer rather than only the old green paper tone. */
+.harbour-theme > #home,
+.harbour-theme > #about,
+.harbour-theme > #projects,
+.harbour-theme > #contact { background-color: #fff !important; }
+
+.harbour-theme > #what-i-offer,
+.harbour-theme > #why-naveen { background-color: var(--harbour-soft) !important; }
+
+.harbour-theme > #expertise,
+.harbour-theme > #skills,
+.harbour-theme > footer { background-color: var(--harbour-navy) !important; color: #fff; }
+
+.harbour-theme .theme-hero header {
+  background: #ffffffb8 !important;
+  border-color: #0b254514 !important;
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
+}
+
+.harbour-theme .theme-hero h1 > span { color: var(--harbour-blue); }
+
+/* Strong, readable eyebrow system. */
 .harbour-theme .offers-eyebrow,
-.harbour-theme .why-eyebrow { color: var(--harbour-blue); }
-.harbour-theme .theme-hero header > a,
-.harbour-theme .theme-hero a[href="#projects"]:not(nav a),
-.harbour-theme #contact button[type="submit"] { background: var(--harbour-blue); color: var(--harbour-paper); box-shadow: 0 8px 28px #0b254515; }
-.harbour-theme .theme-hero header > a:hover,
-.harbour-theme .theme-hero a[href="#projects"]:not(nav a):hover,
-.harbour-theme #contact button[type="submit"]:hover { background: var(--harbour-slate); }
-.harbour-theme .theme-hero a[href="#contact"]:not(nav a) { color: var(--harbour-navy); border-color: #13407470; background: #eef4ed80; }
+.harbour-theme .why-eyebrow {
+  display: inline-flex !important;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px !important;
+  border-radius: 999px;
+  background: var(--harbour-blue) !important;
+  color: #fff !important;
+  border: 1px solid var(--harbour-blue) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase;
+  box-shadow: 0 8px 22px #0b254512;
+}
+
+.harbour-theme #about > .relative.z-10 > .flex.flex-col.items-start > .inline-flex,
+.harbour-theme #expertise .inline-flex:first-child {
+  background: var(--harbour-blue) !important;
+  color: #fff !important;
+  border-color: var(--harbour-blue) !important;
+  box-shadow: 0 8px 22px #0b254514 !important;
+}
+.harbour-theme #about > .relative.z-10 > .flex.flex-col.items-start > .inline-flex span,
+.harbour-theme #expertise .inline-flex:first-child span { color: #fff !important; }
+
+/* Bright glass UI on light sections. */
 .harbour-theme .theme-hero [class*="backdrop-blur"],
 .harbour-theme #about [class*="backdrop-blur"],
-.harbour-theme .why-card { background-color: #eef4edd9; border-color: #0b25452b; backdrop-filter: blur(20px) saturate(110%); -webkit-backdrop-filter: blur(20px) saturate(110%); box-shadow: inset 0 1px 0 #eef4ed, 0 16px 48px #0b25450d; }
-.harbour-theme .why-portrait { padding: 8px; background: #eef4ed99; border-color: #13407455; backdrop-filter: blur(20px); box-shadow: 0 18px 55px #0b25451a, inset 0 1px 0 #eef4ed; }
-.harbour-theme .why-portrait img { border-radius: 2px; }
-.harbour-theme .why-icon { color: var(--harbour-blue); background: #1340740d; border-color: #13407430; }
-.harbour-theme .offer-icon { color: var(--harbour-paper); background: #13315c99; border-color: #eef4ed40; }
-.harbour-theme .offer-card-shade { background: linear-gradient(180deg, transparent 15%, #0b254526 30%, #0b2545f5 72%, #0b2545 100%); }
-.harbour-theme .offer-card h3, .harbour-theme .offer-card p { color: var(--harbour-paper); }
-.harbour-theme .offers-pause { color: var(--harbour-blue); border-color: #13407455; background: #eef4ed; }
-.harbour-theme .theme-hero .animate-marquee { color: var(--harbour-blue); }
+.harbour-theme .why-card {
+  background-color: #fffffff0 !important;
+  border-color: #0b254519 !important;
+  backdrop-filter: blur(22px) saturate(120%);
+  -webkit-backdrop-filter: blur(22px) saturate(120%);
+  box-shadow: inset 0 1px 0 #fff, 0 18px 58px #0b254510;
+}
+
+.harbour-theme #about [class*="rounded-[2.5rem]"] {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fbf8 100%) !important;
+  border-color: #0b254516 !important;
+  box-shadow: 0 22px 70px #0b25450f, inset 0 1px 0 #fff !important;
+}
+
+.harbour-theme .why-portrait {
+  padding: 8px;
+  background: #fff !important;
+  border-color: #13407438 !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 22px 65px #0b254518, inset 0 1px 0 #fff;
+}
+.harbour-theme .why-portrait img { border-radius: 3px; }
+.harbour-theme .why-icon { color: var(--harbour-blue); background: #fff; border-color: #13407428; }
+
+.harbour-theme .offer-icon { color: #fff; background: #134074d9; border-color: #ffffff55; }
+.harbour-theme .offer-card { box-shadow: 0 22px 60px #0b25451a; }
+.harbour-theme .offer-card-shade { background: linear-gradient(180deg, transparent 10%, #0b254512 28%, #0b2545e8 70%, #0b2545 100%); }
+.harbour-theme .offer-card h3,
+.harbour-theme .offer-card p { color: #fff; }
+.harbour-theme .offers-pause { color: var(--harbour-blue); border-color: #13407438; background: #fff; }
+
+/* White editorial dividers and clearer section framing. */
+.harbour-theme #what-i-offer .offers-heading,
+.harbour-theme #why-naveen .why-heading {
+  background: #fff;
+  border: 1px solid #0b254510;
+  border-radius: 28px;
+  padding: clamp(24px, 4vw, 44px);
+  box-shadow: 0 18px 60px #0b25450b;
+}
+
+.harbour-theme .theme-hero .hero-metrics {
+  border-top: 1px solid #0b25450f;
+  background: linear-gradient(180deg, transparent, #ffffff70);
+}
+
 .harbour-theme :focus-visible { outline: 3px solid var(--harbour-blue); outline-offset: 4px; }
-.harbour-theme #expertise :focus-visible, .harbour-theme #skills :focus-visible, .harbour-theme footer :focus-visible { outline-color: var(--harbour-paper); }
-@media (prefers-reduced-motion: reduce) { .harbour-theme > section { animation: none; } }
+.harbour-theme #expertise :focus-visible,
+.harbour-theme #skills :focus-visible,
+.harbour-theme footer :focus-visible { outline-color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .harbour-theme > section { animation: none; }
+}
