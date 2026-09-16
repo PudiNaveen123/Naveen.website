@@ -1,3 +1,6 @@
+import { useCallback, useState } from 'react';
+import NetflixPreloader from './components/NetflixPreloader';
+import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
 import About from './components/About';
 import Expertise from './components/Expertise';
@@ -11,10 +14,15 @@ import ThemeMotion from './components/ThemeMotion';
 import './EmeraldTheme.css';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const finishLoading = useCallback(() => setLoading(false), []);
+
   return (
-    <main className="harbour-theme bg-[#eef4ed] min-h-screen text-[#0b2545] relative selection:bg-[#134074] selection:text-[#eef4ed]">
+    <main className="harbour-theme bg-white min-h-screen text-[#0b2545] relative selection:bg-[#134074] selection:text-white">
       <ThemeMotion />
-      <Hero startMotion />
+      {loading && <NetflixPreloader onComplete={finishLoading} />}
+      <CustomCursor />
+      <Hero startMotion={!loading} />
       <About />
       <Expertise />
       <WhatIOffer />
