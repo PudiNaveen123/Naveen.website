@@ -1,188 +1,78 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
 
 const Contact = () => {
-  const ref = useRef(null);
+  const [formData, setFormData] = useState({ name: '', company: '', email: '', objective: '', message: '' });
 
-  // React Form State tracking
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: '',
-    permission: false
-  });
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  // Parallax translation for the big background text
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "20%"]);
-
-  // Handle input changes dynamically
   const handleChange = (e) => {
-    const { id, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [id]: type === 'checkbox' ? checked : value
-    }));
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // Handle form submission logic
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!formData.permission) {
-      alert("Please accept the contact permission checkbox.");
-      return;
-    }
-
-    console.log("Form Data Submitted Successfully:", formData);
-    alert(`Thanks ${formData.firstName}! Message captured successfully.`);
-
-    setFormData({ firstName: '', lastName: '', email: '', message: '', permission: false });
+    console.log('Growth conversation:', formData);
+    alert('Thanks — your message has been captured.');
+    setFormData({ name: '', company: '', email: '', objective: '', message: '' });
   };
 
   return (
-    <section ref={ref} id="contact" className="bg-[#eef4ed] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-[#0b2545]/10 select-none">
-
-      {/* Background Cinematic Red Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#134074]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
-
-      {/* Huge Background Parallax Netflix Watermark Text */}
-      <motion.div
-        style={{ y }}
-        className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12 opacity-10"
-      >
-        <h1
-          className="text-[25vw] leading-[0.75] font-black text-[#134074] uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
-          style={{ fontFamily: "'Bebas Neue', 'Impact', sans-serif" }}
-        >
-          CONTACT
-        </h1>
-      </motion.div>
-
-      {/* Form Card Overlay */}
-      <div className="relative z-10 w-full flex justify-end items-end">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-[#eef4ed]/95 backdrop-blur-2xl border-t border-l border-[#0b2545]/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-[#0b2545] flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(11,37,69,0.10)] relative overflow-hidden"
-        >
-          {/* Subtle internal top crimson highlight glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-[#134074] to-transparent opacity-90"></div>
-
-          <div className="flex items-center justify-between mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-[#134074]/10 border border-[#134074]/30 text-xs font-mono uppercase tracking-widest text-[#134074]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#134074] animate-ping"></span>
-              <span>EPISODE 04 // GET IN TOUCH</span>
-            </div>
-            <span className="text-xs font-mono text-[#0b2545] tracking-wider hidden md:block">
-              // LET'S BUILD SOMETHING CINEMATIC
-            </span>
+    <section id="contact" className="relative w-full bg-[#eef4ed] text-[#0b2545] py-28 px-6 md:px-12 overflow-hidden border-t border-[#0b2545]/10">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] rounded-full bg-[#134074]/[0.06] blur-[160px] pointer-events-none" />
+      <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="lg:col-span-5 lg:sticky lg:top-24">
+          <p className="text-[11px] font-mono font-bold tracking-[0.18em] uppercase text-[#134074] mb-4">Start a Conversation</p>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.96] mb-6">Good growth conversations start with the <span className="text-[#134074]">business problem.</span></h2>
+          <p className="text-sm md:text-base leading-relaxed text-[#0b2545]/68 max-w-xl">
+            Acquisition, conversion, monetization, efficiency, operating systems or a broader business mandate — start with the context and the outcome that needs to move.
+          </p>
+          <div className="mt-9 grid grid-cols-2 gap-4 text-[10px] font-mono uppercase tracking-[0.11em] text-[#0b2545]/55">
+            <span className="border-t border-[#0b2545]/12 pt-3">Growth Leadership</span>
+            <span className="border-t border-[#0b2545]/12 pt-3">Business Mandates</span>
+            <span className="border-t border-[#0b2545]/12 pt-3">Partnerships</span>
+            <span className="border-t border-[#0b2545]/12 pt-3">New Opportunities</span>
           </div>
+        </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 w-full">
-            <div className="flex flex-col md:flex-row gap-12 md:gap-20 w-full">
-
-              {/* Left Column */}
-              <div className="flex-1 flex flex-col gap-10">
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                    required
-                    className="w-full bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium rounded-none text-[#0b2545]"
-                  />
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                    required
-                    className="w-full bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium rounded-none text-[#0b2545]"
-                  />
-                </div>
-                <div className="relative">
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email Address"
-                    required
-                    className="w-full bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium rounded-none text-[#0b2545]"
-                  />
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="flex-1 flex flex-col">
-                <div className="relative h-full flex flex-col">
-                  <textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Type your message here..."
-                    required
-                    className="w-full h-full min-h-[140px] bg-transparent border-b border-[#0b2545]/20 pb-3 text-lg focus:outline-none focus:border-[#134074] transition-colors placeholder-[#13315c] font-medium resize-none rounded-none text-[#0b2545]"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Section */}
-            <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-[#0b2545]/10">
-              {/* Left text */}
-              <div className="flex-1 flex items-start gap-4 text-sm font-light text-[#0b2545]">
+        <div className="lg:col-span-7 rounded-[28px] border border-[#0b2545]/10 bg-[#eef4ed]/80 backdrop-blur-xl p-7 md:p-10 shadow-[0_24px_70px_rgba(11,37,69,0.07)]">
+          <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-x-6 gap-y-7">
+            {[
+              ['name', 'Name', 'text'],
+              ['company', 'Company / Organisation', 'text'],
+              ['email', 'Work Email', 'email'],
+              ['objective', 'Growth Objective', 'text'],
+            ].map(([id, label, type]) => (
+              <label key={id} className="block">
+                <span className="block text-[10px] font-mono uppercase tracking-[0.12em] text-[#0b2545]/45 mb-2">{label}</span>
                 <input
-                  type="checkbox"
-                  id="permission"
-                  checked={formData.permission}
+                  id={id}
+                  type={type}
+                  value={formData[id]}
                   onChange={handleChange}
-                  className="mt-1 w-4 h-4 rounded-sm border-[#0b2545]/30 bg-transparent text-[#134074] focus:ring-0 focus:ring-offset-0 cursor-pointer"
-                  style={{ accentColor: "#134074" }}
+                  required
+                  className="w-full bg-transparent border-b border-[#0b2545]/18 py-3 text-base focus:outline-none focus:border-[#134074] transition-colors rounded-none"
                 />
-                <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
-                  I give permission to contact me at this email address.
-                </label>
-              </div>
+              </label>
+            ))}
 
-              {/* Right text & button */}
-              <div className="flex-1 flex flex-col gap-8 text-xs text-[#0b2545] font-light">
-                <p className="leading-relaxed max-w-[400px]">
-                  This site is protected by security protocols and industry-standard privacy guidelines.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
-                  <p className="max-w-[250px] leading-relaxed">
-                    Ready to start a project or collaboration? Send a direct signal.
-                  </p>
+            <label className="md:col-span-2 block">
+              <span className="block text-[10px] font-mono uppercase tracking-[0.12em] text-[#0b2545]/45 mb-2">Business Context</span>
+              <textarea
+                id="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows="5"
+                placeholder="What is the business trying to solve, improve or scale?"
+                className="w-full bg-transparent border-b border-[#0b2545]/18 py-3 text-base focus:outline-none focus:border-[#134074] transition-colors resize-none rounded-none placeholder:text-[#0b2545]/32"
+              />
+            </label>
 
-                  <button
-                    type="submit"
-                    className="px-8 py-3.5 rounded bg-[#134074] text-[#eef4ed] font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-[#134074] transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(19,64,116,0.6)] hover:scale-105"
-                  >
-                    Send Message
-                    <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+            <div className="md:col-span-2 pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-t border-[#0b2545]/10">
+              <p className="text-xs leading-relaxed text-[#0b2545]/52 max-w-sm">A direct route for relevant business, leadership, partnership and strategic conversations.</p>
+              <button type="submit" className="px-7 py-3.5 rounded-lg bg-[#134074] text-[#eef4ed] font-bold text-[11px] uppercase tracking-[0.14em] transition-transform hover:-translate-y-0.5">Start a Conversation</button>
             </div>
           </form>
-
-        </motion.div>
+        </div>
       </div>
     </section>
   );
