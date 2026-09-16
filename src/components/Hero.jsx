@@ -9,8 +9,6 @@ const Hero = ({ startMotion = true }) => {
   const cardRef = useRef(null);
   const glareRef = useRef(null);
   const spotlightRef = useRef(null);
-  const cursorDotRef = useRef(null);
-  const cursorRingRef = useRef(null);
   const contentRef = useRef(null);
 
   const systemSignals = [
@@ -31,8 +29,6 @@ const Hero = ({ startMotion = true }) => {
       card,
       glareRef.current,
       spotlightRef.current,
-      cursorDotRef.current,
-      cursorRingRef.current,
       ...content.querySelectorAll('.hero-anim-item'),
       section.querySelector('header'),
     ].filter(Boolean);
@@ -42,12 +38,6 @@ const Hero = ({ startMotion = true }) => {
       .fromTo(content.querySelectorAll('.hero-anim-item'), { y: 50, opacity: 0, filter: 'blur(10px)' }, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.05, stagger: 0.1 }, '-=0.72')
       .fromTo(card, { scale: 0.78, opacity: 0, rotationY: 32, rotationX: -12 }, { scale: 1, opacity: 1, rotationY: 0, rotationX: 0, duration: 1.35, ease: 'back.out(1.18)' }, '-=0.88');
 
-    gsap.set([cursorDotRef.current, cursorRingRef.current], { scale: 0.5, opacity: 0, transformOrigin: '50% 50%' });
-
-    const xToDot = gsap.quickTo(cursorDotRef.current, 'x', { duration: 0.05, ease: 'power2.out' });
-    const yToDot = gsap.quickTo(cursorDotRef.current, 'y', { duration: 0.05, ease: 'power2.out' });
-    const xToRing = gsap.quickTo(cursorRingRef.current, 'x', { duration: 0.15, ease: 'power3.out' });
-    const yToRing = gsap.quickTo(cursorRingRef.current, 'y', { duration: 0.15, ease: 'power3.out' });
     const xTilt = gsap.quickTo(card, 'rotationY', { duration: 0.4, ease: 'power3.out' });
     const yTilt = gsap.quickTo(card, 'rotationX', { duration: 0.4, ease: 'power3.out' });
     const glareX = gsap.quickTo(glareRef.current, 'x', { duration: 0.3, ease: 'power2.out' });
@@ -57,14 +47,8 @@ const Hero = ({ startMotion = true }) => {
       const rect = section.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const dotSize = 12;
-      const ringSize = 48;
 
       if (spotlightRef.current) spotlightRef.current.style.transform = `translate3d(${x - 300}px, ${y - 300}px, 0)`;
-      xToDot(x - dotSize / 2);
-      yToDot(y - dotSize / 2);
-      xToRing(x - ringSize / 2);
-      yToRing(y - ringSize / 2);
 
       const cardRect = card.getBoundingClientRect();
       const cardCenterX = cardRect.left + cardRect.width / 2 - rect.left;
@@ -78,12 +62,10 @@ const Hero = ({ startMotion = true }) => {
     };
 
     const handleMouseEnter = () => {
-      gsap.to([cursorDotRef.current, cursorRingRef.current], { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' });
       if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 1, duration: 0.3 });
     };
 
     const handleMouseLeave = () => {
-      gsap.to([cursorDotRef.current, cursorRingRef.current], { opacity: 0, scale: 0.5, duration: 0.3, ease: 'power2.inOut' });
       if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 0, duration: 0.3 });
       xTilt(0);
       yTilt(0);
@@ -121,7 +103,7 @@ const Hero = ({ startMotion = true }) => {
         </div>
       </div>
 
-      <div ref={spotlightRef} className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-10 opacity-0 blur-[90px] transition-opacity duration-300" style={{ background: 'radial-gradient(circle, rgba(19,64,116,0.22) 0%, rgba(19,64,116,0.08) 42%, transparent 70%)' }} />
+      <div ref={spotlightRef} className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-10 opacity-0 blur-[90px] transition-opacity duration-300" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.34) 0%, rgba(19,64,116,0.14) 36%, rgba(19,64,116,0.05) 56%, transparent 72%)' }} />
 
       <div ref={contentRef} className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-between pt-24 pb-10">
         <div className="hero-anim-item flex items-center justify-between w-full gap-4">
@@ -202,9 +184,6 @@ const Hero = ({ startMotion = true }) => {
           ))}
         </dl>
       </div>
-
-      <div ref={cursorDotRef} className="absolute top-0 left-0 z-50 pointer-events-none w-3 h-3 bg-[#134074] rounded-full shadow-[0_0_15px_#134074]" />
-      <div ref={cursorRingRef} className="absolute top-0 left-0 z-50 pointer-events-none w-12 h-12 border border-[#134074]/50 rounded-full flex items-center justify-center backdrop-blur-[1px]" />
 
       <header className="absolute top-0 left-0 z-50 w-full px-6 md:px-12 py-5 flex items-center justify-between pointer-events-auto bg-white/60 backdrop-blur-xl border-b border-[#0b2545]/8">
         <div className="text-xl md:text-2xl font-black text-[#134074] tracking-tighter flex items-center gap-2">GROWTH.ENGINE<span className="w-1.5 h-1.5 rounded-full bg-[#134074] inline-block" /></div>
