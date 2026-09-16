@@ -11,35 +11,30 @@ uniform vec2 resolution;
 uniform float time;
 uniform float darkMode;
 float grain(vec2 p){return fract(52.9829189*fract(dot(p,vec2(.06711056,.00583715))));}
-vec2 deform(vec2 p,float t){
-  for(int i=0;i<5;i++){
-    float n=float(i)+1.;
-    vec2 drift=vec2(sin(t*.61+n*1.7),cos(t*.47+n*2.3));
-    p+=.22/n*sin(p.yx*(1.3+n*.35)+drift+t*vec2(.31,-.27));
-  }
-  return p;
-}
 void main(){
   vec2 uv=gl_FragCoord.xy/resolution;
-  // Aspect-correct coordinates prevent the fluid stretching on narrow screens.
   vec2 p=(gl_FragCoord.xy-.5*resolution)/max(resolution.x,resolution.y)*2.;
-  p=mat2(.82,-.57,.57,.82)*p;
-  float t=time*.195;
-  vec2 q=deform(p*.78+vec2(.2,-.4),t);
-  vec2 r=deform(q+vec2(.34*sin(t*.3),.3*cos(t*.23)),t*.73+2.);
-  float field=.5+.25*sin(r.x*3.4+r.y*1.8+t*.7)
-                    +.25*cos(q.y*2.6-q.x*1.7-t*.53);
-  // Alternating wide colour stops form shifting folds and open, quiet areas.
-  float fold=smoothstep(.16,.38,field)*(1.-smoothstep(.52,.72,field));
-  float broad=smoothstep(.68,.94,field);
-  float amount=clamp(fold*.92+broad*.65,0.,1.);
+  // Broad sheets of colour travel across the full canvas, slowly changing angle.
+  float angle=.65+.8*sin(time*.105);
+  p=mat2(cos(angle),-sin(angle),sin(angle),cos(angle))*p;
+  float t=time*.65;
+  for(int i=0;i<7;i++){
+    float n=float(i)+1.;
+    p+=.07/n*sin(p.yx*(2.+n*.31)+t*vec2(.63,-.47)+n*1.9);
+  }
+  float phase=p.x*5.+.65*sin(p.y*2.2+t*.38)+t;
+  // A narrow fold accompanies a broad luminous sheet, like the video reference.
+  float wave=.5+.5*sin(phase);
+  float sheet=smoothstep(.25,.8,wave);
+  float seam=exp(-pow((sin(phase+.85)-.8)*7.,2.));
+  float amount=clamp(sheet-.7*seam,0.,1.);
   vec3 paper=vec3(238.,244.,237.)/255.;
   vec3 navy=vec3(11.,37.,69.)/255.;
   vec3 blue=vec3(19.,64.,116.)/255.;
   vec3 base=mix(paper,navy,darkMode);
-  vec3 ink=mix(mix(paper,blue,.37),blue,darkMode);
+  vec3 ink=mix(mix(paper,blue,.48),blue,darkMode);
   // The same vertical fade as the reference, with an accessible light variant.
-  float fade=mix(.32,1.,smoothstep(0.,.9,uv.y));
+  float fade=smoothstep(0.,1.,uv.y);
   vec3 color=mix(base,ink,amount*fade);
   color+=(grain(gl_FragCoord.xy)-.5)*.015;
   gl_FragColor=vec4(color,1.);
@@ -75,7 +70,7 @@ export default function FlowBackground({ variant = 'hero' }) {
     const clock = gl.getUniformLocation(program,'time');
     gl.uniform1f(gl.getUniformLocation(program,'darkMode'), variant === 'footer' ? 1 : 0);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let frame = 0, visible = true, elapsed = variant === 'footer' ? 17 : 6, last = 0;
+    let frame = 0, visible = true, elapsed = variant === 'footer' ? 9 : 0, last = 0;
     let contextLost = false;
     const draw = () => {
       if (contextLost) return;

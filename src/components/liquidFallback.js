@@ -4,31 +4,29 @@ export function startLiquidFallback(canvas, variant) {
   if (!context) return () => {};
   const dark = variant === 'footer';
   const base = dark ? [11,37,69] : [238,244,237];
-  const ink = dark ? [19,64,116] : base.map((v,i) => v+([19,64,116][i]-v)*.37);
+  const ink = dark ? [19,64,116] : base.map((v,i) => v+([19,64,116][i]-v)*.48);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let frame=0, last=0, elapsed=dark?17:6, visible=true, pixels;
+  let frame=0, last=0, elapsed=dark?9:0, visible=true, pixels;
   const smooth = (a,b,v) => { const n=Math.max(0,Math.min(1,(v-a)/(b-a))); return n*n*(3-2*n); };
-  function deform(x,y,t) {
-    for(let n=1;n<=5;n++) {
-      const dx=.22/n*Math.sin(y*(1.3+n*.35)+Math.sin(t*.61+n*1.7)+t*.31);
-      const dy=.22/n*Math.sin(x*(1.3+n*.35)+Math.cos(t*.47+n*2.3)-t*.27);
-      x+=dx; y+=dy;
-    }
-    return [x,y];
-  }
   function draw() {
     if(!pixels) return;
-    const w=canvas.width,h=canvas.height,t=elapsed*.195,scale=Math.max(w,h);
-    const tx=.34*Math.sin(t*.3),ty=.3*Math.cos(t*.23);
+    const w=canvas.width,h=canvas.height,t=elapsed*.65,scale=Math.max(w,h);
+    const angle=.65+.8*Math.sin(elapsed*.105),ca=Math.cos(angle),sa=Math.sin(angle);
     for(let y=0;y<h;y++) {
       const py=(h-y-.5-h/2)/scale*2;
-      const fade=.32+.68*smooth(0,.9,1-(y+.5)/h);
+      const fade=smooth(0,1,1-(y+.5)/h);
       for(let x=0;x<w;x++) {
         const px=(x+.5-w/2)/scale*2;
-        const [qx,qy]=deform((.82*px+.57*py)*.78+.2,(-.57*px+.82*py)*.78-.4,t);
-        const [rx,ry]=deform(qx+tx,qy+ty,t*.73+2);
-        const field=.5+.25*Math.sin(rx*3.4+ry*1.8+t*.7)+.25*Math.cos(qy*2.6-qx*1.7-t*.53);
-        const amount=Math.min(1,smooth(.16,.38,field)*(1-smooth(.52,.72,field))*.92+smooth(.68,.94,field)*.65)*fade;
+        let qx=ca*px+sa*py,qy=-sa*px+ca*py;
+        for(let n=1;n<=7;n++) {
+          const dx=.07/n*Math.sin(qy*(2+n*.31)+t*.63+n*1.9);
+          const dy=.07/n*Math.sin(qx*(2+n*.31)-t*.47+n*1.9);
+          qx+=dx; qy+=dy;
+        }
+        const phase=qx*5+.65*Math.sin(qy*2.2+t*.38)+t;
+        const wave=.5+.5*Math.sin(phase);
+        const seam=Math.exp(-Math.pow((Math.sin(phase+.85)-.8)*7,2));
+        const amount=Math.max(0,Math.min(1,smooth(.25,.8,wave)-.7*seam))*fade;
         const i=(y*w+x)*4;
         for(let c=0;c<3;c++) pixels.data[i+c]=base[c]+(ink[c]-base[c])*amount;
         pixels.data[i+3]=255;
