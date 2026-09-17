@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const projectsData = [
   {
@@ -64,10 +61,15 @@ const Projects = () => {
   const mobileCarouselRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const getGridPos = (index) => ({ row: Math.floor(index / 3), col: index % 3 });
-      const mm = gsap.matchMedia();
+    const section = containerRef.current;
+    if (!section) return undefined;
 
+    const desktop = window.matchMedia('(min-width: 768px)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let floatTween;
+    let observer;
+
+    const ctx = gsap.context(() => {
       gsap.set([folderBackRef.current, folderFrontRef.current], {
         xPercent: -50,
         yPercent: -50,
@@ -79,124 +81,176 @@ const Projects = () => {
         force3D: true,
       });
 
-      mm.add('(min-width: 768px)', () => {
-        cardsRef.current.forEach((card, index) => {
-          if (!card) return;
-          gsap.set(card, {
-            xPercent: -50,
-            yPercent: -50,
-            x: 0,
-            y: 0,
-            rotation: index % 2 === 0 ? -2.5 : 2.5,
-            scale: 0.84,
-            opacity: 0.98,
-            zIndex: 10 + index,
-            force3D: true,
-          });
+      if (desktop) {
+        const cards = cardsRef.current.filter(Boolean);
+
+        const finalX = (index) => {
+          const col = index % 3;
+          const step = Math.min(window.innerWidth * 0.285, 400);
+          return (col - 1) * step;
+        };
+
+        const finalY = (index) => {
+          const row = Math.floor(index / 3);
+          const step = Math.min(window.innerHeight * 0.29, 260);
+          return (row - 0.5) * step;
+        };
+
+        gsap.set(cards, {
+          xPercent: -50,
+          yPercent: -50,
+          x: 0,
+          y: 15,
+          scale: 0.72,
+          opacity: 0,
+          force3D: true,
         });
 
-        const timeline = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: '+=150%',
-            scrub: 0.9,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+        if (reducedMotion) {
+          gsap.set(folderFrontRef.current, { rotationX: -128 });
+          gsap.set([folderBackRef.current, folderFrontRef.current], { opacity: 0.18, scale: 0.92 });
+          cards.forEach((card, index) => {
+            gsap.set(card, {
+              x: finalX(index),
+              y: finalY(index),
+              scale: 1,
+              rotation: 0,
+              opacity: 1,
+              zIndex: 70 + index,
+            });
+          });
+          return;
+        }
+
+        const timeline = gsap.timeline({ paused: true });
 
         timeline
           .to(folderFrontRef.current, {
-            rotationX: -132,
-            duration: 0.24,
-            ease: 'power2.inOut',
+            rotationX: -128,
+            duration: 0.72,
+            ease: 'power3.inOut',
           })
-          .to(cardsRef.current, {
-            y: -105,
-            scale: 0.92,
-            duration: 0.20,
-            stagger: 0.015,
-            ease: 'back.out(1.15)',
-          }, '-=0.11')
-          .to(cardsRef.current, {
-            x: (i) => {
-              const w = Math.max(...cardsRef.current.map((c) => c?.offsetWidth || 0)) || 340;
-              const { col } = getGridPos(i);
-              return (col - 1) * (w + 34);
-            },
-            y: (i) => {
-              const h = Math.max(...cardsRef.current.map((c) => c?.offsetHeight || 0)) || 230;
-              const { row } = getGridPos(i);
-              return (row - 0.5) * (h + 36);
-            },
-            rotation: (i) => [-1.4, 0.8, 1.3, 1.1, -0.7, 0.5][i] || 0,
-            scale: 1,
+          .to(cards, {
+            opacity: 1,
+            y: -95,
+            scale: 0.84,
+            zIndex: 70,
             duration: 0.56,
-            stagger: 0.018,
-            ease: 'power3.out',
-          }, '-=0.03');
+            stagger: 0.055,
+            ease: 'back.out(1.25)',
+          }, '-=0.34')
+          .to(cards, {
+            x: (index) => finalX(index),
+            y: (index) => finalY(index),
+            rotation: (index) => [-1.1, 0.45, 1.05, 0.75, -0.55, 0.35][index] || 0,
+            scale: 1,
+            opacity: 1,
+            duration: 1.05,
+            stagger: 0.065,
+            ease: 'expo.out',
+          }, '-=0.12')
+          .to([folderBackRef.current, folderFrontRef.current], {
+            opacity: 0.16,
+            scale: 0.92,
+            duration: 0.45,
+            ease: 'power2.out',
+          }, '-=0.48')
+          .add(() => {
+            floatTween = gsap.to(cards, {
+              y: '+=7',
+              duration: 3.2,
+              repeat: -1,
+              yoyo: true,
+              ease: 'sine.inOut',
+              stagger: { amount: 0.9, from: 'random' },
+            });
+          });
 
-        requestAnimationFrame(() => ScrollTrigger.refresh());
+        let played = false;
+        observer = new IntersectionObserver((entries) => {
+          const entry = entries[0];
+          if (!played && entry.isIntersecting) {
+            played = true;
+            timeline.play(0);
+            observer?.disconnect();
+          }
+        }, {
+          threshold: 0.22,
+          rootMargin: '0px 0px -8% 0px',
+        });
 
-        return () => timeline.kill();
-      });
+        observer.observe(section);
+      } else {
+        const cards = mobileCardsRef.current.filter(Boolean);
+        const cardStep = window.innerWidth * 0.8 + 20;
 
-      mm.add('(max-width: 767px)', () => {
-        mobileCardsRef.current.forEach((card, i) => {
-          if (!card) return;
+        cards.forEach((card, index) => {
           gsap.set(card, {
-            x: -(i * (window.innerWidth * 0.8 + 20)),
-            y: 0,
-            scale: 0.42,
+            x: -(index * cardStep),
+            y: 10,
+            scale: 0.45,
             opacity: 0,
-            rotation: i % 2 === 0 ? -9 : 9,
+            rotation: index % 2 === 0 ? -8 : 8,
           });
         });
 
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 68%',
-            once: true,
-          },
-        });
+        const revealMobile = () => {
+          const timeline = gsap.timeline();
+          timeline
+            .to(folderFrontRef.current, { rotationX: -128, duration: 0.68, ease: 'power3.inOut' })
+            .to(cards, {
+              y: -70,
+              opacity: 1,
+              scale: 0.84,
+              duration: 0.5,
+              stagger: 0.045,
+              ease: 'back.out(1.18)',
+            }, '-=0.34')
+            .to(cards, {
+              x: 0,
+              y: 0,
+              rotation: 0,
+              scale: (index) => (index === 0 ? 1 : 0.94),
+              opacity: (index) => (index === 0 ? 1 : 0.6),
+              duration: 0.72,
+              stagger: 0.055,
+              ease: 'expo.out',
+              onComplete: () => {
+                if (mobileCarouselRef.current) {
+                  mobileCarouselRef.current.style.overflowX = 'auto';
+                  mobileCarouselRef.current.style.pointerEvents = 'auto';
+                }
+              },
+            }, '-=0.12');
+        };
 
-        timeline
-          .to(folderFrontRef.current, { rotationX: -130, duration: 0.75, ease: 'power3.inOut' })
-          .to(mobileCardsRef.current, {
-            y: -86,
-            opacity: 1,
-            scale: 0.86,
-            duration: 0.52,
-            stagger: 0.05,
-            ease: 'back.out(1.15)',
-          }, '-=0.38')
-          .to(mobileCardsRef.current, {
-            x: 0,
-            y: 0,
-            rotation: 0,
-            scale: (i) => (i === 0 ? 1 : 0.93),
-            opacity: (i) => (i === 0 ? 1 : 0.58),
-            duration: 0.78,
-            stagger: 0.065,
-            ease: 'expo.out',
-            onComplete: () => {
-              if (mobileCarouselRef.current) {
-                mobileCarouselRef.current.style.overflowX = 'auto';
-                mobileCarouselRef.current.style.pointerEvents = 'auto';
-              }
-            },
-          }, '-=0.18');
+        if (reducedMotion) {
+          gsap.set(folderFrontRef.current, { rotationX: -128 });
+          cards.forEach((card, index) => gsap.set(card, { x: 0, y: 0, rotation: 0, scale: index === 0 ? 1 : 0.94, opacity: index === 0 ? 1 : 0.6 }));
+          if (mobileCarouselRef.current) {
+            mobileCarouselRef.current.style.overflowX = 'auto';
+            mobileCarouselRef.current.style.pointerEvents = 'auto';
+          }
+        } else {
+          let played = false;
+          observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (!played && entry.isIntersecting) {
+              played = true;
+              revealMobile();
+              observer?.disconnect();
+            }
+          }, { threshold: 0.18 });
+          observer.observe(section);
+        }
+      }
+    }, section);
 
-        return () => timeline.kill();
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      observer?.disconnect();
+      floatTween?.kill();
+      ctx.revert();
+    };
   }, []);
 
   const Card = ({ project, mobile = false, index }) => (
@@ -229,7 +283,7 @@ const Projects = () => {
   );
 
   return (
-    <section id="projects" ref={containerRef} className="bg-white min-h-screen relative font-sans overflow-x-clip text-[#0b2545] w-full flex items-center justify-center py-24 md:py-32 select-none">
+    <section id="projects" ref={containerRef} className="bg-white min-h-[115vh] relative font-sans overflow-x-clip text-[#0b2545] w-full flex items-center justify-center py-24 md:py-32 select-none">
       <div className="absolute top-8 left-6 md:left-12 z-30 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/94 border border-[#134074]/20 shadow-sm backdrop-blur-xl text-[11px] font-mono font-bold tracking-[0.18em] uppercase text-[#134074]">
         <span className="w-1.5 h-1.5 rounded-full bg-[#134074]" />
         Selected Growth Work
@@ -238,16 +292,16 @@ const Projects = () => {
       <div className="absolute top-10 left-0 w-full flex items-start justify-center pointer-events-none z-0">
         <h1 className="text-[15vw] sm:text-[17vw] md:text-[19vw] font-black text-[#0b2545]/[0.025] tracking-tighter leading-none whitespace-nowrap uppercase">WORK</h1>
       </div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[48vw] h-[48vw] bg-[#134074]/[0.055] rounded-full blur-[135px] pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[48vw] h-[48vw] bg-[#134074]/[0.045] rounded-full blur-[130px] pointer-events-none z-0" />
 
-      <div className="relative w-full max-w-7xl h-[72vh] min-h-[640px] flex items-center justify-center perspective-[2000px] z-10" style={{ transformStyle: 'preserve-3d' }}>
+      <div className="relative w-full max-w-7xl h-[78vh] min-h-[660px] flex items-center justify-center perspective-[2000px] z-10" style={{ transformStyle: 'preserve-3d' }}>
         <div className="relative w-0 h-0" style={{ transformStyle: 'preserve-3d' }}>
           <div ref={folderBackRef} className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video bg-white rounded-[24px] border border-[#134074]/25 shadow-[0_22px_60px_rgba(19,64,116,0.16)] flex items-center justify-center" style={{ zIndex: 5 }}>
             <div className="absolute -top-6 left-6 w-32 h-8 bg-white rounded-t-xl border-t border-x border-[#134074]/20" />
             <div className="relative z-10 text-[#134074] font-mono font-black text-xl tracking-[0.18em] uppercase opacity-70">GROWTH_ARCHIVE</div>
           </div>
 
-          {projectsData.map((project, i) => <Card key={project.title} project={project} index={i} />)}
+          {projectsData.map((project, index) => <Card key={project.title} project={project} index={index} />)}
 
           <div ref={folderFrontRef} className="absolute w-[85vw] md:w-[32vw] max-w-[380px] aspect-video pointer-events-none will-change-transform" style={{ zIndex: 60 }}>
             <div className="absolute bottom-0 w-full h-[85%] bg-[#f7faf7] rounded-b-[24px] rounded-t-md shadow-[0_-5px_25px_rgba(11,37,69,0.10)] flex flex-col justify-end p-6 border-t border-[#134074]/25">
@@ -259,7 +313,7 @@ const Projects = () => {
 
       <div ref={mobileCarouselRef} className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-auto py-12 flex items-center gap-6 px-[10vw] pointer-events-none z-[100] snap-x snap-mandatory overflow-x-hidden hide-scrollbar">
         <style>{`.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}`}</style>
-        {projectsData.map((project, i) => <Card key={`mob-${project.title}`} project={project} index={i} mobile />)}
+        {projectsData.map((project, index) => <Card key={`mob-${project.title}`} project={project} index={index} mobile />)}
       </div>
     </section>
   );
