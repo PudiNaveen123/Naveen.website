@@ -7,31 +7,31 @@ const growthStages = [
     title: 'Brand Positioning Research',
     statement: 'Find the market position worth owning.',
     signals: ['Customer tension', 'Category white space', 'Commercial relevance'],
-    bars: [24, 32, 29, 43, 39, 56, 51, 68, 63, 78, 74, 91],
+    bars: [62, 28, 84, 41, 73, 36, 92, 54, 67, 25, 78, 48],
   },
   {
     title: 'Acquisition',
     statement: 'Turn strategic clarity into qualified demand.',
     signals: ['Audience priority', 'Channel intent', 'Acquisition efficiency'],
-    bars: [18, 27, 38, 34, 49, 45, 61, 57, 72, 68, 84, 94],
+    bars: [35, 76, 44, 89, 52, 31, 68, 94, 39, 72, 57, 83],
   },
   {
     title: 'Conversion',
     statement: 'Move customer intent into measurable revenue.',
     signals: ['Journey friction', 'Offer strength', 'Decision confidence'],
-    bars: [28, 37, 33, 46, 42, 58, 53, 69, 65, 79, 75, 89],
+    bars: [81, 46, 29, 74, 58, 91, 37, 65, 86, 43, 69, 32],
   },
   {
     title: 'Retention',
     statement: 'Create value customers choose repeatedly.',
     signals: ['Product experience', 'Lifecycle engagement', 'Repeat behaviour'],
-    bars: [20, 35, 31, 51, 47, 66, 60, 73, 69, 83, 79, 93],
+    bars: [42, 88, 53, 27, 79, 61, 34, 93, 57, 71, 38, 84],
   },
   {
     title: 'Lifetime Value',
     statement: 'Compound every customer relationship.',
     signals: ['Purchase frequency', 'Customer expansion', 'Margin quality'],
-    bars: [22, 30, 41, 38, 55, 50, 67, 62, 77, 73, 87, 97],
+    bars: [69, 33, 87, 49, 76, 24, 58, 95, 45, 82, 63, 36],
   },
 ];
 
@@ -147,8 +147,10 @@ const About = () => {
             </div>
 
             <div className="growth-control-visual" aria-hidden="true">
-              <span className="growth-control-visual-label">Commercial momentum</span>
+              <span className="growth-control-visual-label">Growth signal pattern</span>
               <span ref={numberRef} className="growth-control-ghost-number">01</span>
+              <span className="growth-control-axis growth-control-axis--high">High</span>
+              <span className="growth-control-axis growth-control-axis--base">Base</span>
               <div className="growth-control-bars">
                 {growthStages[0].bars.map((height, index) => (
                   <span
