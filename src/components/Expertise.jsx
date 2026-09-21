@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Expertise.css';
 
 const capabilities = [
@@ -32,18 +32,8 @@ const capabilities = [
   },
 ];
 
-const ROTATION_MS = 4800;
-
 const Expertise = () => {
-  const [activeIndex, setActiveIndex] = useState(1);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % capabilities.length);
-    }, ROTATION_MS);
-
-    return () => window.clearInterval(interval);
-  }, []);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   return (
     <section id="expertise" className="capability-map" aria-labelledby="capability-map-title">
@@ -69,6 +59,25 @@ const Expertise = () => {
                 <rect x={x - 5} y={y - 7} width="10" height="14" />
               </g>
             ))}
+            {[
+              { path: 'M 500 260 L 375 105', begin: '0s' },
+              { path: 'M 500 260 L 625 105', begin: '0.8s' },
+              { path: 'M 500 260 L 375 415', begin: '1.6s' },
+              { path: 'M 500 260 L 625 415', begin: '2.4s' },
+            ].map((signal) => (
+              <circle className="capability-map__signal" r="4" key={signal.path}>
+                <animateMotion
+                  path={signal.path}
+                  dur="3.8s"
+                  begin={signal.begin}
+                  repeatCount="indefinite"
+                  keyPoints="0;1"
+                  keyTimes="0;1"
+                  calcMode="spline"
+                  keySplines="0.4 0 0.2 1"
+                />
+              </circle>
+            ))}
           </svg>
 
           {capabilities.map((item, index) => (
@@ -78,9 +87,12 @@ const Expertise = () => {
               className={`capability-map__cell capability-map__cell--${index + 1}${activeIndex === index ? ' is-active' : ''}`}
               onClick={() => setActiveIndex(index)}
               onMouseEnter={() => setActiveIndex(index)}
-              aria-current={activeIndex === index ? 'true' : undefined}
+              onMouseLeave={() => setActiveIndex(null)}
+              onFocus={() => setActiveIndex(index)}
+              onBlur={() => setActiveIndex(null)}
+              aria-pressed={activeIndex === index}
             >
-              <div className="capability-map__content" key={activeIndex === index ? `active-${item.number}` : `idle-${item.number}`}>
+              <div className="capability-map__content">
                 <div className="capability-map__number"><span>{item.number}</span><i /></div>
                 <h3>{item.title}</h3>
                 <p className="capability-map__headline">{item.headline}</p>
@@ -93,6 +105,7 @@ const Expertise = () => {
           ))}
 
           <div className="capability-map__core" aria-label="Revenue system">
+            <i aria-hidden="true" />
             <span>Revenue</span>
             <span>System</span>
           </div>
